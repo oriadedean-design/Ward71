@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-cream: #FDFBF7;
+  --color-brand-slate: #1e293b;
+  --color-brand-red: #E05A47;
+  --color-brand-mustard: #E8B130;
+  --color-brand-forest: #1F4E3C;
+  
+  --font-fraunces: var(--font-fraunces), serif;
+  --font-jakarta: var(--font-jakarta), sans-serif;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-brand-cream);
+    color: var(--color-brand-slate);
+    font-family: var(--font-jakarta);
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-fraunces);
+  }
+}
