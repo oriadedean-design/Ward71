@@ -1,11 +1,16 @@
-'use client';
-
 import Image from 'next/image';
 import Link from 'next/link';
 import { FadeIn } from '@/components/FadeIn';
 import { ImpactMeter } from '@/components/ImpactMeter';
+import { client } from '@/sanity/client';
+import { urlFor } from '@/sanity/image';
 
-export default function Home() {
+export default async function Home() {
+  const settings = await client.fetch(`*[_type == "siteSettings"][0]{ candidatePhoto }`)
+  const photoUrl = settings?.candidatePhoto
+    ? urlFor(settings.candidatePhoto).width(800).height(1000).fit('crop').url()
+    : null
+
   return (
     <>
       <section className="px-6 py-10 md:py-16 max-w-7xl mx-auto flex flex-col md:flex-row gap-8 items-center">
@@ -27,14 +32,13 @@ export default function Home() {
         </FadeIn>
         <FadeIn className="md:w-1/2 flex justify-center">
           <div className="relative w-full aspect-[4/5] max-w-sm rounded-2xl overflow-hidden shadow-2xl">
-            <Image
-              src="https://picsum.photos/seed/lorna/800/1000"
-              alt="Lorna Antwi"
-              fill
-              className="object-cover"
-              referrerPolicy="no-referrer"
-              priority
-            />
+            {photoUrl ? (
+              <Image src={photoUrl} alt="Lorna Antwi" fill className="object-cover" priority />
+            ) : (
+              <div className="w-full h-full bg-brand-slate/10 flex items-center justify-center text-brand-slate/40 text-sm">
+                Upload candidate photo in Sanity Studio
+              </div>
+            )}
           </div>
         </FadeIn>
       </section>
@@ -83,30 +87,12 @@ export default function Home() {
         </FadeIn>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
-            {
-              title: "Affordable Housing and Tenant Protections",
-              desc: "Fighting for rent control, stronger eviction prevention, and reducing the 10-year wait for subsidized housing."
-            },
-            {
-              title: "Community Safety and Mental Health",
-              desc: "Investing in prevention, youth outreach, after-school programs, and mental health supports that address root causes."
-            },
-            {
-              title: "Streets, Parks, and Infrastructure",
-              desc: "Cleaner streets, faster pothole repairs, more parks with pools, and safe gathering spaces for families."
-            },
-            {
-              title: "Youth Opportunity and Mentorship",
-              desc: "Expanding youth employment, training, and mentorship so young people have clear pathways to success."
-            },
-            {
-              title: "Small Business and Local Economy",
-              desc: "Reducing barriers for local entrepreneurs and improving access to city supports for community-based businesses."
-            },
-            {
-              title: "Affordability for Seniors and Families",
-              desc: "Property tax fairness and stronger supports for seniors, newcomers, and low- to moderate-income households."
-            }
+            { title: "Affordable Housing and Tenant Protections", desc: "Fighting for rent control, stronger eviction prevention, and reducing the 10-year wait for subsidized housing." },
+            { title: "Community Safety and Mental Health", desc: "Investing in prevention, youth outreach, after-school programs, and mental health supports that address root causes." },
+            { title: "Streets, Parks, and Infrastructure", desc: "Cleaner streets, faster pothole repairs, more parks with pools, and safe gathering spaces for families." },
+            { title: "Youth Opportunity and Mentorship", desc: "Expanding youth employment, training, and mentorship so young people have clear pathways to success." },
+            { title: "Small Business and Local Economy", desc: "Reducing barriers for local entrepreneurs and improving access to city supports for community-based businesses." },
+            { title: "Affordability for Seniors and Families", desc: "Property tax fairness and stronger supports for seniors, newcomers, and low- to moderate-income households." }
           ].map((item, idx) => (
             <FadeIn key={idx} delay={idx * 0.1} className="bg-white p-6 rounded-2xl shadow-sm border border-brand-slate/5 hover:shadow-md transition-shadow">
               <h3 className="text-xl font-fraunces font-bold mb-3">{item.title}</h3>

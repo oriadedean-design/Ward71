@@ -2,13 +2,20 @@ import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FadeIn } from '@/components/FadeIn';
+import { client } from '@/sanity/client';
+import { urlFor } from '@/sanity/image';
 
 export const metadata: Metadata = {
   title: 'About Lorna Antwi | Toronto City Council Ward 7',
   description: 'Rooted in service. Built for our community. Read about Lorna Antwi\'s story and why she is running for Toronto City Council.',
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const settings = await client.fetch(`*[_type == "siteSettings"][0]{ candidatePhoto }`)
+  const photoUrl = settings?.candidatePhoto
+    ? urlFor(settings.candidatePhoto).width(600).height(800).fit('crop').url()
+    : null
+
   return (
     <>
       <script
@@ -20,7 +27,6 @@ export default function AboutPage() {
             "name": "Lorna Antwi",
             "jobTitle": "Political Candidate for Toronto City Council",
             "url": "https://lornaantwi.ca",
-            "image": "https://picsum.photos/seed/lorna_portrait/800/1000",
             "description": "Running for Toronto City Council in Humber River-Black Creek (Ward 7)."
           })
         }}
@@ -36,13 +42,13 @@ export default function AboutPage() {
         <div className="flex flex-col lg:flex-row gap-10 items-start">
           <FadeIn className="lg:w-1/3 sticky top-32">
             <div className="relative w-full aspect-[3/4] rounded-2xl overflow-hidden shadow-xl">
-              <Image
-                src="https://picsum.photos/seed/lorna/800/1000"
-                alt="Lorna Antwi in the community"
-                fill
-                className="object-cover"
-                referrerPolicy="no-referrer"
-              />
+              {photoUrl ? (
+                <Image src={photoUrl} alt="Lorna Antwi in the community" fill className="object-cover" />
+              ) : (
+                <div className="w-full h-full bg-brand-slate/10 flex items-center justify-center text-brand-slate/40 text-sm p-4 text-center">
+                  Upload candidate photo in Sanity Studio
+                </div>
+              )}
             </div>
           </FadeIn>
 

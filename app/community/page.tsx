@@ -1,12 +1,17 @@
 import { Metadata } from 'next';
 import { FadeIn } from '@/components/FadeIn';
+import { client } from '@/sanity/client';
+import { urlFor } from '@/sanity/image';
 
 export const metadata: Metadata = {
   title: 'Community Voices | Lorna Antwi',
   description: 'What I\'m hearing in Humber River-Black Creek. Lorna Antwi is listening to residents about housing, safety, and youth opportunities.',
 };
 
-export default function CommunityPage() {
+export default async function CommunityPage() {
+  const settings = await client.fetch(`*[_type == "siteSettings"][0]{ galleryImages }`)
+  const gallery: Array<{ _key: string; alt?: string; asset: any }> = settings?.galleryImages ?? []
+
   return (
     <>
       <script
@@ -47,30 +52,12 @@ export default function CommunityPage() {
       <section className="py-12 px-6 max-w-7xl mx-auto">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
-            {
-              title: "Housing and Cost of Living",
-              desc: "Families are worried about rising rent, eviction prevention, overcrowding, and homelessness. First-time homebuyers face real barriers to ownership."
-            },
-            {
-              title: "Streets and Neighbourhoods",
-              desc: "Residents want cleaner streets, safer public spaces, faster pothole repairs, and better infrastructure throughout the community."
-            },
-            {
-              title: "Youth and Opportunity",
-              desc: "Parents and young people speak about the need for more employment, mentorship, skills training, safe recreational spaces, and pathways to success."
-            },
-            {
-              title: "Small Business",
-              desc: "Small business owners share concerns about how difficult it is to start and sustain a business due to rising costs and limited support."
-            },
-            {
-              title: "Seniors and Newcomers",
-              desc: "Seniors raise concerns about affordability, accessibility, and isolation. Newcomers face barriers to employment, housing, and available resources."
-            },
-            {
-              title: "Food Security",
-              desc: "Many families struggle to afford groceries and basic necessities. There is a growing need for stronger community supports."
-            }
+            { title: "Housing and Cost of Living", desc: "Families are worried about rising rent, eviction prevention, overcrowding, and homelessness. First-time homebuyers face real barriers to ownership." },
+            { title: "Streets and Neighbourhoods", desc: "Residents want cleaner streets, safer public spaces, faster pothole repairs, and better infrastructure throughout the community." },
+            { title: "Youth and Opportunity", desc: "Parents and young people speak about the need for more employment, mentorship, skills training, safe recreational spaces, and pathways to success." },
+            { title: "Small Business", desc: "Small business owners share concerns about how difficult it is to start and sustain a business due to rising costs and limited support." },
+            { title: "Seniors and Newcomers", desc: "Seniors raise concerns about affordability, accessibility, and isolation. Newcomers face barriers to employment, housing, and available resources." },
+            { title: "Food Security", desc: "Many families struggle to afford groceries and basic necessities. There is a growing need for stronger community supports." }
           ].map((item, idx) => (
             <FadeIn key={idx} delay={idx * 0.1} className="bg-white p-6 rounded-2xl shadow-sm border border-brand-slate/10 hover:shadow-md transition-shadow">
               <h3 className="text-xl font-fraunces font-bold mb-3 text-brand-red">{item.title}</h3>
@@ -87,28 +74,26 @@ export default function CommunityPage() {
             </p>
           </FadeIn>
 
-          <div className="columns-1 md:columns-2 lg:columns-3 gap-4 space-y-4">
-            {[
-              { src: "https://picsum.photos/seed/lorna1/600/800", alt: "Lorna speaking with a store owner", aspect: "aspect-[3/4]" },
-              { src: "https://picsum.photos/seed/lorna2/600/400", alt: "Lorna at a community BBQ", aspect: "aspect-[3/2]" },
-              { src: "https://picsum.photos/seed/lorna3/600/600", alt: "Lorna mentoring youth", aspect: "aspect-square" },
-              { src: "https://picsum.photos/seed/lorna4/600/900", alt: "Lorna at a town hall meeting", aspect: "aspect-[2/3]" },
-              { src: "https://picsum.photos/seed/lorna5/600/500", alt: "Lorna participating in a neighborhood cleanup", aspect: "aspect-[5/4]" },
-              { src: "https://picsum.photos/seed/lorna6/600/700", alt: "Lorna talking with seniors", aspect: "aspect-[6/7]" }
-            ].map((img, idx) => (
-              <FadeIn key={idx} delay={idx * 0.1} className="break-inside-avoid">
-                <div className={`relative w-full ${img.aspect} rounded-2xl overflow-hidden shadow-sm group`}>
-                  <img
-                    src={img.src}
-                    alt={img.alt}
-                    loading="lazy"
-                    className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
-                    referrerPolicy="no-referrer"
-                  />
-                </div>
-              </FadeIn>
-            ))}
-          </div>
+          {gallery.length > 0 ? (
+            <div className="columns-1 md:columns-2 lg:columns-3 gap-4 space-y-4">
+              {gallery.map((img, idx) => (
+                <FadeIn key={img._key ?? idx} delay={idx * 0.05} className="break-inside-avoid">
+                  <div className="relative w-full rounded-2xl overflow-hidden shadow-sm group">
+                    <img
+                      src={urlFor(img).width(600).url()}
+                      alt={img.alt ?? 'Campaign photo'}
+                      loading="lazy"
+                      className="object-cover w-full h-auto group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+                </FadeIn>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-16 text-brand-slate/40 border-2 border-dashed border-brand-slate/20 rounded-2xl">
+              Upload gallery photos in Sanity Studio → Site Settings → Community Gallery Photos
+            </div>
+          )}
         </div>
 
         <FadeIn className="my-10 text-center max-w-4xl mx-auto">
