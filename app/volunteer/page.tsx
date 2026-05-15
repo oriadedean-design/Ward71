@@ -42,7 +42,6 @@ export default function VolunteerPage() {
     const newAnswers = { ...answers, [questionIndex]: questions[questionIndex].options[optionIndex].label };
     setAnswers(newAnswers);
 
-    // If all questions answered, calculate role
     if (Object.keys(newAnswers).length === questions.length) {
       calculateBestFit(newAnswers);
     }
@@ -50,8 +49,7 @@ export default function VolunteerPage() {
 
   const calculateBestFit = (finalAnswers: Record<number, string>) => {
     const roleCounts: Record<string, number> = {};
-    
-    // Tally up the roles based on selected options
+
     questions.forEach((q, qIndex) => {
       const selectedOptionLabel = finalAnswers[qIndex];
       const option = q.options.find(o => o.label === selectedOptionLabel);
@@ -62,8 +60,7 @@ export default function VolunteerPage() {
       }
     });
 
-    // Find the highest score
-    let bestRole = "Community Outreach"; // fallback
+    let bestRole = "Community Outreach";
     let max = 0;
     Object.entries(roleCounts).forEach(([role, count]) => {
       if (count > max) {
@@ -79,8 +76,6 @@ export default function VolunteerPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Normally we would POST to an API route here using Formspree or Resend
-    // For now, simulate submission
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setStep(3);
   };
@@ -88,30 +83,30 @@ export default function VolunteerPage() {
   const currentQuestionIdx = Object.keys(answers).length;
 
   return (
-    <section className="px-6 py-20 max-w-7xl mx-auto min-h-[70vh]">
+    <section className="px-6 py-12 max-w-7xl mx-auto min-h-[70vh]">
       {step === 1 && (
         <FadeIn>
-          <div className="text-center max-w-4xl mx-auto mb-16">
-            <h1 className="text-5xl md:text-7xl font-fraunces font-bold mb-6 text-brand-slate">Join the Team.</h1>
-            <p className="text-2xl font-medium text-brand-slate/80">Every role matters. Let's find your best fit.</p>
+          <div className="text-center max-w-4xl mx-auto mb-8">
+            <h1 className="text-4xl md:text-6xl font-fraunces font-bold mb-3 text-brand-slate">Join the Team.</h1>
+            <p className="text-xl font-medium text-brand-slate/80">Every role matters. Let's find your best fit.</p>
           </div>
-          
-          <div className="max-w-2xl mx-auto bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-brand-slate/10">
+
+          <div className="max-w-2xl mx-auto bg-white p-6 md:p-10 rounded-3xl shadow-xl border border-brand-slate/10">
             {currentQuestionIdx < questions.length && (
               <div>
-                <p className="text-brand-red font-bold uppercase tracking-wider mb-4 text-sm">
+                <p className="text-brand-red font-bold uppercase tracking-wider mb-3 text-sm">
                   Question {currentQuestionIdx + 1} of {questions.length}
                 </p>
-                <h2 className="text-2xl md:text-3xl font-fraunces font-bold mb-8 text-brand-slate">
+                <h2 className="text-xl md:text-2xl font-fraunces font-bold mb-6 text-brand-slate">
                   {questions[currentQuestionIdx].question}
                 </h2>
-                
-                <div className="flex flex-col gap-4">
+
+                <div className="flex flex-col gap-3">
                   {questions[currentQuestionIdx].options.map((opt, idx) => (
-                    <button 
+                    <button
                       key={idx}
                       onClick={() => handleAnswerSelect(currentQuestionIdx, idx)}
-                      className="text-left px-6 py-5 rounded-xl border-2 border-brand-slate/10 hover:border-brand-mustard hover:bg-brand-cream/30 transition-all font-medium text-lg text-brand-slate"
+                      className="text-left px-5 py-4 rounded-xl border-2 border-brand-slate/10 hover:border-brand-mustard hover:bg-brand-cream/30 transition-all font-medium text-brand-slate"
                     >
                       {opt.label}
                     </button>
@@ -125,19 +120,19 @@ export default function VolunteerPage() {
 
       {step === 2 && (
         <FadeIn className="max-w-2xl mx-auto">
-          <div className="text-center mb-12">
-            <button 
-              onClick={() => { setStep(1); setAnswers({}); }} 
-              className="text-brand-slate/60 hover:text-brand-red font-medium mb-8 inline-block"
+          <div className="text-center mb-8">
+            <button
+              onClick={() => { setStep(1); setAnswers({}); }}
+              className="text-brand-slate/60 hover:text-brand-red font-medium mb-6 inline-block"
             >
               &larr; Retake quiz
             </button>
-            <h1 className="text-4xl md:text-5xl font-fraunces font-bold mb-6 text-brand-slate">Sign up to volunteer</h1>
-            <p className="text-xl font-medium text-brand-slate/80">Your matched best fit role is: <strong className="text-brand-red">{selectedRole}</strong></p>
+            <h1 className="text-3xl md:text-4xl font-fraunces font-bold mb-4 text-brand-slate">Sign up to volunteer</h1>
+            <p className="text-lg font-medium text-brand-slate/80">Your matched role: <strong className="text-brand-red">{selectedRole}</strong></p>
           </div>
-          
-          <form onSubmit={handleSubmit} className="bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-brand-slate/10 flex flex-col gap-6">
-            <div className="grid md:grid-cols-2 gap-6">
+
+          <form onSubmit={handleSubmit} className="bg-white p-6 md:p-10 rounded-3xl shadow-xl border border-brand-slate/10 flex flex-col gap-5">
+            <div className="grid md:grid-cols-2 gap-5">
               <div className="flex flex-col">
                 <label className="mb-2 font-bold text-brand-slate" htmlFor="name">Name</label>
                 <input id="name" type="text" className="px-5 py-4 bg-white border-2 border-brand-slate/20 rounded-xl text-brand-slate focus:outline-none focus:border-brand-mustard focus:ring-0" required />
@@ -147,8 +142,8 @@ export default function VolunteerPage() {
                 <input id="email" type="email" className="px-5 py-4 bg-white border-2 border-brand-slate/20 rounded-xl text-brand-slate focus:outline-none focus:border-brand-mustard focus:ring-0" required />
               </div>
             </div>
-            
-            <div className="grid md:grid-cols-2 gap-6">
+
+            <div className="grid md:grid-cols-2 gap-5">
               <div className="flex flex-col">
                 <label className="mb-2 font-bold text-brand-slate" htmlFor="phone">Phone</label>
                 <input id="phone" type="tel" className="px-5 py-4 bg-white border-2 border-brand-slate/20 rounded-xl text-brand-slate focus:outline-none focus:border-brand-mustard focus:ring-0" required />
@@ -169,7 +164,7 @@ export default function VolunteerPage() {
               <textarea id="availability" rows={3} placeholder="E.g., Weekday evenings, Saturdays..." className="px-5 py-4 bg-white border-2 border-brand-slate/20 rounded-xl text-brand-slate focus:outline-none focus:border-brand-mustard focus:ring-0" required></textarea>
             </div>
 
-            <button type="submit" className="bg-brand-red text-white py-4 mt-4 rounded-full font-bold text-xl hover:bg-opacity-90 transition-opacity w-full text-center">
+            <button type="submit" className="bg-brand-red text-white py-4 mt-2 rounded-full font-bold text-xl hover:bg-opacity-90 transition-opacity w-full text-center">
               Sign Me Up
             </button>
           </form>
@@ -177,20 +172,20 @@ export default function VolunteerPage() {
       )}
 
       {step === 3 && (
-        <FadeIn className="max-w-2xl mx-auto text-center py-12">
-          <div className="w-24 h-24 bg-brand-forest/10 text-brand-forest rounded-full flex items-center justify-center mx-auto mb-8">
-            <svg className="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <FadeIn className="max-w-2xl mx-auto text-center py-8">
+          <div className="w-20 h-20 bg-brand-forest/10 text-brand-forest rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h1 className="text-4xl md:text-5xl font-fraunces font-bold mb-6 text-brand-slate">Thank you for volunteering.</h1>
-          <p className="text-xl font-medium text-brand-slate/80 mb-16">Someone from the team will be in touch within 48 hours.</p>
+          <h1 className="text-3xl md:text-4xl font-fraunces font-bold mb-4 text-brand-slate">Thank you for volunteering.</h1>
+          <p className="text-lg font-medium text-brand-slate/80 mb-10">Someone from the team will be in touch within 48 hours.</p>
 
-          <div className="bg-white p-10 rounded-3xl shadow-lg border border-brand-slate/10">
-            <h2 className="text-2xl font-fraunces font-bold mb-4 text-brand-slate">Would you also like to contribute to the campaign?</h2>
-            <p className="font-medium text-brand-slate/70 mb-8">Grassroots donations help us build momentum.</p>
-            <div className="flex flex-col items-center gap-6">
-              <Link href="/donate" className="bg-brand-red text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-opacity-90 transition-opacity w-full max-w-sm">
+          <div className="bg-white p-8 rounded-3xl shadow-lg border border-brand-slate/10">
+            <h2 className="text-xl font-fraunces font-bold mb-3 text-brand-slate">Would you also like to contribute to the campaign?</h2>
+            <p className="font-medium text-brand-slate/70 mb-6">Grassroots donations help us build momentum.</p>
+            <div className="flex flex-col items-center gap-4">
+              <Link href="/donate" className="bg-brand-red text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-opacity-90 transition-opacity w-full max-w-sm text-center">
                 Donate Now
               </Link>
               <Link href="/" className="text-brand-slate/60 hover:text-brand-slate font-medium underline underline-offset-4">

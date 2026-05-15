@@ -2,19 +2,18 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion } from 'motion/react';
 import { FadeIn } from '@/components/FadeIn';
 import { ImpactMeter } from '@/components/ImpactMeter';
 
 export default function Home() {
   return (
     <>
-      <section className="px-6 py-16 md:py-24 max-w-7xl mx-auto flex flex-col md:flex-row gap-12 items-center">
+      <section className="px-6 py-10 md:py-16 max-w-7xl mx-auto flex flex-col md:flex-row gap-8 items-center">
         <FadeIn className="md:w-1/2">
-          <h1 className="text-5xl md:text-7xl font-bold font-fraunces leading-tight mb-6">
+          <h1 className="text-4xl md:text-6xl font-bold font-fraunces leading-tight mb-4">
             Stronger Together. <span className="text-brand-red">Real Change</span> for Our Community.
           </h1>
-          <p className="text-xl md:text-2xl text-brand-slate/80 mb-10 leading-relaxed font-medium">
+          <p className="text-lg md:text-xl text-brand-slate/80 mb-8 leading-relaxed font-medium">
             Lorna Antwi for Toronto City Council, Humber River-Black Creek.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
@@ -27,12 +26,12 @@ export default function Home() {
           </div>
         </FadeIn>
         <FadeIn className="md:w-1/2 flex justify-center">
-          <div className="relative w-full aspect-[4/5] max-w-md rounded-2xl overflow-hidden shadow-2xl">
-            <Image 
-              src="https://picsum.photos/seed/lorna/800/1000" 
-              alt="Lorna Antwi" 
-              fill 
-              className="object-cover" 
+          <div className="relative w-full aspect-[4/5] max-w-sm rounded-2xl overflow-hidden shadow-2xl">
+            <Image
+              src="https://picsum.photos/seed/lorna/800/1000"
+              alt="Lorna Antwi"
+              fill
+              className="object-cover"
               referrerPolicy="no-referrer"
               priority
             />
@@ -40,16 +39,16 @@ export default function Home() {
         </FadeIn>
       </section>
 
-      <section className="bg-brand-slate text-brand-cream py-20 px-6">
+      <section className="bg-brand-slate text-brand-cream py-12 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <FadeIn>
-            <h2 className="text-4xl md:text-5xl font-fraunces font-bold mb-6">Vote for Lorna Antwi</h2>
-            <p className="text-xl md:text-2xl text-brand-mustard mb-10 font-bold">
+            <h2 className="text-3xl md:text-4xl font-fraunces font-bold mb-4">Vote for Lorna Antwi</h2>
+            <p className="text-lg md:text-xl text-brand-mustard mb-8 font-bold">
               Join the community to stay updated on the campaign.
             </p>
             <form className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto relative z-10">
-              <input 
-                type="email" 
+              <input
+                type="email"
                 placeholder="Email address"
                 className="flex-1 px-6 py-4 rounded-full bg-white text-brand-slate font-medium text-lg border-2 border-brand-slate/20 focus:border-brand-mustard focus:outline-none focus:ring-0"
                 required
@@ -58,17 +57,17 @@ export default function Home() {
                 Join Us
               </button>
             </form>
-            
-            <div className="mt-16 text-left bg-brand-cream/10 p-8 rounded-2xl border border-brand-cream/20">
-              <h3 className="text-2xl font-bold font-fraunces mb-6 border-b border-brand-cream/20 pb-4">Key Voting Timelines - 2026</h3>
-              <div className="grid md:grid-cols-2 gap-8">
+
+            <div className="mt-8 text-left bg-brand-cream/10 p-6 rounded-2xl border border-brand-cream/20">
+              <h3 className="text-xl font-bold font-fraunces mb-4 border-b border-brand-cream/20 pb-3">Key Voting Timelines - 2026</h3>
+              <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <h4 className="text-xl font-bold text-brand-mustard mb-2">Advance Voting</h4>
-                  <p className="font-medium">Tuesday, October 6 to<br />Sunday, October 11</p>
+                  <h4 className="text-lg font-bold text-brand-mustard mb-1">Advance Voting</h4>
+                  <p className="font-medium">Tuesday, October 6 to Sunday, October 11</p>
                   <p className="text-sm opacity-80 mt-1">10:00 AM - 7:00 PM</p>
                 </div>
                 <div>
-                  <h4 className="text-xl font-bold text-brand-mustard mb-2">Election Day</h4>
+                  <h4 className="text-lg font-bold text-brand-mustard mb-1">Election Day</h4>
                   <p className="font-medium">Monday, October 26</p>
                   <p className="text-sm opacity-80 mt-1">10:00 AM - 8:00 PM</p>
                 </div>
@@ -78,11 +77,11 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-20 px-6 max-w-7xl mx-auto">
+      <section className="py-12 px-6 max-w-7xl mx-auto">
         <FadeIn>
-          <h2 className="text-4xl md:text-5xl font-fraunces font-bold mb-16 text-center">What I'll Fight For in Ward 7</h2>
+          <h2 className="text-3xl md:text-4xl font-fraunces font-bold mb-8 text-center">What I'll Fight For in Ward 7</h2>
         </FadeIn>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
             {
               title: "Affordable Housing and Tenant Protections",
@@ -109,9 +108,9 @@ export default function Home() {
               desc: "Property tax fairness and stronger supports for seniors, newcomers, and low- to moderate-income households."
             }
           ].map((item, idx) => (
-            <FadeIn key={idx} delay={idx * 0.1} className="bg-white p-8 rounded-2xl shadow-sm border border-brand-slate/5 hover:shadow-md transition-shadow">
-              <h3 className="text-2xl font-fraunces font-bold mb-4">{item.title}</h3>
-              <p className="text-brand-slate/80 leading-relaxed text-lg">{item.desc}</p>
+            <FadeIn key={idx} delay={idx * 0.1} className="bg-white p-6 rounded-2xl shadow-sm border border-brand-slate/5 hover:shadow-md transition-shadow">
+              <h3 className="text-xl font-fraunces font-bold mb-3">{item.title}</h3>
+              <p className="text-brand-slate/80 leading-relaxed">{item.desc}</p>
             </FadeIn>
           ))}
         </div>
@@ -119,10 +118,10 @@ export default function Home() {
 
       <ImpactMeter />
 
-      <section className="bg-brand-slate text-brand-cream py-24 px-6 text-center">
+      <section className="bg-brand-slate text-brand-cream py-14 px-6 text-center">
         <FadeIn className="max-w-3xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-fraunces font-bold mb-10">Join us. This campaign is built by neighbours.</h2>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+          <h2 className="text-3xl md:text-4xl font-fraunces font-bold mb-6">Join us. This campaign is built by neighbours.</h2>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/donate" className="bg-brand-mustard text-brand-slate px-10 py-4 rounded-full font-bold text-lg hover:bg-opacity-90 transition-opacity">
               Donate
             </Link>

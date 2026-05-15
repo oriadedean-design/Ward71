@@ -33,23 +33,23 @@ export default function CommunityPage() {
           })
         }}
       />
-      <section className="bg-brand-cream py-20 px-6">
+      <section className="bg-brand-cream py-12 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <FadeIn>
-            <h1 className="text-5xl md:text-7xl font-fraunces font-bold mb-8 text-brand-slate">What I'm Hearing in Our Community.</h1>
-            <p className="text-xl md:text-2xl text-brand-slate/80 leading-relaxed font-medium">
-              When speaking with residents across Humber River-Black Creek, the most urgent concerns I hear are affordability, housing instability, rising rent costs, community safety, food insecurity, youth opportunities, mental health support, and access to essential services.
+            <h1 className="text-4xl md:text-6xl font-fraunces font-bold mb-4 text-brand-slate">What I'm Hearing in Our Community.</h1>
+            <p className="text-lg md:text-xl text-brand-slate/80 leading-relaxed font-medium">
+              Across Humber River-Black Creek, residents are raising urgent concerns: affordability, housing instability, community safety, food insecurity, youth opportunity, and access to essential services.
             </p>
           </FadeIn>
         </div>
       </section>
 
-      <section className="py-20 px-6 max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <section className="py-12 px-6 max-w-7xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
             {
               title: "Housing and Cost of Living",
-              desc: "Many residents are struggling with rising costs and rent prices. Families are worried about affordable housing, eviction prevention, overcrowding, and homelessness. First-time homebuyers face barriers to ownership."
+              desc: "Families are worried about rising rent, eviction prevention, overcrowding, and homelessness. First-time homebuyers face real barriers to ownership."
             },
             {
               title: "Streets and Neighbourhoods",
@@ -57,37 +57,37 @@ export default function CommunityPage() {
             },
             {
               title: "Youth and Opportunity",
-              desc: "Parents and young people speak about the need for more youth employment, mentorship programs, skills training, safe recreational spaces, and pathways to long-term success."
+              desc: "Parents and young people speak about the need for more employment, mentorship, skills training, safe recreational spaces, and pathways to success."
             },
             {
               title: "Small Business",
-              desc: "Small business owners and aspiring entrepreneurs share concerns about how difficult it is to start and sustain a business due to rising costs and limited support."
+              desc: "Small business owners share concerns about how difficult it is to start and sustain a business due to rising costs and limited support."
             },
             {
               title: "Seniors and Newcomers",
-              desc: "Seniors raise concerns about affordability, accessibility, and isolation. Newcomers and refugees face barriers to employment, housing, and navigating available resources."
+              desc: "Seniors raise concerns about affordability, accessibility, and isolation. Newcomers face barriers to employment, housing, and available resources."
             },
             {
               title: "Food Security",
-              desc: "Many families struggle to afford groceries and basic necessities. There is a growing need for stronger community supports and accessible programs."
+              desc: "Many families struggle to afford groceries and basic necessities. There is a growing need for stronger community supports."
             }
           ].map((item, idx) => (
-            <FadeIn key={idx} delay={idx * 0.1} className="bg-white p-8 rounded-2xl shadow-sm border border-brand-slate/10 hover:shadow-md transition-shadow">
-              <h3 className="text-2xl font-fraunces font-bold mb-4 text-brand-red">{item.title}</h3>
-              <p className="text-brand-slate/80 leading-relaxed text-lg font-medium">{item.desc}</p>
+            <FadeIn key={idx} delay={idx * 0.1} className="bg-white p-6 rounded-2xl shadow-sm border border-brand-slate/10 hover:shadow-md transition-shadow">
+              <h3 className="text-xl font-fraunces font-bold mb-3 text-brand-red">{item.title}</h3>
+              <p className="text-brand-slate/80 leading-relaxed font-medium">{item.desc}</p>
             </FadeIn>
           ))}
         </div>
 
-        <div className="mt-24 mb-12">
+        <div className="mt-12 mb-8">
           <FadeIn>
-            <h2 className="text-4xl font-fraunces font-bold mb-6 text-brand-slate text-center">In the Community</h2>
-            <p className="text-xl text-brand-slate/80 text-center mb-12 max-w-2xl mx-auto font-medium">
+            <h2 className="text-3xl font-fraunces font-bold mb-3 text-brand-slate text-center">In the Community</h2>
+            <p className="text-lg text-brand-slate/80 text-center mb-8 max-w-2xl mx-auto font-medium">
               Moments from the campaign trail across Humber River-Black Creek.
             </p>
           </FadeIn>
-          
-          <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+
+          <div className="columns-1 md:columns-2 lg:columns-3 gap-4 space-y-4">
             {[
               { src: "https://picsum.photos/seed/lorna1/600/800", alt: "Lorna speaking with a store owner", aspect: "aspect-[3/4]" },
               { src: "https://picsum.photos/seed/lorna2/600/400", alt: "Lorna at a community BBQ", aspect: "aspect-[3/2]" },
@@ -110,24 +110,24 @@ export default function CommunityPage() {
             ))}
           </div>
         </div>
-        
-        <FadeIn className="my-24 text-center max-w-4xl mx-auto">
-          <blockquote className="text-3xl md:text-5xl font-fraunces font-bold text-brand-slate leading-tight mb-12">
+
+        <FadeIn className="my-10 text-center max-w-4xl mx-auto">
+          <blockquote className="text-2xl md:text-4xl font-fraunces font-bold text-brand-slate leading-tight">
             "Residents want leadership that listens, takes action, and works collaboratively with the community to create practical and lasting solutions."
           </blockquote>
         </FadeIn>
       </section>
 
-      <section className="bg-brand-slate text-brand-cream py-24 px-6 text-center">
+      <section className="bg-brand-slate text-brand-cream py-14 px-6 text-center">
         <FadeIn className="max-w-2xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-fraunces font-bold mb-10">Have a concern? Tell Lorna directly.</h2>
-          <form 
-            action="mailto:campaign@lornaantwi.ca?subject=Community Concern" 
-            method="POST" 
+          <h2 className="text-3xl md:text-4xl font-fraunces font-bold mb-8">Have a concern? Tell Lorna directly.</h2>
+          <form
+            action="mailto:campaign@lornaantwi.ca?subject=Community Concern"
+            method="POST"
             encType="text/plain"
-            className="flex flex-col gap-6 text-left"
+            className="flex flex-col gap-5 text-left"
           >
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-2 gap-5">
               <div className="flex flex-col">
                 <label className="mb-2 font-medium" htmlFor="name">Name</label>
                 <input id="name" name="name" type="text" className="px-5 py-4 rounded-xl text-brand-slate focus:outline-none focus:ring-2 focus:ring-brand-mustard" required />
@@ -143,9 +143,9 @@ export default function CommunityPage() {
             </div>
             <div className="flex flex-col">
               <label className="mb-2 font-medium" htmlFor="message">Message</label>
-              <textarea id="message" name="message" rows={5} className="px-5 py-4 rounded-xl text-brand-slate focus:outline-none focus:ring-2 focus:ring-brand-mustard" required></textarea>
+              <textarea id="message" name="message" rows={4} className="px-5 py-4 rounded-xl text-brand-slate focus:outline-none focus:ring-2 focus:ring-brand-mustard" required></textarea>
             </div>
-            <button type="submit" className="bg-brand-red text-white py-4 rounded-xl font-bold text-lg hover:bg-opacity-90 transition-opacity mt-4">
+            <button type="submit" className="bg-brand-red text-white py-4 rounded-xl font-bold text-lg hover:bg-opacity-90 transition-opacity mt-2">
               Send Message
             </button>
           </form>
