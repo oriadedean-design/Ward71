@@ -6,39 +6,75 @@ import { FadeIn } from '@/components/FadeIn';
 
 export default function VolunteerPage() {
   const [step, setStep] = useState<1 | 2 | 3>(1);
+  const [answers, setAnswers] = useState<Record<number, string>>({});
   const [selectedRole, setSelectedRole] = useState('');
 
-  const roles = [
+  const questions = [
     {
-      title: "Door Knocking and Canvassing",
-      desc: "Go door-to-door to speak with residents, share campaign materials, and listen to community concerns. This is how we build real relationships."
+      question: "What type of work energizes you the most?",
+      options: [
+        { label: "Talking to people and building connections", roles: ["Door Knocking and Canvassing", "Phone Banking"] },
+        { label: "Organizing things and keeping data clean", roles: ["Data Entry and Admin"] },
+        { label: "Being behind the scenes making things run", roles: ["Event Support and Setup", "Data Entry and Admin"] },
+        { label: "Creating content and spreading the word", roles: ["Social Media Support", "Community Outreach"] }
+      ]
     },
     {
-      title: "Phone Banking",
-      desc: "Help call community members to share campaign updates, gather feedback, and encourage participation in events and voting."
+      question: "What is your preferred environment for volunteering?",
+      options: [
+        { label: "Outdoors and in the neighborhood", roles: ["Door Knocking and Canvassing", "Community Outreach"] },
+        { label: "From the comfort of my home", roles: ["Phone Banking", "Social Media Support", "Data Entry and Admin"] },
+        { label: "In a dynamic, fast-paced setting", roles: ["Event Support and Setup"] }
+      ]
     },
     {
-      title: "Event Support and Setup",
-      desc: "Help organize and run community events. Set up venues, welcome guests, and manage sign-ins."
-    },
-    {
-      title: "Data Entry and Admin",
-      desc: "Help input and organize community feedback, volunteer information, and outreach data to keep the campaign running smoothly."
-    },
-    {
-      title: "Community Outreach",
-      desc: "Distribute flyers, share campaign messaging, and support outreach in local neighbourhoods."
-    },
-    {
-      title: "Social Media Support",
-      desc: "Help share updates, create posts, and amplify the campaign online."
+      question: "Which of these skills best describes you?",
+      options: [
+        { label: "Great listener and empathetic", roles: ["Door Knocking and Canvassing", "Phone Banking"] },
+        { label: "Tech savvy and detail-oriented", roles: ["Data Entry and Admin", "Social Media Support"] },
+        { label: "Strong physical stamina and hands-on", roles: ["Event Support and Setup", "Community Outreach"] },
+        { label: "Creative and good with words", roles: ["Social Media Support"] }
+      ]
     }
   ];
 
-  const handleRoleSelect = (role: string) => {
-    setSelectedRole(role);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  const handleAnswerSelect = (questionIndex: number, optionIndex: number) => {
+    const newAnswers = { ...answers, [questionIndex]: questions[questionIndex].options[optionIndex].label };
+    setAnswers(newAnswers);
+
+    // If all questions answered, calculate role
+    if (Object.keys(newAnswers).length === questions.length) {
+      calculateBestFit(newAnswers);
+    }
+  };
+
+  const calculateBestFit = (finalAnswers: Record<number, string>) => {
+    const roleCounts: Record<string, number> = {};
+    
+    // Tally up the roles based on selected options
+    questions.forEach((q, qIndex) => {
+      const selectedOptionLabel = finalAnswers[qIndex];
+      const option = q.options.find(o => o.label === selectedOptionLabel);
+      if (option) {
+        option.roles.forEach(r => {
+          roleCounts[r] = (roleCounts[r] || 0) + 1;
+        });
+      }
+    });
+
+    // Find the highest score
+    let bestRole = "Community Outreach"; // fallback
+    let max = 0;
+    Object.entries(roleCounts).forEach(([role, count]) => {
+      if (count > max) {
+        max = count;
+        bestRole = role;
+      }
+    });
+
+    setSelectedRole(bestRole);
     setStep(2);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -49,26 +85,40 @@ export default function VolunteerPage() {
     setStep(3);
   };
 
+  const currentQuestionIdx = Object.keys(answers).length;
+
   return (
     <section className="px-6 py-20 max-w-7xl mx-auto min-h-[70vh]">
       {step === 1 && (
         <FadeIn>
           <div className="text-center max-w-4xl mx-auto mb-16">
             <h1 className="text-5xl md:text-7xl font-fraunces font-bold mb-6 text-brand-slate">Join the Team.</h1>
-            <p className="text-2xl font-medium text-brand-slate/80">Every role matters. Find where you fit.</p>
+            <p className="text-2xl font-medium text-brand-slate/80">Every role matters. Let's find your best fit.</p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {roles.map((role, idx) => (
-              <button 
-                key={idx}
-                onClick={() => handleRoleSelect(role.title)}
-                className="bg-white p-8 rounded-2xl shadow-sm border border-brand-slate/10 hover:shadow-xl hover:-translate-y-1 hover:border-brand-mustard transition-all text-left flex flex-col h-full group"
-              >
-                <h2 className="text-2xl font-fraunces font-bold mb-4 text-brand-slate group-hover:text-brand-red transition-colors">{role.title}</h2>
-                <p className="text-brand-slate/80 leading-relaxed font-medium">{role.desc}</p>
-              </button>
-            ))}
+          <div className="max-w-2xl mx-auto bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-brand-slate/10">
+            {currentQuestionIdx < questions.length && (
+              <div>
+                <p className="text-brand-red font-bold uppercase tracking-wider mb-4 text-sm">
+                  Question {currentQuestionIdx + 1} of {questions.length}
+                </p>
+                <h2 className="text-2xl md:text-3xl font-fraunces font-bold mb-8 text-brand-slate">
+                  {questions[currentQuestionIdx].question}
+                </h2>
+                
+                <div className="flex flex-col gap-4">
+                  {questions[currentQuestionIdx].options.map((opt, idx) => (
+                    <button 
+                      key={idx}
+                      onClick={() => handleAnswerSelect(currentQuestionIdx, idx)}
+                      className="text-left px-6 py-5 rounded-xl border-2 border-brand-slate/10 hover:border-brand-mustard hover:bg-brand-cream/30 transition-all font-medium text-lg text-brand-slate"
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </FadeIn>
       )}
@@ -77,46 +127,46 @@ export default function VolunteerPage() {
         <FadeIn className="max-w-2xl mx-auto">
           <div className="text-center mb-12">
             <button 
-              onClick={() => setStep(1)} 
+              onClick={() => { setStep(1); setAnswers({}); }} 
               className="text-brand-slate/60 hover:text-brand-red font-medium mb-8 inline-block"
             >
-              &larr; Back to roles
+              &larr; Retake quiz
             </button>
             <h1 className="text-4xl md:text-5xl font-fraunces font-bold mb-6 text-brand-slate">Sign up to volunteer</h1>
-            <p className="text-xl font-medium text-brand-slate/80">You selected: <strong className="text-brand-red">{selectedRole}</strong></p>
+            <p className="text-xl font-medium text-brand-slate/80">Your matched best fit role is: <strong className="text-brand-red">{selectedRole}</strong></p>
           </div>
           
           <form onSubmit={handleSubmit} className="bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-brand-slate/10 flex flex-col gap-6">
             <div className="grid md:grid-cols-2 gap-6">
               <div className="flex flex-col">
                 <label className="mb-2 font-bold text-brand-slate" htmlFor="name">Name</label>
-                <input id="name" type="text" className="px-5 py-4 bg-brand-cream/50 rounded-xl text-brand-slate focus:outline-none focus:ring-2 focus:ring-brand-mustard" required />
+                <input id="name" type="text" className="px-5 py-4 bg-white border-2 border-brand-slate/20 rounded-xl text-brand-slate focus:outline-none focus:border-brand-mustard focus:ring-0" required />
               </div>
               <div className="flex flex-col">
                 <label className="mb-2 font-bold text-brand-slate" htmlFor="email">Email</label>
-                <input id="email" type="email" className="px-5 py-4 bg-brand-cream/50 rounded-xl text-brand-slate focus:outline-none focus:ring-2 focus:ring-brand-mustard" required />
+                <input id="email" type="email" className="px-5 py-4 bg-white border-2 border-brand-slate/20 rounded-xl text-brand-slate focus:outline-none focus:border-brand-mustard focus:ring-0" required />
               </div>
             </div>
             
             <div className="grid md:grid-cols-2 gap-6">
               <div className="flex flex-col">
                 <label className="mb-2 font-bold text-brand-slate" htmlFor="phone">Phone</label>
-                <input id="phone" type="tel" className="px-5 py-4 bg-brand-cream/50 rounded-xl text-brand-slate focus:outline-none focus:ring-2 focus:ring-brand-mustard" required />
+                <input id="phone" type="tel" className="px-5 py-4 bg-white border-2 border-brand-slate/20 rounded-xl text-brand-slate focus:outline-none focus:border-brand-mustard focus:ring-0" required />
               </div>
               <div className="flex flex-col">
                 <label className="mb-2 font-bold text-brand-slate" htmlFor="postal">Postal code</label>
-                <input id="postal" type="text" className="px-5 py-4 bg-brand-cream/50 rounded-xl text-brand-slate focus:outline-none focus:ring-2 focus:ring-brand-mustard" maxLength={7} required />
+                <input id="postal" type="text" className="px-5 py-4 bg-white border-2 border-brand-slate/20 rounded-xl text-brand-slate focus:outline-none focus:border-brand-mustard focus:ring-0" maxLength={7} required />
               </div>
             </div>
 
             <div className="flex flex-col">
               <label className="mb-2 font-bold text-brand-slate" htmlFor="role">Role</label>
-              <input id="role" type="text" value={selectedRole} readOnly className="px-5 py-4 bg-brand-slate/5 rounded-xl text-brand-slate/60 font-medium cursor-not-allowed" />
+              <input id="role" type="text" value={selectedRole} readOnly className="px-5 py-4 bg-brand-slate/5 border-2 border-brand-slate/10 rounded-xl text-brand-slate/60 font-medium cursor-not-allowed" />
             </div>
 
             <div className="flex flex-col">
               <label className="mb-2 font-bold text-brand-slate" htmlFor="availability">When are you available?</label>
-              <textarea id="availability" rows={3} placeholder="E.g., Weekday evenings, Saturdays..." className="px-5 py-4 bg-brand-cream/50 rounded-xl text-brand-slate focus:outline-none focus:ring-2 focus:ring-brand-mustard" required></textarea>
+              <textarea id="availability" rows={3} placeholder="E.g., Weekday evenings, Saturdays..." className="px-5 py-4 bg-white border-2 border-brand-slate/20 rounded-xl text-brand-slate focus:outline-none focus:border-brand-mustard focus:ring-0" required></textarea>
             </div>
 
             <button type="submit" className="bg-brand-red text-white py-4 mt-4 rounded-full font-bold text-xl hover:bg-opacity-90 transition-opacity w-full text-center">

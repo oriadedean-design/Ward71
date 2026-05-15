@@ -81,36 +81,30 @@ export default function CommunityPage() {
 
         <div className="mt-24 mb-12">
           <FadeIn>
-            <h2 className="text-4xl font-fraunces font-bold mb-6 text-brand-slate text-center">Community Voices</h2>
+            <h2 className="text-4xl font-fraunces font-bold mb-6 text-brand-slate text-center">In the Community</h2>
             <p className="text-xl text-brand-slate/80 text-center mb-12 max-w-2xl mx-auto font-medium">
-              Real stories and support from our neighbours in Humber River-Black Creek.
+              Moments from the campaign trail across Humber River-Black Creek.
             </p>
           </FadeIn>
           
           <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
             {[
-              { src: "https://picsum.photos/seed/lorna1/600/800", alt: "Lorna speaking with a store owner", quote: "Lorna understands the challenges small businesses face on Jane Street.", author: "Maria, Small Business Owner", aspect: "aspect-[3/4]" },
-              { src: "https://picsum.photos/seed/lorna2/600/400", alt: "Lorna at a community BBQ", quote: "She’s been doing the work for years. We need that voice at City Hall.", author: "David, Resident", aspect: "aspect-[3/2]" },
-              { src: "https://picsum.photos/seed/lorna3/600/600", alt: "Lorna mentoring youth", quote: "An inspiration and a true leader for the next generation.", author: "Sarah, Youth Worker", aspect: "aspect-square" },
-              { src: "https://picsum.photos/seed/lorna4/600/900", alt: "Lorna at a town hall meeting", quote: "Finally, someone who listens and takes action on housing affordability.", author: "Ken, Tenant Advocate", aspect: "aspect-[2/3]" },
-              { src: "https://picsum.photos/seed/lorna5/600/500", alt: "Lorna participating in a neighborhood cleanup", quote: "She cares about our streets and our safety. She has my vote.", author: "Elena, Local Parent", aspect: "aspect-[5/4]" },
-              { src: "https://picsum.photos/seed/lorna6/600/700", alt: "Lorna talking with seniors", quote: "Lorna makes sure seniors aren't forgotten in Ward 7.", author: "George, Downsview Resident", aspect: "aspect-[6/7]" }
+              { src: "https://picsum.photos/seed/lorna1/600/800", alt: "Lorna speaking with a store owner", aspect: "aspect-[3/4]" },
+              { src: "https://picsum.photos/seed/lorna2/600/400", alt: "Lorna at a community BBQ", aspect: "aspect-[3/2]" },
+              { src: "https://picsum.photos/seed/lorna3/600/600", alt: "Lorna mentoring youth", aspect: "aspect-square" },
+              { src: "https://picsum.photos/seed/lorna4/600/900", alt: "Lorna at a town hall meeting", aspect: "aspect-[2/3]" },
+              { src: "https://picsum.photos/seed/lorna5/600/500", alt: "Lorna participating in a neighborhood cleanup", aspect: "aspect-[5/4]" },
+              { src: "https://picsum.photos/seed/lorna6/600/700", alt: "Lorna talking with seniors", aspect: "aspect-[6/7]" }
             ].map((img, idx) => (
               <FadeIn key={idx} delay={idx * 0.1} className="break-inside-avoid">
-                <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-brand-slate/10 group">
-                  <div className={`relative w-full ${img.aspect} overflow-hidden`}>
-                    <img
-                      src={img.src}
-                      alt={img.alt}
-                      loading="lazy"
-                      className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
-                      referrerPolicy="no-referrer"
-                    />
-                  </div>
-                  <div className="p-6">
-                    <p className="font-fraunces text-xl text-brand-slate mb-4 italic">"{img.quote}"</p>
-                    <p className="font-bold text-brand-red tracking-wider uppercase text-sm">{img.author}</p>
-                  </div>
+                <div className={`relative w-full ${img.aspect} rounded-2xl overflow-hidden shadow-sm group`}>
+                  <img
+                    src={img.src}
+                    alt={img.alt}
+                    loading="lazy"
+                    className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
+                    referrerPolicy="no-referrer"
+                  />
                 </div>
               </FadeIn>
             ))}

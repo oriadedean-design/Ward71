@@ -68,7 +68,7 @@ export default function DonatePage() {
         <FadeIn>
           <div className="flex justify-center mb-6">
             <Image 
-              src="/2F92F584-3B85-476F-B8C1-E8B9BC14051D.jpeg"
+              src="https://picsum.photos/seed/lorna/160/160"
               alt="Lorna Antwi"
               width={160}
               height={160}
@@ -135,27 +135,27 @@ export default function DonatePage() {
             <div className="grid md:grid-cols-2 gap-6">
               <div className="flex flex-col">
                 <label className="mb-2 font-bold text-brand-slate" htmlFor="firstName">First name</label>
-                <input id="firstName" type="text" className="px-5 py-4 bg-brand-cream/50 rounded-xl text-brand-slate focus:outline-none focus:ring-2 focus:ring-brand-mustard border border-transparent" required />
+                <input id="firstName" type="text" className="px-5 py-4 bg-white border-2 border-brand-slate/20 rounded-xl text-brand-slate focus:outline-none focus:border-brand-mustard focus:ring-0" required />
               </div>
               <div className="flex flex-col">
                 <label className="mb-2 font-bold text-brand-slate" htmlFor="lastName">Last name</label>
-                <input id="lastName" type="text" className="px-5 py-4 bg-brand-cream/50 rounded-xl text-brand-slate focus:outline-none focus:ring-2 focus:ring-brand-mustard border border-transparent" required />
+                <input id="lastName" type="text" className="px-5 py-4 bg-white border-2 border-brand-slate/20 rounded-xl text-brand-slate focus:outline-none focus:border-brand-mustard focus:ring-0" required />
               </div>
             </div>
 
             <div className="flex flex-col">
               <label className="mb-2 font-bold text-brand-slate" htmlFor="email">Email</label>
-              <input id="email" type="email" className="px-5 py-4 bg-brand-cream/50 rounded-xl text-brand-slate focus:outline-none focus:ring-2 focus:ring-brand-mustard border border-transparent" required />
+              <input id="email" type="email" className="px-5 py-4 bg-white border-2 border-brand-slate/20 rounded-xl text-brand-slate focus:outline-none focus:border-brand-mustard focus:ring-0" required />
             </div>
 
             <div className="flex flex-col">
               <label className="mb-2 font-bold text-brand-slate" htmlFor="address">Street address</label>
-              <input id="address" type="text" className="px-5 py-4 bg-brand-cream/50 rounded-xl text-brand-slate focus:outline-none focus:ring-2 focus:ring-brand-mustard border border-transparent" required />
+              <input id="address" type="text" className="px-5 py-4 bg-white border-2 border-brand-slate/20 rounded-xl text-brand-slate focus:outline-none focus:border-brand-mustard focus:ring-0" required />
             </div>
 
             <div className="flex flex-col">
               <label className="mb-2 font-bold text-brand-slate" htmlFor="postal">Postal code</label>
-              <input id="postal" type="text" placeholder="Must start with K, L, M, N, or P" pattern="^[KLMNPklmnp].*" className="px-5 py-4 bg-brand-cream/50 rounded-xl text-brand-slate focus:outline-none focus:ring-2 focus:ring-brand-mustard border border-transparent" maxLength={7} required />
+              <input id="postal" type="text" placeholder="Must start with K, L, M, N, or P" pattern="^[KLMNPklmnp].*" className="px-5 py-4 bg-white border-2 border-brand-slate/20 rounded-xl text-brand-slate focus:outline-none focus:border-brand-mustard focus:ring-0" maxLength={7} required />
               <p className="text-sm mt-2 font-medium text-brand-slate/60">Ontario residency required for municipal campaigns.</p>
             </div>
 

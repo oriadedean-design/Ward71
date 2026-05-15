@@ -29,7 +29,7 @@ export default function Home() {
         <FadeIn className="md:w-1/2 flex justify-center">
           <div className="relative w-full aspect-[4/5] max-w-md rounded-2xl overflow-hidden shadow-2xl">
             <Image 
-              src="/2F92F584-3B85-476F-B8C1-E8B9BC14051D.jpeg" 
+              src="https://picsum.photos/seed/lorna/800/1000" 
               alt="Lorna Antwi" 
               fill 
               className="object-cover" 
@@ -51,7 +51,7 @@ export default function Home() {
               <input 
                 type="email" 
                 placeholder="Email address"
-                className="flex-1 px-6 py-4 rounded-full text-brand-slate font-medium text-lg focus:outline-none focus:ring-2 focus:ring-brand-mustard"
+                className="flex-1 px-6 py-4 rounded-full bg-white text-brand-slate font-medium text-lg border-2 border-brand-slate/20 focus:border-brand-mustard focus:outline-none focus:ring-0"
                 required
               />
               <button type="submit" className="bg-brand-mustard text-brand-slate px-8 py-4 rounded-full font-bold hover:bg-opacity-90 transition-opacity">
