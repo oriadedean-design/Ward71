@@ -1,12 +1,13 @@
-import {defineConfig} from 'sanity'
-import {structureTool} from 'sanity/structure'
-import {schemaTypes} from './sanity/schemas'
+import { defineConfig } from 'sanity'
+import { structureTool } from 'sanity/structure'
+import { schemaTypes } from './sanity/schemas'
 
 export default defineConfig({
-  name: 'ward71-campaign',
-  title: 'Ward 71 Campaign',
+  name: 'lorna-antwi-campaign',
+  title: 'Lorna Antwi Campaign',
   projectId: 'kfgyh53r',
   dataset: 'production',
+  basePath: '/studio',
   plugins: [structureTool()],
   schema: {
     types: schemaTypes,
