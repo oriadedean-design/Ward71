@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { Facebook, Twitter, Linkedin, Link as LinkIcon } from 'lucide-react';
 import { FadeIn } from '@/components/FadeIn';
+import { ImpactMeter } from '@/components/ImpactMeter';
 
 export const metadata: Metadata = {
   title: 'How to Help | Lorna Antwi Campaign',
@@ -100,6 +101,8 @@ export default function HowToHelpPage() {
             </ul>
           </FadeIn>
         </div>
+
+        <ImpactMeter />
       </section>
     </>
   );

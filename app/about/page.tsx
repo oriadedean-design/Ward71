@@ -38,7 +38,7 @@ export default function AboutPage() {
           <FadeIn className="lg:w-1/3 sticky top-32">
             <div className="relative w-full aspect-[3/4] rounded-2xl overflow-hidden shadow-xl">
               <Image 
-                src="https://picsum.photos/seed/lorna_about/800/1000" 
+                src="/2F92F584-3B85-476F-B8C1-E8B9BC14051D.jpeg" 
                 alt="Lorna Antwi in the community" 
                 fill 
                 className="object-cover"

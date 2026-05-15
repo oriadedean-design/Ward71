@@ -1,28 +1,12 @@
 'use client';
 
-import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { motion } from 'motion/react';
 import { FadeIn } from '@/components/FadeIn';
+import { ImpactMeter } from '@/components/ImpactMeter';
 
 export default function Home() {
-  const [postalCode, setPostalCode] = useState('');
-  const [wardStatus, setWardStatus] = useState<string | null>(null);
-
-  const checkWard = (e: React.FormEvent) => {
-    e.preventDefault();
-    const prefix = postalCode.trim().toUpperCase().substring(0, 3);
-    const ward7Prefixes = ['M3L', 'M3M', 'M3N', 'M9L', 'M9M', 'M9N'];
-    
-    if (prefix.length < 3) return;
-    
-    if (ward7Prefixes.includes(prefix)) {
-      setWardStatus("Yes, you're in Ward 7. Lorna is running to represent you.");
-    } else {
-      setWardStatus("You're outside Ward 7, but you can still help spread the word.");
-    }
-  };
-
   return (
     <>
       <section className="px-6 py-16 md:py-24 max-w-7xl mx-auto flex flex-col md:flex-row gap-12 items-center">
@@ -45,7 +29,7 @@ export default function Home() {
         <FadeIn className="md:w-1/2 flex justify-center">
           <div className="relative w-full aspect-[4/5] max-w-md rounded-2xl overflow-hidden shadow-2xl">
             <Image 
-              src="https://picsum.photos/seed/lorna_portrait/800/1000" 
+              src="/2F92F584-3B85-476F-B8C1-E8B9BC14051D.jpeg" 
               alt="Lorna Antwi" 
               fill 
               className="object-cover" 
@@ -59,32 +43,37 @@ export default function Home() {
       <section className="bg-brand-slate text-brand-cream py-20 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <FadeIn>
-            <h2 className="text-4xl md:text-5xl font-fraunces font-bold mb-6">Are you in Ward 7?</h2>
-            <p className="text-lg md:text-xl text-brand-cream/80 mb-10">
-              Enter your postal code to find out if Lorna will be your candidate.
+            <h2 className="text-4xl md:text-5xl font-fraunces font-bold mb-6">Vote for Lorna Antwi</h2>
+            <p className="text-xl md:text-2xl text-brand-mustard mb-10 font-bold">
+              Join the community to stay updated on the campaign.
             </p>
-            <form onSubmit={checkWard} className="flex gap-4 max-w-md mx-auto relative z-10">
+            <form className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto relative z-10">
               <input 
-                type="text" 
-                maxLength={3}
-                placeholder="Ex. M3M"
-                value={postalCode}
-                onChange={(e) => setPostalCode(e.target.value)}
+                type="email" 
+                placeholder="Email address"
                 className="flex-1 px-6 py-4 rounded-full text-brand-slate font-medium text-lg focus:outline-none focus:ring-2 focus:ring-brand-mustard"
                 required
               />
               <button type="submit" className="bg-brand-mustard text-brand-slate px-8 py-4 rounded-full font-bold hover:bg-opacity-90 transition-opacity">
-                Check
+                Join Us
               </button>
             </form>
-            {wardStatus && (
-              <motion.div 
-                initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} 
-                className="mt-6 text-lg font-medium p-4 bg-brand-cream/10 rounded-xl"
-              >
-                {wardStatus}
-              </motion.div>
-            )}
+            
+            <div className="mt-16 text-left bg-brand-cream/10 p-8 rounded-2xl border border-brand-cream/20">
+              <h3 className="text-2xl font-bold font-fraunces mb-6 border-b border-brand-cream/20 pb-4">Key Voting Timelines - 2026</h3>
+              <div className="grid md:grid-cols-2 gap-8">
+                <div>
+                  <h4 className="text-xl font-bold text-brand-mustard mb-2">Advance Voting</h4>
+                  <p className="font-medium">Tuesday, October 6 to<br />Sunday, October 11</p>
+                  <p className="text-sm opacity-80 mt-1">10:00 AM - 7:00 PM</p>
+                </div>
+                <div>
+                  <h4 className="text-xl font-bold text-brand-mustard mb-2">Election Day</h4>
+                  <p className="font-medium">Monday, October 26</p>
+                  <p className="text-sm opacity-80 mt-1">10:00 AM - 8:00 PM</p>
+                </div>
+              </div>
+            </div>
           </FadeIn>
         </div>
       </section>
@@ -128,20 +117,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-20 px-6 bg-white">
-        <div className="max-w-4xl mx-auto text-center">
-          <FadeIn>
-            <h2 className="text-4xl md:text-5xl font-fraunces font-bold mb-8">Help us reach our $25,000 grassroots goal.</h2>
-            <div className="w-full bg-brand-cream rounded-full h-8 mb-6 overflow-hidden border border-brand-slate/10 relative">
-              <div className="bg-brand-forest h-full absolute left-0 top-0 transition-all duration-1000 w-[5%]"></div>
-            </div>
-            <p className="text-xl text-brand-slate/80 mb-10 font-medium">This campaign is rooted in people, not big money.</p>
-            <Link href="/donate" className="bg-brand-red text-white px-10 py-4 rounded-full font-bold text-lg inline-block hover:bg-opacity-90 transition-opacity">
-              Donate to the Campaign
-            </Link>
-          </FadeIn>
-        </div>
-      </section>
+      <ImpactMeter />
 
       <section className="bg-brand-slate text-brand-cream py-24 px-6 text-center">
         <FadeIn className="max-w-3xl mx-auto">
