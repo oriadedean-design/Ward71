@@ -5,6 +5,7 @@ import event from './event';
 import communityPost from './communityPost';
 import volunteerSubmission from './volunteerSubmission';
 import donationMilestone from './donationMilestone';
+import donationRecord from './donationRecord';
 
 export const schemaTypes = [
   siteSettings,
@@ -13,5 +14,6 @@ export const schemaTypes = [
   event,
   communityPost,
   volunteerSubmission,
-  donationMilestone
+  donationMilestone,
+  donationRecord,
 ];

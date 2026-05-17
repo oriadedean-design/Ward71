@@ -1,11 +1,12 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
+import { writeClient } from '@/sanity/client';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_placeholder', {
-  apiVersion: '2026-04-22.dahlia',
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: '2026-04-22.dahlia' as any,
 });
 
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || 'whsec_placeholder';
+const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
 export async function POST(req: Request) {
   try {
@@ -17,52 +18,56 @@ export async function POST(req: Request) {
     }
 
     let event: Stripe.Event;
-
     try {
       event = stripe.webhooks.constructEvent(body, sig, webhookSecret);
     } catch (err: any) {
-      console.error(`Webhook Error: ${err.message}`);
+      console.error(`Webhook signature error: ${err.message}`);
       return NextResponse.json({ error: `Webhook Error: ${err.message}` }, { status: 400 });
     }
 
-    if (event.type === 'checkout.session.completed') {
-      const session = event.data.object as Stripe.Checkout.Session;
-      
-      const amountTotal = session.amount_total;
-      
-      if (amountTotal) {
-        // Here you would find the primary donation Milestone in Sanity and increment its currentAmount
-        // using the Sanity Node client (which needs a write token)
-        
-        /* 
-        import { createClient } from 'next-sanity';
-        
-        const writeClient = createClient({
-          projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-          dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
-          apiVersion: '2024-03-24',
-          useCdn: false,
-          token: process.env.SANITY_API_WRITE_TOKEN
-        });
+    if (event.type === 'payment_intent.succeeded') {
+      const intent = event.data.object as Stripe.PaymentIntent;
+      const m = intent.metadata;
+      const amountCad = Number(m.amount_cad);
 
-        // 1. Fetch the active milestone document (example query)
-        // const milestone = await writeClient.fetch(`*[_type == "donationMilestone"] | order(order asc) [0]`);
-        
-        // 2. Increment the amount by the donation amount (amount_total is in cents, so divide by 100)
-        // if (milestone) {
-        //   await writeClient.patch(milestone._id)
-        //     .inc({ currentAmount: amountTotal / 100 })
-        //     .commit();
-        // }
-        */
+      // 1. Create donation record in Sanity
+      await writeClient.create({
+        _type: 'donationRecord',
+        donorName: m.donor_name,
+        donorEmail: m.donor_email,
+        donorPhone: m.donor_phone,
+        donorAddress: {
+          street: m.donor_street,
+          city: m.donor_city,
+          province: m.donor_province,
+          postalCode: m.donor_postal_code,
+          country: m.donor_country ?? 'Canada',
+        },
+        amount: amountCad,
+        stripePaymentIntentId: intent.id,
+        ontarioResidencyConfirmed: m.residency_confirmed === 'true',
+        selfAttested: m.self_attested === 'true',
+        contributorType: m.contributor_type,
+        paidAt: new Date().toISOString(),
+        receiptSent: false,
+        status: 'completed',
+      });
 
-        console.log(`Payment successful for $${amountTotal / 100}. Sanity document would be updated here.`);
+      // 2. Increment the primary donation milestone
+      const milestone = await writeClient.fetch(
+        `*[_type == "donationMilestone"] | order(order asc) [0]`
+      );
+      if (milestone?._id) {
+        await writeClient
+          .patch(milestone._id)
+          .inc({ currentAmount: amountCad, donorCount: 1 })
+          .commit();
       }
     }
 
     return NextResponse.json({ received: true });
   } catch (err) {
-    console.error('Webhook payload error:', err);
+    console.error('Webhook error:', err);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
