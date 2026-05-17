@@ -1,8 +1,20 @@
+import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FadeIn } from '@/components/FadeIn';
 import { ImpactMeter } from '@/components/ImpactMeter';
 import { client } from '@/sanity/client';
+
+export const metadata: Metadata = {
+  title: 'Lorna Antwi for Toronto City Council | Ward 7',
+  description: 'Vote Lorna Antwi for Toronto City Council, Humber River-Black Creek (Ward 7). Affordable housing, community safety, youth opportunity, and real change for our neighbourhood.',
+  alternates: { canonical: 'https://lornaantwi.ca' },
+  openGraph: {
+    title: 'Lorna Antwi for Toronto City Council | Ward 7',
+    description: 'Stronger Together. Real change for Humber River-Black Creek. Join our grassroots campaign.',
+    url: 'https://lornaantwi.ca',
+  },
+};
 import { urlFor } from '@/sanity/image';
 
 export default async function Home() {

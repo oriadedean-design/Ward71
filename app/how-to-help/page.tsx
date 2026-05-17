@@ -5,8 +5,14 @@ import { FadeIn } from '@/components/FadeIn';
 import { ImpactMeter } from '@/components/ImpactMeter';
 
 export const metadata: Metadata = {
-  title: 'How to Help | Lorna Antwi Campaign',
-  description: 'Three ways to make a difference: Donate, Volunteer, and Spread the Word. Power a grassroots movement in Ward 7.',
+  title: 'How to Help',
+  description: 'Three ways to make a difference for Ward 7: Donate, Volunteer, and Spread the Word. Power a grassroots movement behind Lorna Antwi for Toronto City Council.',
+  openGraph: {
+    title: 'How to Help | Lorna Antwi for Toronto City Council',
+    description: 'Donate, volunteer, or spread the word. Every action powers our grassroots campaign in Ward 7.',
+    url: 'https://lornaantwi.ca/how-to-help',
+  },
+  alternates: { canonical: 'https://lornaantwi.ca/how-to-help' },
 };
 
 export default function HowToHelpPage() {

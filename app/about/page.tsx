@@ -6,8 +6,14 @@ import { client } from '@/sanity/client';
 import { urlFor } from '@/sanity/image';
 
 export const metadata: Metadata = {
-  title: 'About Lorna Antwi | Toronto City Council Ward 7',
-  description: 'Rooted in service. Built for our community. Read about Lorna Antwi\'s story and why she is running for Toronto City Council.',
+  title: 'About Lorna Antwi',
+  description: 'Rooted in service. Built for our community. Read about Lorna Antwi\'s story and why she is running for Toronto City Council in Humber River-Black Creek (Ward 7).',
+  openGraph: {
+    title: 'About Lorna Antwi | Toronto City Council Ward 7',
+    description: 'Rooted in service. Built for our community. Read Lorna\'s story and why she\'s running for Ward 7.',
+    url: 'https://lornaantwi.ca/about',
+  },
+  alternates: { canonical: 'https://lornaantwi.ca/about' },
 };
 
 export default async function AboutPage() {

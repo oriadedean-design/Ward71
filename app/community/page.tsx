@@ -4,8 +4,14 @@ import { client } from '@/sanity/client';
 import { urlFor } from '@/sanity/image';
 
 export const metadata: Metadata = {
-  title: 'Community Voices | Lorna Antwi',
-  description: 'What I\'m hearing in Humber River-Black Creek. Lorna Antwi is listening to residents about housing, safety, and youth opportunities.',
+  title: 'Community',
+  description: 'What Lorna Antwi is hearing in Humber River-Black Creek. Residents are speaking up about housing, safety, food security, youth opportunity, and more.',
+  openGraph: {
+    title: 'Community Voices | Lorna Antwi for Toronto City Council',
+    description: 'What residents across Humber River-Black Creek are saying — and how Lorna is listening.',
+    url: 'https://lornaantwi.ca/community',
+  },
+  alternates: { canonical: 'https://lornaantwi.ca/community' },
 };
 
 export default async function CommunityPage() {
