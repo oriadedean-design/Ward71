@@ -1,5 +1,14 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
+
+// Initialised lazily so the module loads cleanly at build time
+// without requiring STRIPE_SECRET_KEY to be present.
+function getStripe() {
+  return new Stripe(process.env.STRIPE_SECRET_KEY!, {
+    apiVersion: '2026-04-22.dahlia' as any,
+  });
+}
+
 import {
   CONTRIBUTION_LIMITS,
   isOntarioPostalCode,
@@ -69,7 +78,7 @@ export async function POST(req: Request) {
 
     // --- All checks passed — create PaymentIntent ---
 
-    const intent = await stripe.paymentIntents.create({
+    const intent = await getStripe().paymentIntents.create({
       amount: Math.round(parsedAmount * 100), // cents
       currency: 'cad',
       automatic_payment_methods: { enabled: true },
