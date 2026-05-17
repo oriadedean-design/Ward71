@@ -38,7 +38,7 @@ export default {
   ],
   preview: {
     select: { title: 'donorName', subtitle: 'amount', media: 'paidAt' },
-    prepare({ title, subtitle }: { title: string; subtitle: number }) {
+    prepare({ title, subtitle }: Record<string, any>) {
       return { title, subtitle: `$${subtitle} CAD` };
     },
   },
