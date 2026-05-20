@@ -20,30 +20,6 @@ export default async function CommunityPage() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Event",
-            "name": "Community Town Hall",
-            "startDate": "2026-06-01T18:00",
-            "endDate": "2026-06-01T20:00",
-            "location": {
-              "@type": "Place",
-              "name": "Community Center",
-              "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "123 Ward 7 Ave",
-                "addressLocality": "Toronto",
-                "postalCode": "M3N",
-                "addressRegion": "ON",
-                "addressCountry": "CA"
-              }
-            }
-          })
-        }}
-      />
       <section className="bg-brand-cream py-12 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <FadeIn>
