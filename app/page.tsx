@@ -102,7 +102,7 @@ export default async function Home() {
         </FadeIn>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
-            { title: "Affordable Housing and Tenant Protections", desc: "Fighting for rent control, stronger eviction prevention, and reducing the 10-year wait for subsidized housing." },
+            { title: "Affordable Housing and Tenant Protections", desc: "Fighting for rent control, stronger eviction prevention, faster construction, and reducing the 10-year wait for subsidized housing. Supporting first-time homebuyers facing affordability barriers." },
             { title: "Community Safety and Mental Health", desc: "Investing in prevention, youth outreach, after-school programs, and mental health supports that address root causes." },
             { title: "Streets, Parks, and Infrastructure", desc: "Cleaner streets, faster pothole repairs, more parks with pools, and safe gathering spaces for families." },
             { title: "Youth Opportunity and Mentorship", desc: "Expanding youth employment, training, and mentorship so young people have clear pathways to success." },
