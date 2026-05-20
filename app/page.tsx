@@ -30,8 +30,11 @@ export default async function Home() {
           <h1 className="text-4xl md:text-6xl font-bold font-fraunces leading-tight mb-4">
             Stronger Together. <span className="text-brand-red">Real Change</span> for Ward 7.
           </h1>
-          <p className="text-lg md:text-xl text-brand-slate/80 mb-8 leading-relaxed font-medium">
+          <p className="text-lg md:text-xl text-brand-slate/80 mb-4 leading-relaxed font-medium">
             Lorna Antwi for Toronto City Council, Humber River-Black Creek.
+          </p>
+          <p className="text-base md:text-lg text-brand-slate/70 mb-8 leading-relaxed font-semibold">
+            Counsellor with Toronto Shelter &amp; Support Services. Lifelong Humber River-Black Creek resident. Running on lived experience.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Link href="/donate" className="bg-brand-red text-white px-8 py-4 rounded-full font-bold text-center hover:bg-opacity-90 transition-opacity">
