@@ -26,26 +26,30 @@ export default async function Home() {
   return (
     <>
       <section className="px-6 py-10 md:py-16 max-w-7xl mx-auto flex flex-col md:flex-row gap-8 items-center">
-        <FadeIn className="md:w-1/2">
-          <h1 className="text-4xl md:text-6xl font-bold font-fraunces leading-tight mb-4">
-            Stronger Together. <span className="text-brand-red">Real Change</span> for Ward 7.
-          </h1>
-          <p className="text-lg md:text-xl text-brand-slate/80 mb-4 leading-relaxed font-medium">
-            Lorna Antwi for Toronto City Council, Humber River-Black Creek.
-          </p>
-          <p className="text-base md:text-lg text-brand-slate/70 mb-8 leading-relaxed font-semibold">
-            Counsellor with Toronto Shelter &amp; Support Services. Lifelong Humber River-Black Creek resident. Running on lived experience.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Link href="/donate" className="bg-brand-red text-white px-8 py-4 rounded-full font-bold text-center hover:bg-opacity-90 transition-opacity">
-              Donate Now
-            </Link>
-            <Link href="/volunteer" className="border-2 border-brand-slate text-brand-slate px-8 py-4 rounded-full font-bold text-center hover:bg-brand-slate hover:text-white transition-colors">
-              Volunteer With Me
-            </Link>
-          </div>
-        </FadeIn>
-        <FadeIn className="md:w-1/2 flex justify-center">
+        <div className="contents md:flex md:flex-col md:w-1/2">
+          <FadeIn className="order-1 md:order-none w-full">
+            <h1 className="text-4xl md:text-6xl font-bold font-fraunces leading-tight mb-4">
+              Stronger Together. <span className="text-brand-red">Real Change</span> for Ward 7.
+            </h1>
+          </FadeIn>
+          <FadeIn className="order-3 md:order-none w-full">
+            <p className="text-lg md:text-xl text-brand-slate/80 mb-4 leading-relaxed font-medium">
+              Lorna Antwi for Toronto City Council, Humber River-Black Creek.
+            </p>
+            <p className="text-base md:text-lg text-brand-slate/70 mb-8 leading-relaxed font-semibold">
+              Counsellor with Toronto Shelter &amp; Support Services. Lifelong Humber River-Black Creek resident. Running on lived experience.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link href="/donate" className="bg-brand-red text-white px-8 py-4 rounded-full font-bold text-center hover:bg-opacity-90 transition-opacity">
+                Donate Now
+              </Link>
+              <Link href="/volunteer" className="border-2 border-brand-slate text-brand-slate px-8 py-4 rounded-full font-bold text-center hover:bg-brand-slate hover:text-white transition-colors">
+                Volunteer With Me
+              </Link>
+            </div>
+          </FadeIn>
+        </div>
+        <FadeIn className="order-2 md:order-none w-full md:w-1/2 flex justify-center">
           <div className="relative w-full aspect-[4/5] max-w-sm rounded-2xl overflow-hidden shadow-2xl">
             {photoUrl ? (
               <Image src={photoUrl} alt="Lorna Antwi" fill className="object-cover" priority />
