@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { FadeIn } from '@/components/FadeIn';
+import { InquiryForm } from '@/components/InquiryForm';
 import { client } from '@/sanity/client';
 import { urlFor } from '@/sanity/image';
 
@@ -89,34 +90,7 @@ export default async function CommunityPage() {
       <section className="bg-brand-slate text-brand-cream py-14 px-6 text-center">
         <FadeIn className="max-w-2xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-fraunces font-bold mb-8">Have a concern? Tell Lorna directly.</h2>
-          <form
-            action="mailto:campaign@lornaantwi.ca?subject=Community Concern"
-            method="POST"
-            encType="text/plain"
-            className="flex flex-col gap-5 text-left"
-          >
-            <div className="grid md:grid-cols-2 gap-5">
-              <div className="flex flex-col">
-                <label className="mb-2 font-medium" htmlFor="name">Name</label>
-                <input id="name" name="name" type="text" className="px-5 py-4 rounded-xl text-brand-slate focus:outline-none focus:ring-2 focus:ring-brand-mustard" required />
-              </div>
-              <div className="flex flex-col">
-                <label className="mb-2 font-medium" htmlFor="email">Email</label>
-                <input id="email" name="email" type="email" className="px-5 py-4 rounded-xl text-brand-slate focus:outline-none focus:ring-2 focus:ring-brand-mustard" required />
-              </div>
-            </div>
-            <div className="flex flex-col">
-              <label className="mb-2 font-medium" htmlFor="postal">Postal Code</label>
-              <input id="postal" name="postal" type="text" className="px-5 py-4 rounded-xl text-brand-slate focus:outline-none focus:ring-2 focus:ring-brand-mustard" maxLength={7} />
-            </div>
-            <div className="flex flex-col">
-              <label className="mb-2 font-medium" htmlFor="message">Message</label>
-              <textarea id="message" name="message" rows={4} className="px-5 py-4 rounded-xl text-brand-slate focus:outline-none focus:ring-2 focus:ring-brand-mustard" required></textarea>
-            </div>
-            <button type="submit" className="bg-brand-red text-white py-4 rounded-xl font-bold text-lg hover:bg-opacity-90 transition-opacity mt-2">
-              Send Message
-            </button>
-          </form>
+          <InquiryForm />
         </FadeIn>
       </section>
     </>
