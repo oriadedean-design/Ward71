@@ -28,7 +28,7 @@ export default async function Home() {
       <section className="px-6 py-10 md:py-16 max-w-7xl mx-auto flex flex-col md:flex-row gap-8 items-center">
         <FadeIn className="md:w-1/2">
           <h1 className="text-4xl md:text-6xl font-bold font-fraunces leading-tight mb-4">
-            Stronger Together. <span className="text-brand-red">Real Change</span> for Our Community.
+            Stronger Together. <span className="text-brand-red">Real Change</span> for Ward 7.
           </h1>
           <p className="text-lg md:text-xl text-brand-slate/80 mb-8 leading-relaxed font-medium">
             Lorna Antwi for Toronto City Council, Humber River-Black Creek.
@@ -104,7 +104,9 @@ export default async function Home() {
             { title: "Streets, Parks, and Infrastructure", desc: "Cleaner streets, faster pothole repairs, more parks with pools, and safe gathering spaces for families." },
             { title: "Youth Opportunity and Mentorship", desc: "Expanding youth employment, training, and mentorship so young people have clear pathways to success." },
             { title: "Small Business and Local Economy", desc: "Reducing barriers for local entrepreneurs and improving access to city supports for community-based businesses." },
-            { title: "Affordability for Seniors and Families", desc: "Property tax fairness and stronger supports for seniors, newcomers, and low- to moderate-income households." }
+            { title: "Affordability for Seniors and Families", desc: "Property tax fairness and stronger supports for seniors, newcomers, and low- to moderate-income households." },
+            { title: "Food Security and Ending Hunger", desc: "Stronger community food programs, affordable and culturally appropriate food, support for food banks and community kitchens, and long-term solutions to poverty." },
+            { title: "Support for Families and Children with Disabilities", desc: "Accessible community services, inclusive recreation, educational supports, and real resources for families raising children with disabilities. No parent should struggle alone." }
           ].map((item, idx) => (
             <FadeIn key={idx} delay={idx * 0.1} className="bg-white p-6 rounded-2xl shadow-sm border border-brand-slate/5 hover:shadow-md transition-shadow">
               <h3 className="text-xl font-fraunces font-bold mb-3">{item.title}</h3>

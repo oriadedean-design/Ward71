@@ -63,7 +63,8 @@ export default async function CommunityPage() {
             { title: "Youth and Opportunity", desc: "Parents and young people speak about the need for more employment, mentorship, skills training, safe recreational spaces, and pathways to success." },
             { title: "Small Business", desc: "Small business owners share concerns about how difficult it is to start and sustain a business due to rising costs and limited support." },
             { title: "Seniors and Newcomers", desc: "Seniors raise concerns about affordability, accessibility, and isolation. Newcomers face barriers to employment, housing, and available resources." },
-            { title: "Food Security", desc: "Many families struggle to afford groceries and basic necessities. There is a growing need for stronger community supports." }
+            { title: "Food Security", desc: "Supporting stronger community food programs, expanding access to affordable and culturally appropriate food, backing local food banks and community kitchens, and advocating for long-term solutions to poverty and economic inequality." },
+            { title: "Families and Children with Disabilities", desc: "Parents and caregivers raising children with disabilities need accessible services, inclusive recreation, and educational supports. They should not have to struggle alone to find help." }
           ].map((item, idx) => (
             <FadeIn key={idx} delay={idx * 0.1} className="bg-white p-6 rounded-2xl shadow-sm border border-brand-slate/10 hover:shadow-md transition-shadow">
               <h3 className="text-xl font-fraunces font-bold mb-3 text-brand-red">{item.title}</h3>
