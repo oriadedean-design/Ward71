@@ -18,6 +18,7 @@ export function Footer() {
         <nav className="flex gap-4 text-sm font-medium">
           <Link href="/about" className="hover:text-brand-red transition-colors">About</Link>
           <Link href="/community" className="hover:text-brand-red transition-colors">Community</Link>
+          <Link href="/resources" className="hover:text-brand-red transition-colors">Voter Resources</Link>
           <Link href="/how-to-help" className="hover:text-brand-red transition-colors">How to Help</Link>
           <Link href="/volunteer" className="hover:text-brand-red transition-colors">Volunteer</Link>
         </nav>

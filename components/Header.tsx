@@ -7,6 +7,7 @@ import { Menu, X } from 'lucide-react'
 const links = [
   { href: '/about', label: 'About Me' },
   { href: '/community', label: 'Community' },
+  { href: '/resources', label: 'Voter Resources' },
   { href: '/how-to-help', label: 'How to Help' },
   { href: '/volunteer', label: 'Volunteer' },
 ]
