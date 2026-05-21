@@ -23,8 +23,45 @@ export default async function Home() {
     ? urlFor(settings.candidatePhoto).width(800).height(1000).fit('crop').url()
     : null
 
+  const candidateImage =
+    photoUrl ??
+    'https://cdn.sanity.io/images/kfgyh53r/production/3279f5a4bbd66e1b50076368d2372c9980c7b90d-3696x5371.jpg'
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Person",
+                "@id": "https://lornaantwi.ca/#lorna",
+                "name": "Lorna Antwi",
+                "jobTitle": "Candidate for Toronto City Council, Ward 7 (Humber River-Black Creek)",
+                "description": "Counsellor with Toronto Shelter & Support Services and community advocate running for Toronto City Council in Humber River-Black Creek (Ward 7).",
+                "url": "https://lornaantwi.ca",
+                "image": candidateImage,
+                "alumniOf": ["Brookview Middle School", "Seneca Polytechnic"],
+                "homeLocation": {
+                  "@type": "Place",
+                  "name": "Humber River-Black Creek, Toronto, Ontario"
+                }
+              },
+              {
+                "@type": "Organization",
+                "@id": "https://lornaantwi.ca/#campaign",
+                "name": "Lorna Antwi for Toronto City Council",
+                "url": "https://lornaantwi.ca",
+                "logo": candidateImage,
+                "founder": { "@id": "https://lornaantwi.ca/#lorna" },
+                "areaServed": "Humber River-Black Creek (Ward 7), Toronto, Ontario"
+              }
+            ]
+          })
+        }}
+      />
       <section className="px-6 py-10 md:py-16 max-w-7xl mx-auto flex flex-col md:flex-row gap-8 items-center">
         <div className="contents md:flex md:flex-col md:w-1/2">
           <FadeIn className="order-1 md:order-none w-full">
