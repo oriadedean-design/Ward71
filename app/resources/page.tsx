@@ -29,7 +29,7 @@ const faqs = [
   {
     question: 'When can I vote?',
     answer:
-      'Advance voting and election day dates are set by the City of Toronto. Advance voting: to be confirmed by the City of Toronto. Election day: to be confirmed by the City of Toronto. Always confirm the current schedule at toronto.ca/elections before you make plans to vote.',
+      'Advance voting runs Tuesday, October 6 to Sunday, October 11, 2026, from 10:00 a.m. to 7:00 p.m. Election day is Monday, October 26, 2026, from 10:00 a.m. to 8:00 p.m. These dates are set by the City of Toronto; always confirm the current schedule at toronto.ca/elections before you make plans to vote.',
   },
   {
     question: 'Where do I vote?',
@@ -131,8 +131,7 @@ export default function ResourcesPage() {
               When can I vote?
             </h2>
             <p className="text-brand-slate/80 leading-relaxed font-medium mb-4">
-              Advance voting and election day dates are set by the City of Toronto. Always confirm
-              the current schedule at{' '}
+              These dates are set by the City of Toronto. Always confirm the current schedule at{' '}
               <a
                 href="https://www.toronto.ca/city-government/elections/"
                 className="text-brand-red underline underline-offset-2 hover:opacity-80"
@@ -146,11 +145,13 @@ export default function ResourcesPage() {
             <div className="bg-white rounded-2xl border border-brand-slate/10 p-6 grid sm:grid-cols-2 gap-6">
               <div>
                 <h3 className="font-bold text-brand-slate mb-1">Advance Voting</h3>
-                <p className="text-brand-slate/70 font-medium">To be confirmed by the City of Toronto</p>
+                <p className="text-brand-slate/70 font-medium">Tuesday, October 6 – Sunday, October 11, 2026</p>
+                <p className="text-sm text-brand-slate/60 mt-1">10:00 a.m. – 7:00 p.m.</p>
               </div>
               <div>
                 <h3 className="font-bold text-brand-slate mb-1">Election Day</h3>
-                <p className="text-brand-slate/70 font-medium">To be confirmed by the City of Toronto</p>
+                <p className="text-brand-slate/70 font-medium">Monday, October 26, 2026</p>
+                <p className="text-sm text-brand-slate/60 mt-1">10:00 a.m. – 8:00 p.m.</p>
               </div>
             </div>
           </FadeIn>
