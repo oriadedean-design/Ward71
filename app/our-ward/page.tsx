@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import { OurWardMap } from './OurWardMap'
+import { WardStats } from '@/components/WardStats'
 
 export const metadata: Metadata = {
   title: 'Our Ward | Lorna Antwi for Toronto City Council, Ward 7',
@@ -15,5 +16,10 @@ export const metadata: Metadata = {
 }
 
 export default function OurWardPage() {
-  return <OurWardMap />
+  return (
+    <>
+      <OurWardMap />
+      <WardStats />
+    </>
+  )
 }
