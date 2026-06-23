@@ -150,7 +150,9 @@ export default async function Home() {
             { title: "Small Business and Local Economy", desc: "Reducing barriers for local entrepreneurs and improving access to city supports for community-based businesses." },
             { title: "Affordability for Seniors and Families", desc: "Property tax fairness and stronger supports for seniors, newcomers, and low- to moderate-income households." },
             { title: "Food Security and Ending Hunger", desc: "Stronger community food programs, affordable and culturally appropriate food, support for food banks and community kitchens, and long-term solutions to poverty." },
-            { title: "Support for Families and Children with Disabilities", desc: "Accessible community services, inclusive recreation, educational supports, and real resources for families raising children with disabilities. No parent should struggle alone." }
+            { title: "Support for Families and Children with Disabilities", desc: "Accessible community services, inclusive recreation, educational supports, and real resources for families raising children with disabilities. No parent should struggle alone." },
+            { title: "Lower Property Taxes", desc: "Fighting for responsible spending and lower property taxes at City Hall. Residents already face rising costs for housing, groceries, and essentials — taxpayers deserve a government that spends wisely, reduces waste, and delivers real value for every dollar collected." },
+            { title: "Safe and Welcoming Community Spaces", desc: "Every resident deserves access to safe, inclusive community spaces where people of all ages, backgrounds, and abilities can connect and thrive. I'll invest in community centres, parks, and programming that truly serves Ward 7 residents." }
           ].map((item, idx) => (
             <FadeIn key={idx} delay={idx * 0.1} className="bg-white p-6 rounded-2xl shadow-sm border border-brand-slate/5 hover:shadow-md transition-shadow">
               <h3 className="text-xl font-fraunces font-bold mb-3">{item.title}</h3>

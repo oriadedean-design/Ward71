@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { Facebook, Twitter, Linkedin, Link as LinkIcon } from 'lucide-react';
+import { Facebook, Instagram, Twitter, Linkedin, Link as LinkIcon } from 'lucide-react';
 import { FadeIn } from '@/components/FadeIn';
 import { ImpactMeter } from '@/components/ImpactMeter';
 
@@ -52,18 +52,34 @@ export default function HowToHelpPage() {
               Share Lorna's campaign with your neighbours, family, and community.
             </p>
             <div className="grid grid-cols-2 gap-3">
-              <a href="#" className="flex justify-center items-center gap-2 bg-brand-cream text-brand-forest py-3 rounded-xl font-bold hover:bg-opacity-90 transition-opacity">
+              <a
+                href="https://www.facebook.com/sharer/sharer.php?u=https://lornaantwi.ca"
+                target="_blank" rel="noopener noreferrer"
+                className="flex justify-center items-center gap-2 bg-brand-cream text-brand-forest py-3 rounded-xl font-bold hover:bg-opacity-90 transition-opacity"
+              >
                 <Facebook className="w-5 h-5" /> Facebook
               </a>
-              <a href="#" className="flex justify-center items-center gap-2 bg-brand-cream text-brand-forest py-3 rounded-xl font-bold hover:bg-opacity-90 transition-opacity">
+              <a
+                href="https://www.instagram.com/lornaantwi_/"
+                target="_blank" rel="noopener noreferrer"
+                className="flex justify-center items-center gap-2 bg-brand-cream text-brand-forest py-3 rounded-xl font-bold hover:bg-opacity-90 transition-opacity"
+              >
+                <Instagram className="w-5 h-5" /> Instagram
+              </a>
+              <a
+                href="https://twitter.com/intent/tweet?url=https://lornaantwi.ca&text=Vote+Lorna+Antwi+for+Toronto+City+Council+Ward+7"
+                target="_blank" rel="noopener noreferrer"
+                className="flex justify-center items-center gap-2 bg-brand-cream text-brand-forest py-3 rounded-xl font-bold hover:bg-opacity-90 transition-opacity"
+              >
                 <Twitter className="w-5 h-5" /> X
               </a>
-              <a href="#" className="flex justify-center items-center gap-2 bg-brand-cream text-brand-forest py-3 rounded-xl font-bold hover:bg-opacity-90 transition-opacity">
+              <a
+                href="https://www.linkedin.com/sharing/share-offsite/?url=https://lornaantwi.ca"
+                target="_blank" rel="noopener noreferrer"
+                className="flex justify-center items-center gap-2 bg-brand-cream text-brand-forest py-3 rounded-xl font-bold hover:bg-opacity-90 transition-opacity"
+              >
                 <Linkedin className="w-5 h-5" /> LinkedIn
               </a>
-              <button className="flex justify-center items-center gap-2 bg-brand-cream text-brand-forest py-3 rounded-xl font-bold hover:bg-opacity-90 transition-opacity">
-                <LinkIcon className="w-5 h-5" /> Copy Link
-              </button>
             </div>
           </FadeIn>
         </div>

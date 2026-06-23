@@ -420,13 +420,6 @@ function NeighbourhoodPanel({ n }: { n: Neighbourhood }) {
 
       <div>
         <p className="text-[10px] font-bold uppercase tracking-widest text-brand-slate/40 mb-2">
-          What I&apos;m Hearing
-        </p>
-        <p className="text-brand-slate/80 text-[1.05rem] leading-relaxed">{n.whatImHearing}</p>
-      </div>
-
-      <div>
-        <p className="text-[10px] font-bold uppercase tracking-widest text-brand-slate/40 mb-2">
           Platform Priority
         </p>
         <span
@@ -480,8 +473,7 @@ function NeighbourhoodCard({
       </button>
 
       {isOpen && (
-        <div className="px-5 pb-5 border-t border-brand-slate/5">
-          <p className="text-brand-slate/80 leading-relaxed mt-4 mb-4">{n.whatImHearing}</p>
+        <div className="px-5 pb-5 pt-4 border-t border-brand-slate/5">
           <span
             className={`inline-block text-sm font-bold px-4 py-2 rounded-full ${accentTag(n.accentColor)}`}
           >
@@ -598,16 +590,6 @@ export function OurWardMap() {
         </div>
       </section>
 
-      {/* ── Placeholder notice ── */}
-      <section className="px-6 pb-12 max-w-7xl mx-auto">
-        <FadeIn>
-          <div className="bg-brand-mustard/10 border border-brand-mustard/25 rounded-2xl px-6 py-4 text-sm text-brand-slate/65">
-            <strong className="text-brand-slate font-semibold">Note for Lorna:</strong> The
-            &ldquo;What I&apos;m hearing&rdquo; text in each neighbourhood is placeholder content
-            drawn from your platform priorities. Please refine it in your own words before launch.
-          </div>
-        </FadeIn>
-      </section>
     </>
   )
 }

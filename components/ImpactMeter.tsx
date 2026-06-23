@@ -6,7 +6,7 @@ import { FadeIn } from '@/components/FadeIn';
 
 export function ImpactMeter() {
   const [currentAmount, setCurrentAmount] = useState(1250);
-  const targetAmount = 25000;
+  const targetAmount = 60000;
   
   // In a full Sanity implementation, this would fetch the milestone document:
   /*
