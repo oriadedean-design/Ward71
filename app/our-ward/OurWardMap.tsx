@@ -4,6 +4,7 @@ import { useState, useRef } from 'react'
 import { ChevronDown } from 'lucide-react'
 import { FadeIn } from '@/components/FadeIn'
 import { neighbourhoods, type Neighbourhood, type AccentColor } from '@/lib/wardData'
+import { wardStats } from '@/lib/wardStats'
 
 // ─── SVG zone geometry ────────────────────────────────────────────────────────
 // ViewBox: 0 0 440 520
@@ -420,6 +421,13 @@ function NeighbourhoodPanel({ n }: { n: Neighbourhood }) {
 
       <div>
         <p className="text-[10px] font-bold uppercase tracking-widest text-brand-slate/40 mb-2">
+          In This Neighbourhood
+        </p>
+        <p className="text-brand-slate/80 text-[1.05rem] leading-relaxed">{n.description}</p>
+      </div>
+
+      <div>
+        <p className="text-[10px] font-bold uppercase tracking-widest text-brand-slate/40 mb-2">
           Platform Priority
         </p>
         <span
@@ -474,6 +482,7 @@ function NeighbourhoodCard({
 
       {isOpen && (
         <div className="px-5 pb-5 pt-4 border-t border-brand-slate/5">
+          <p className="text-brand-slate/75 text-sm leading-relaxed mb-4">{n.description}</p>
           <span
             className={`inline-block text-sm font-bold px-4 py-2 rounded-full ${accentTag(n.accentColor)}`}
           >
@@ -482,6 +491,118 @@ function NeighbourhoodCard({
         </div>
       )}
     </div>
+  )
+}
+
+// ─── Census stat card ─────────────────────────────────────────────────────────
+function StatCard({
+  label,
+  value,
+  note,
+  accentColor,
+}: {
+  label: string
+  value: string
+  note: string
+  accentColor: AccentColor
+}) {
+  const isPlaceholder = value === 'TO BE VERIFIED'
+  const bar =
+    accentColor === 'red'
+      ? 'bg-brand-red'
+      : accentColor === 'mustard'
+      ? 'bg-brand-mustard'
+      : 'bg-brand-forest'
+
+  return (
+    <div className="bg-white rounded-2xl shadow-sm border border-brand-slate/5 overflow-hidden flex flex-col">
+      <div className={`h-1 w-full ${bar}`} />
+      <div className="p-5 flex flex-col gap-2 flex-1">
+        <p className="text-[10px] font-bold uppercase tracking-widest text-brand-slate/40 leading-tight">
+          {label}
+        </p>
+        {isPlaceholder ? (
+          <span className="self-start text-[11px] font-bold px-2.5 py-1 rounded-full bg-brand-mustard/15 text-brand-mustard border border-brand-mustard/20">
+            TO BE VERIFIED
+          </span>
+        ) : (
+          <p className="text-2xl font-fraunces font-bold text-brand-slate leading-none">{value}</p>
+        )}
+        <p className="text-xs text-brand-slate/45 leading-snug">{note}</p>
+      </div>
+    </div>
+  )
+}
+
+// ─── Ward census data panel ───────────────────────────────────────────────────
+function WardDataPanel() {
+  const stats: { label: string; key: keyof typeof wardStats; accentColor: AccentColor }[] = [
+    { label: 'Total Population',              key: 'totalPopulation',       accentColor: 'forest'  },
+    { label: '5-Year Population Change',      key: 'fiveYearGrowth',        accentColor: 'forest'  },
+    { label: 'Median Age',                    key: 'medianAge',             accentColor: 'mustard' },
+    { label: 'Median Household Income',       key: 'medianHouseholdIncome', accentColor: 'mustard' },
+    { label: 'Low-Income Rate',               key: 'lowIncomeRate',         accentColor: 'red'     },
+    { label: 'Renter Households',             key: 'tenantPct',             accentColor: 'red'     },
+    { label: 'Owner Households',              key: 'ownerPct',              accentColor: 'mustard' },
+    { label: 'Visible Minority',              key: 'visibleMinorityPct',    accentColor: 'forest'  },
+    { label: 'Immigrants & Non-Permanent Res.',key: 'immigrantPct',         accentColor: 'forest'  },
+  ]
+
+  return (
+    <section className="px-6 pb-10 md:pb-16 max-w-7xl mx-auto">
+      {/* Divider */}
+      <div className="border-t border-brand-slate/10 mb-10 md:mb-14" />
+
+      <FadeIn>
+        <div className="mb-8">
+          <h2 className="text-3xl md:text-4xl font-fraunces font-bold mb-2">
+            Ward 7 by the Numbers
+          </h2>
+          <p className="text-brand-slate/60 text-base max-w-2xl leading-relaxed">
+            2021 Census data for Humber River-Black Creek. Drop verified figures into{' '}
+            <code className="text-xs bg-brand-slate/5 px-1.5 py-0.5 rounded font-mono">
+              lib/wardStats.ts
+            </code>{' '}
+            when confirmed — each card updates automatically.
+          </p>
+        </div>
+      </FadeIn>
+
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+        {stats.map(({ label, key, accentColor }, i) => {
+          const entry = wardStats[key] as { value: string; note: string }
+          return (
+            <FadeIn key={label} delay={i * 0.05}>
+              <StatCard
+                label={label}
+                value={entry.value}
+                note={entry.note}
+                accentColor={accentColor}
+              />
+            </FadeIn>
+          )
+        })}
+      </div>
+
+      <FadeIn delay={0.5}>
+        <p className="text-xs text-brand-slate/35 text-right">
+          Source: {wardStats.source}
+        </p>
+      </FadeIn>
+
+      {/* Phase 2 note — features outlined but not built */}
+      <FadeIn delay={0.55}>
+        <div className="mt-10 bg-brand-slate/3 border border-brand-slate/10 rounded-2xl px-6 py-5 text-sm text-brand-slate/60">
+          <p className="font-semibold text-brand-slate/70 mb-1">Phase 2 — Planned additions</p>
+          <p className="leading-relaxed">
+            Map overlay toggles for transit corridors, zoning categories, and individual landmark
+            detail cards are scoped for a future release. The SVG zone structure and React state
+            already support togglable overlay layers; the next step is adding a layer-switcher UI
+            and overlay path data.
+          </p>
+        </div>
+      </FadeIn>
+    </section>
   )
 }
 
@@ -590,6 +711,8 @@ export function OurWardMap() {
         </div>
       </section>
 
+      {/* ── Census data panel ── */}
+      <WardDataPanel />
     </>
   )
 }
