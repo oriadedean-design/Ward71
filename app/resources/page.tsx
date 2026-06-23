@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
 import { FadeIn } from '@/components/FadeIn';
 
 export const metadata: Metadata = {
@@ -66,6 +67,7 @@ export default function ResourcesPage() {
         }}
       />
 
+      {/* ── Hero ── */}
       <section className="bg-brand-cream py-12 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <FadeIn>
@@ -81,12 +83,136 @@ export default function ResourcesPage() {
         </div>
       </section>
 
-      <section className="py-12 px-6 max-w-3xl mx-auto">
-        <div className="flex flex-col gap-10">
+      {/* ── Action cards ── */}
+      <section className="px-6 py-10 max-w-2xl mx-auto flex flex-col gap-5">
+
+        {/* Card 1: Registration deadline */}
+        <FadeIn>
+          <div className="bg-white rounded-2xl border border-brand-slate/10 shadow-sm overflow-hidden">
+            <div className="px-6 pt-6 pb-5">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-brand-slate/45 mb-3">
+                Voter Registration
+              </p>
+              {/* DATE PLACEHOLDER — confirm exact 2026 deadline from the City of Toronto */}
+              <p className="text-3xl md:text-4xl font-fraunces font-bold text-brand-slate leading-tight">
+                Deadline TBC
+              </p>
+              <p className="text-xs text-brand-slate/45 mt-1">
+                City of Toronto · Elections Ontario
+                {' '}
+                <span className="bg-brand-mustard/20 text-brand-mustard font-semibold px-1.5 py-0.5 rounded text-[10px] uppercase tracking-wide ml-1">
+                  Confirm at toronto.ca/elections
+                </span>
+              </p>
+            </div>
+            <div className="border-t border-brand-slate/8 px-6 py-5">
+              <p className="font-bold text-brand-slate text-sm mb-1">Can I still register on voting day?</p>
+              <p className="text-brand-slate/70 text-sm leading-relaxed">
+                Yes. In Ontario municipal elections you can register to vote in-person at your
+                polling station on election day and during advance voting. Bring qualifying ID that
+                shows your name and your Toronto address.
+              </p>
+            </div>
+          </div>
+        </FadeIn>
+
+        {/* Card 2: Find your polling station */}
+        <FadeIn delay={0.07}>
+          <a
+            href="https://www.toronto.ca/city-government/elections/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center justify-between gap-4 bg-white rounded-2xl border border-brand-slate/10 shadow-sm px-6 py-5 min-h-[72px] hover:border-brand-slate/30 hover:shadow-md transition-all"
+            aria-label="Find your polling station on MyVote toronto.ca (opens in new tab)"
+          >
+            <div className="flex flex-col gap-0.5">
+              <span className="font-fraunces font-bold text-lg text-brand-slate leading-snug">
+                Find Your Polling Station
+              </span>
+              <span className="text-xs text-brand-slate/45">MyVote · toronto.ca/elections</span>
+            </div>
+            <ArrowRight
+              size={20}
+              aria-hidden="true"
+              className="flex-shrink-0 text-brand-slate/40 group-hover:text-brand-slate/70 group-hover:translate-x-0.5 transition-all"
+            />
+          </a>
+        </FadeIn>
+
+        {/* Card 3: Check your voter registration — primary action, mustard border */}
+        <FadeIn delay={0.14}>
+          <a
+            href="https://www.toronto.ca/city-government/elections/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center justify-between gap-4 bg-white rounded-2xl border-2 border-brand-mustard shadow-sm px-6 py-5 min-h-[72px] hover:shadow-md transition-shadow"
+            aria-label="Check your voter registration on MyVote toronto.ca (opens in new tab)"
+          >
+            <div className="flex flex-col gap-0.5">
+              <span className="font-fraunces font-bold text-lg text-brand-slate leading-snug">
+                Check Your Voter Registration
+              </span>
+              <span className="text-xs text-brand-slate/45">MyVote · toronto.ca/elections</span>
+            </div>
+            <ArrowRight
+              size={20}
+              aria-hidden="true"
+              className="flex-shrink-0 text-brand-mustard group-hover:translate-x-0.5 transition-transform"
+            />
+          </a>
+        </FadeIn>
+
+        {/* Disclaimer */}
+        <FadeIn delay={0.2}>
+          <p className="text-xs text-brand-slate/50 leading-relaxed px-1">
+            Official information from the City of Toronto. Voting locations are typically published
+            closer to election day. For the most current details, visit{' '}
+            <a
+              href="https://www.toronto.ca/city-government/elections/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline underline-offset-2 hover:text-brand-red transition-colors"
+            >
+              toronto.ca/elections
+            </a>
+            .
+          </p>
+        </FadeIn>
+      </section>
+
+      {/* ── Key dates ── */}
+      <section className="px-6 pb-10 max-w-2xl mx-auto">
+        <FadeIn>
+          <div className="bg-white rounded-2xl border border-brand-slate/10 p-6">
+            <h2 className="font-fraunces font-bold text-xl text-brand-slate mb-4">Key Dates — 2026</h2>
+            <div className="grid sm:grid-cols-2 gap-6">
+              <div>
+                <p className="font-bold text-brand-slate mb-1">Advance Voting</p>
+                <p className="text-brand-slate/70 font-medium">Tue, Oct 6 – Sun, Oct 11, 2026</p>
+                <p className="text-sm text-brand-slate/55 mt-1">10:00 a.m. – 7:00 p.m.</p>
+              </div>
+              <div>
+                <p className="font-bold text-brand-slate mb-1">Election Day</p>
+                <p className="text-brand-slate/70 font-medium">Mon, October 26, 2026</p>
+                <p className="text-sm text-brand-slate/55 mt-1">10:00 a.m. – 8:00 p.m.</p>
+              </div>
+            </div>
+          </div>
+        </FadeIn>
+      </section>
+
+      {/* ── Helpful Q&A ── */}
+      <section className="py-4 px-6 pb-14 max-w-2xl mx-auto">
+        <FadeIn>
+          <h2 className="text-2xl md:text-3xl font-fraunces font-bold mb-8 text-brand-slate">
+            Frequently Asked Questions
+          </h2>
+        </FadeIn>
+        <div className="flex flex-col gap-8">
           <FadeIn>
-            <h2 className="text-2xl md:text-3xl font-fraunces font-bold mb-3 text-brand-red">
+            <h3 className="text-xl font-fraunces font-bold mb-2 text-brand-red">
               Am I in Ward 7 (Humber River-Black Creek)?
-            </h2>
+            </h3>
             <p className="text-brand-slate/80 leading-relaxed font-medium">
               Ward 7 covers the Humber River-Black Creek area of Toronto. The postal areas (FSAs){' '}
               <strong className="text-brand-slate">M3L, M3M, M3N, M9L, M9M and M9N</strong> fall
@@ -100,86 +226,15 @@ export default function ResourcesPage() {
                 rel="noopener noreferrer"
               >
                 toronto.ca/elections
-              </a>{' '}
-              — the official lookup is the definitive source.
-            </p>
-          </FadeIn>
-
-          <FadeIn>
-            <h2 className="text-2xl md:text-3xl font-fraunces font-bold mb-3 text-brand-red">
-              How do I register to vote?
-            </h2>
-            <p className="text-brand-slate/80 leading-relaxed font-medium">
-              To vote in a Toronto municipal election you must be a Canadian citizen, at least 18
-              years old, a resident of Toronto (or a non-resident who owns or rents property in the
-              city), and not otherwise prohibited from voting. Use{' '}
-              <strong className="text-brand-slate">MyVote</strong> at{' '}
-              <a
-                href="https://www.toronto.ca/city-government/elections/"
-                className="text-brand-red underline underline-offset-2 hover:opacity-80"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                toronto.ca/elections
-              </a>{' '}
-              to check whether you are on the voters list and to add or update your information.
-            </p>
-          </FadeIn>
-
-          <FadeIn>
-            <h2 className="text-2xl md:text-3xl font-fraunces font-bold mb-3 text-brand-red">
-              When can I vote?
-            </h2>
-            <p className="text-brand-slate/80 leading-relaxed font-medium mb-4">
-              These dates are set by the City of Toronto. Always confirm the current schedule at{' '}
-              <a
-                href="https://www.toronto.ca/city-government/elections/"
-                className="text-brand-red underline underline-offset-2 hover:opacity-80"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                toronto.ca/elections
-              </a>{' '}
-              before you make plans to vote.
-            </p>
-            <div className="bg-white rounded-2xl border border-brand-slate/10 p-6 grid sm:grid-cols-2 gap-6">
-              <div>
-                <h3 className="font-bold text-brand-slate mb-1">Advance Voting</h3>
-                <p className="text-brand-slate/70 font-medium">Tuesday, October 6 – Sunday, October 11, 2026</p>
-                <p className="text-sm text-brand-slate/60 mt-1">10:00 a.m. – 7:00 p.m.</p>
-              </div>
-              <div>
-                <h3 className="font-bold text-brand-slate mb-1">Election Day</h3>
-                <p className="text-brand-slate/70 font-medium">Monday, October 26, 2026</p>
-                <p className="text-sm text-brand-slate/60 mt-1">10:00 a.m. – 8:00 p.m.</p>
-              </div>
-            </div>
-          </FadeIn>
-
-          <FadeIn>
-            <h2 className="text-2xl md:text-3xl font-fraunces font-bold mb-3 text-brand-red">
-              Where do I vote?
-            </h2>
-            <p className="text-brand-slate/80 leading-relaxed font-medium">
-              Each voter is assigned a polling location based on their registered address. Find your
-              assigned location using <strong className="text-brand-slate">MyVote</strong> at{' '}
-              <a
-                href="https://www.toronto.ca/city-government/elections/"
-                className="text-brand-red underline underline-offset-2 hover:opacity-80"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                toronto.ca/elections
               </a>
-              , or check the voter information card that the City mails to registered voters before
-              the election.
+              .
             </p>
           </FadeIn>
 
           <FadeIn>
-            <h2 className="text-2xl md:text-3xl font-fraunces font-bold mb-3 text-brand-red">
+            <h3 className="text-xl font-fraunces font-bold mb-2 text-brand-red">
               What do I need to bring?
-            </h2>
+            </h3>
             <p className="text-brand-slate/80 leading-relaxed font-medium">
               You need to show identification that includes your name and your Toronto address. The
               City of Toronto publishes a list of accepted documents — review the accepted ID list at{' '}
@@ -196,28 +251,28 @@ export default function ResourcesPage() {
           </FadeIn>
 
           <FadeIn>
-            <h2 className="text-2xl md:text-3xl font-fraunces font-bold mb-3 text-brand-red">
+            <h3 className="text-xl font-fraunces font-bold mb-2 text-brand-red">
               How can I get involved beyond voting?
-            </h2>
+            </h3>
             <p className="text-brand-slate/80 leading-relaxed font-medium mb-4">
               There are many ways to help build this campaign:
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
                 href="/volunteer"
-                className="bg-brand-red text-white px-6 py-3 rounded-full font-bold text-center hover:bg-opacity-90 transition-opacity"
+                className="flex items-center justify-center min-h-[48px] bg-brand-red text-white px-6 rounded-full font-bold text-center hover:bg-opacity-90 transition-opacity"
               >
                 Volunteer
               </Link>
               <Link
                 href="/donate"
-                className="bg-brand-mustard text-brand-slate px-6 py-3 rounded-full font-bold text-center hover:bg-opacity-90 transition-opacity"
+                className="flex items-center justify-center min-h-[48px] bg-brand-mustard text-brand-slate px-6 rounded-full font-bold text-center hover:bg-opacity-90 transition-opacity"
               >
                 Donate
               </Link>
               <Link
                 href="/how-to-help"
-                className="border-2 border-brand-slate text-brand-slate px-6 py-3 rounded-full font-bold text-center hover:bg-brand-slate hover:text-white transition-colors"
+                className="flex items-center justify-center min-h-[48px] border-2 border-brand-slate text-brand-slate px-6 rounded-full font-bold text-center hover:bg-brand-slate hover:text-white transition-colors"
               >
                 How to Help
               </Link>
