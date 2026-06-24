@@ -2,11 +2,11 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { CheckCircle } from 'lucide-react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import {
   CONTRIBUTION_LIMITS,
-  CANADIAN_PROVINCES,
   isOntarioPostalCode,
   isValidContributionAmount,
   isValidCanadianPhone,
@@ -16,153 +16,119 @@ import {
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
-const STEP_NAMES = [
-  'Ontario Residency',
-  'Contributor Type',
-  'Self-Attestation',
-  'Contribution Amount',
-  'Donor Information',
-  'Payment',
-];
-
-interface FormState {
-  province: string;
-  ontarioResident: boolean;
-  contributorType: '' | 'individual' | 'corporation' | 'union';
-  selfAttestation1: boolean;
-  selfAttestation2: boolean;
-  amount: number | null;
-  customAmount: string;
-  fullName: string;
-  email: string;
-  phone: string;
-  streetAddress: string;
-  city: string;
-  postalCode: string;
-}
-
-const initial: FormState = {
-  province: 'ON',
-  ontarioResident: false,
-  contributorType: '',
-  selfAttestation1: false,
-  selfAttestation2: false,
-  amount: null,
-  customAmount: '',
-  fullName: '',
-  email: '',
-  phone: '',
-  streetAddress: '',
-  city: 'Toronto',
-  postalCode: '',
-};
-
-// ── Shared UI helpers ──────────────────────────────────────────────
-
-function ProgressBar({ step }: { step: number }) {
-  return (
-    <div className="mb-8">
-      <p className="text-sm font-bold text-brand-red uppercase tracking-wider mb-2">
-        Step {step} of {STEP_NAMES.length}: {STEP_NAMES[step - 1]}
-      </p>
-      <div className="w-full bg-brand-slate/10 rounded-full h-2 overflow-hidden">
-        <div
-          className="bg-brand-red h-2 rounded-full transition-all duration-500"
-          style={{ width: `${(step / STEP_NAMES.length) * 100}%` }}
-        />
-      </div>
-    </div>
-  );
-}
-
-function FieldError({ id, error }: { id: string; error?: string }) {
-  if (!error) return null;
-  return (
-    <p id={id} role="alert" className="text-red-600 text-sm mt-1 font-medium">
-      {error}
-    </p>
-  );
-}
-
-function Label({ htmlFor, children, required }: { htmlFor: string; children: React.ReactNode; required?: boolean }) {
-  return (
-    <label htmlFor={htmlFor} className="block mb-2 font-bold text-brand-slate text-sm">
-      {children}
-      {required && <span className="text-brand-red ml-1" aria-label="required">*</span>}
-    </label>
-  );
-}
-
-function NavButtons({
-  step, onBack, onNext, nextLabel = 'Continue', nextDisabled = false,
+// ── Toggle switch ──────────────────────────────────────────────────────────────
+function Toggle({
+  id,
+  checked,
+  onChange,
 }: {
-  step: number; onBack?: () => void; onNext: () => void;
-  nextLabel?: string; nextDisabled?: boolean;
+  id: string
+  checked: boolean
+  onChange: (v: boolean) => void
 }) {
   return (
-    <div className={`flex gap-4 mt-8 ${step > 1 ? 'flex-row' : ''}`}>
-      {step > 1 && (
-        <button
-          type="button"
-          onClick={onBack}
-          className="flex-1 border-2 border-brand-slate text-brand-slate px-6 py-4 rounded-full font-bold hover:bg-brand-slate hover:text-white transition-colors"
-        >
-          ← Back
-        </button>
-      )}
-      <button
-        type="button"
-        onClick={onNext}
-        disabled={nextDisabled}
-        className="flex-1 bg-brand-red text-white px-6 py-4 rounded-full font-bold hover:bg-opacity-90 transition-opacity disabled:opacity-40"
-      >
-        {nextLabel}
-      </button>
-    </div>
-  );
+    <button
+      id={id}
+      role="switch"
+      aria-checked={checked}
+      type="button"
+      onClick={() => onChange(!checked)}
+      className={`relative flex-shrink-0 inline-flex h-8 w-[3.25rem] items-center rounded-full transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 ${
+        checked ? 'bg-brand-red' : 'bg-brand-slate/20'
+      }`}
+    >
+      <span
+        className={`inline-block h-6 w-6 transform rounded-full bg-white shadow-md transition-transform duration-200 ${
+          checked ? 'translate-x-[1.625rem]' : 'translate-x-1'
+        }`}
+      />
+    </button>
+  )
 }
 
-function EligibilityBlock({ children }: { children: React.ReactNode }) {
+// ── Compliance gate row ────────────────────────────────────────────────────────
+function ComplianceGate({
+  id,
+  label,
+  sublabel,
+  checked,
+  onChange,
+}: {
+  id: string
+  label: string
+  sublabel: string
+  checked: boolean
+  onChange: (v: boolean) => void
+}) {
   return (
-    <div className="bg-brand-cream border border-brand-slate/20 rounded-2xl p-6 mt-6" role="alert">
-      {children}
+    <div
+      className={`rounded-2xl border-2 px-5 py-4 transition-all duration-200 ${
+        checked
+          ? 'border-brand-red/25 bg-brand-red/4'
+          : 'border-brand-slate/10 bg-white'
+      }`}
+    >
+      <div className="flex items-start justify-between gap-5">
+        <div className="flex-1 min-w-0">
+          <label htmlFor={id} className="font-bold text-brand-slate text-sm leading-snug cursor-pointer block">
+            {label}
+          </label>
+          <p className="text-xs text-brand-slate/50 mt-1 leading-relaxed">{sublabel}</p>
+        </div>
+        <Toggle id={id} checked={checked} onChange={onChange} />
+      </div>
+      {checked && (
+        <div className="flex items-center gap-1.5 mt-3">
+          <CheckCircle className="w-3.5 h-3.5 text-brand-red flex-shrink-0" aria-hidden="true" />
+          <span className="text-xs text-brand-red font-semibold">Confirmed</span>
+        </div>
+      )}
     </div>
-  );
+  )
 }
 
-// ── Step 6 inner: must live inside <Elements> ──────────────────────
+// ── Section divider + label ────────────────────────────────────────────────────
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="text-[10px] font-bold uppercase tracking-widest text-brand-slate/40 mb-3">
+      {children}
+    </p>
+  )
+}
 
-function PaymentForm({ amount, donorName, onBack }: { amount: number; donorName: string; onBack: () => void }) {
-  const stripe = useStripe();
-  const elements = useElements();
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+// ── PaymentForm (must live inside <Elements>) ──────────────────────────────────
+function PaymentForm({ amount, fullName }: { amount: number; fullName: string }) {
+  const stripe = useStripe()
+  const elements = useElements()
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!stripe || !elements) return;
-    setSubmitting(true);
-    setError(null);
-
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    if (!stripe || !elements) return
+    setSubmitting(true)
+    setError(null)
     const { error: stripeError } = await stripe.confirmPayment({
       elements,
-      confirmParams: {
-        return_url: `${window.location.origin}/thank-you`,
-      },
-    });
-
+      confirmParams: { return_url: `${window.location.origin}/thank-you` },
+    })
     if (stripeError) {
-      setError(stripeError.message ?? 'Payment failed. Please try again.');
-      setSubmitting(false);
+      setError(stripeError.message ?? 'Payment failed. Please try again.')
+      setSubmitting(false)
     }
-    // On success Stripe redirects — no further action needed here
-  };
+  }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-      <div className="bg-brand-cream/60 border border-brand-slate/10 rounded-2xl p-5 text-sm">
-        <p className="font-bold text-brand-slate mb-1">{donorName}</p>
-        <p className="text-brand-slate/70">Contributing <strong className="text-brand-slate">${amount.toLocaleString()} CAD</strong> to Lorna Antwi</p>
+    <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+      <div className="bg-brand-cream border border-brand-slate/10 rounded-2xl px-5 py-4 text-sm">
+        <p className="text-[10px] font-bold uppercase tracking-widest text-brand-slate/40 mb-2">
+          Contributing as
+        </p>
+        <p className="font-bold text-brand-slate">{fullName}</p>
+        <p className="text-brand-slate/65 mt-0.5">
+          <span className="text-brand-slate font-bold text-lg">${amount.toLocaleString()}</span>
+          {' '}CAD to Lorna Antwi for Ward 7
+        </p>
       </div>
 
       <PaymentElement />
@@ -173,594 +139,462 @@ function PaymentForm({ amount, donorName, onBack }: { amount: number; donorName:
         </p>
       )}
 
-      <div className="flex flex-col gap-3">
-        <button
-          type="submit"
-          disabled={!stripe || submitting}
-          className="bg-brand-red text-white py-5 rounded-full font-bold text-lg hover:bg-opacity-90 transition-opacity disabled:opacity-40 w-full"
-        >
-          {submitting ? 'Processing…' : `Contribute $${amount.toLocaleString()} to Lorna Antwi`}
-        </button>
-        <button
-          type="button"
-          onClick={onBack}
-          className="border-2 border-brand-slate text-brand-slate px-6 py-4 rounded-full font-bold hover:bg-brand-slate hover:text-white transition-colors w-full"
-        >
-          ← Back
-        </button>
-      </div>
+      <button
+        type="submit"
+        disabled={!stripe || submitting}
+        className="bg-brand-red text-white py-5 rounded-full font-bold text-base hover:bg-opacity-90 transition-opacity disabled:opacity-40 w-full"
+      >
+        {submitting ? 'Processing…' : `Contribute $${amount.toLocaleString()} CAD`}
+      </button>
+
+      <p className="text-[11px] text-brand-slate/35 text-center leading-relaxed">
+        Secured by Stripe. Authorized by the CFO for the Lorna Antwi Campaign.
+      </p>
     </form>
-  );
+  )
 }
 
-// ── Main page ──────────────────────────────────────────────────────
-
+// ── Main page ──────────────────────────────────────────────────────────────────
 export default function DonatePage() {
-  const [step, setStep] = useState(1);
-  const [form, setForm] = useState<FormState>(initial);
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [clientSecret, setClientSecret] = useState<string | null>(null);
-  const [paymentLoading, setPaymentLoading] = useState(false);
-  const [paymentError, setPaymentError] = useState<string | null>(null);
-  const topRef = useRef<HTMLDivElement>(null);
+  // Compliance
+  const [ontarioResident, setOntarioResident] = useState(false)
+  const [isIndividual, setIsIndividual]       = useState(false)
+  const [selfAttested, setSelfAttested]       = useState(false)
 
-  const update = <K extends keyof FormState>(key: K, value: FormState[K]) => {
-    setForm(f => ({ ...f, [key]: value }));
-    setErrors(e => ({ ...e, [key]: '' }));
-  };
+  // Amount
+  const [amount, setAmount]           = useState<number | null>(null)
+  const [customAmount, setCustomAmount] = useState('')
 
-  const goTo = (next: number) => {
-    setStep(next);
-    setErrors({});
-    setTimeout(() => topRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
-  };
+  // Donor info
+  const [fullName, setFullName]           = useState('')
+  const [email, setEmail]                 = useState('')
+  const [phone, setPhone]                 = useState('')
+  const [streetAddress, setStreetAddress] = useState('')
+  const [city, setCity]                   = useState('Toronto')
+  const [postalCode, setPostalCode]       = useState('')
 
-  const back = () => {
-    if (step === 6) {
-      setClientSecret(null);
-      setPaymentError(null);
-    }
-    goTo(step - 1);
-  };
+  // Touch tracking (show errors only after user has visited the field)
+  const [touched, setTouched] = useState<Record<string, boolean>>({})
+  function touch(field: string) {
+    setTouched(t => ({ ...t, [field]: true }))
+  }
 
-  // Create PaymentIntent when user reaches step 6
+  // Stripe
+  const [clientSecret, setClientSecret]   = useState<string | null>(null)
+  const [paymentLoading, setPaymentLoading] = useState(false)
+  const [paymentError, setPaymentError]   = useState<string | null>(null)
+
+  // Ref to latest form values — avoids stale closure in the PaymentIntent effect
+  const formRef = useRef({ amount, ontarioResident, selfAttested, fullName, email, phone, streetAddress, city, postalCode })
   useEffect(() => {
-    if (step !== 6) return;
-    setPaymentLoading(true);
-    setPaymentError(null);
+    formRef.current = { amount, ontarioResident, selfAttested, fullName, email, phone, streetAddress, city, postalCode }
+  })
+
+  // ── Derived state ────────────────────────────────────────────────────────────
+  const allCompliant = ontarioResident && isIndividual && selfAttested
+
+  const amountResult = amount ? isValidContributionAmount(amount) : { valid: false, error: '' }
+  const amountValid  = !!amount && amountResult.valid
+
+  const donorErrors = {
+    fullName:      !isValidFullName(fullName)       ? 'Full legal name (first and last) is required.' : '',
+    email:         !isValidEmail(email)             ? 'A valid email address is required.' : '',
+    phone:         !isValidCanadianPhone(phone)     ? 'A valid 10-digit Canadian phone number is required.' : '',
+    streetAddress: !streetAddress.trim()            ? 'Street address is required.' : '',
+    city:          !city.trim()                     ? 'City is required.' : '',
+    postalCode:    !isOntarioPostalCode(postalCode) ? 'Must be a valid Ontario postal code (e.g. M3N 1A1).' : '',
+  }
+  const donorInfoValid = Object.values(donorErrors).every(e => !e)
+
+  function fieldError(field: string) {
+    return touched[field] ? donorErrors[field as keyof typeof donorErrors] : ''
+  }
+
+  const readyForPayment = allCompliant && amountValid && donorInfoValid
+
+  // ── Reset PaymentIntent when amount changes ─────────────────────────────────
+  useEffect(() => {
+    setClientSecret(null)
+    setPaymentError(null)
+  }, [amount])
+
+  // ── Reset PaymentIntent when compliance toggles off ─────────────────────────
+  useEffect(() => {
+    if (!allCompliant) {
+      setClientSecret(null)
+      setPaymentError(null)
+    }
+  }, [allCompliant])
+
+  // ── Create PaymentIntent when all conditions are met ────────────────────────
+  useEffect(() => {
+    if (!readyForPayment || clientSecret) return
+
+    let cancelled = false
+    const vals = formRef.current
+
+    setPaymentLoading(true)
+    setPaymentError(null)
 
     fetch('/api/create-payment-intent', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        amount: form.amount,
-        ontarioResident: form.ontarioResident,
-        selfAttested: form.selfAttestation1 && form.selfAttestation2,
-        contributorType: form.contributorType,
+        amount: vals.amount,
+        ontarioResident: vals.ontarioResident,
+        selfAttested: vals.selfAttested,
+        contributorType: 'individual',
         donor: {
-          fullName: form.fullName,
-          email: form.email,
-          phone: form.phone,
-          streetAddress: form.streetAddress,
-          city: form.city,
-          province: form.province,
-          postalCode: form.postalCode,
+          fullName: vals.fullName,
+          email: vals.email,
+          phone: vals.phone,
+          streetAddress: vals.streetAddress,
+          city: vals.city,
+          province: 'ON',
+          postalCode: vals.postalCode,
         },
       }),
     })
       .then(async r => {
-        const data = await r.json();
-        if (!r.ok) throw new Error(data.error ?? 'Server validation failed');
-        setClientSecret(data.clientSecret);
+        if (cancelled) return
+        const data = await r.json()
+        if (!r.ok) throw new Error(data.error ?? 'Server validation failed.')
+        setClientSecret(data.clientSecret)
       })
-      .catch(err => setPaymentError(err.message))
-      .finally(() => setPaymentLoading(false));
-  }, [step]); // eslint-disable-line react-hooks/exhaustive-deps
+      .catch(err => { if (!cancelled) setPaymentError(err.message) })
+      .finally(() => { if (!cancelled) setPaymentLoading(false) })
 
-  // ── Step validation ────────────────────────────────────────────
+    return () => { cancelled = true }
+  }, [readyForPayment, clientSecret]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const validateStep1 = () => {
-    if (!form.ontarioResident) {
-      setErrors({ ontarioResident: 'Please confirm your Ontario residency to continue.' });
-      return false;
-    }
-    return true;
-  };
+  // ── Shared input styles ──────────────────────────────────────────────────────
+  const inputBase =
+    'w-full px-4 py-3.5 bg-white border-2 rounded-xl text-brand-slate text-sm focus:outline-none focus:ring-0 transition-colors placeholder:text-brand-slate/30'
+  const inputCls = (field: string) =>
+    `${inputBase} ${
+      fieldError(field)
+        ? 'border-red-400 focus:border-red-500'
+        : 'border-brand-slate/15 focus:border-brand-mustard'
+    }`
 
-  const validateStep3 = () => {
-    if (!form.selfAttestation1 || !form.selfAttestation2) {
-      setErrors({ attestation: 'Please confirm both statements to continue.' });
-      return false;
-    }
-    return true;
-  };
-
-  const validateStep4 = () => {
-    const amt = form.amount;
-    if (!amt || amt <= 0) {
-      setErrors({ amount: 'Please select or enter a contribution amount.' });
-      return false;
-    }
-    const check = isValidContributionAmount(amt);
-    if (!check.valid) {
-      setErrors({ amount: check.error! });
-      return false;
-    }
-    return true;
-  };
-
-  const validateStep5 = () => {
-    const e: Record<string, string> = {};
-    if (!isValidFullName(form.fullName)) e.fullName = 'Please enter your full legal name (first and last name).';
-    if (!isValidEmail(form.email)) e.email = 'Please enter a valid email address.';
-    if (!isValidCanadianPhone(form.phone)) e.phone = 'Please enter a valid 10-digit Canadian phone number.';
-    if (!form.streetAddress.trim()) e.streetAddress = 'Street address is required.';
-    if (!form.city.trim()) e.city = 'City is required.';
-    if (!isOntarioPostalCode(form.postalCode)) {
-      e.postalCode = 'This postal code is not in Ontario. Please verify your address or return to Step 1 if you live outside Ontario.';
-    }
-    setErrors(e);
-    return Object.keys(e).length === 0;
-  };
-
-  const inputClass = (field: string) =>
-    `w-full px-5 py-4 bg-white border-2 rounded-xl text-brand-slate focus:outline-none focus:ring-0 transition-colors ${
-      errors[field] ? 'border-red-400 focus:border-red-500' : 'border-brand-slate/20 focus:border-brand-mustard'
-    }`;
-
-  // ── Render ─────────────────────────────────────────────────────
-
+  // ── Render ──────────────────────────────────────────────────────────────────
   return (
-    <div className="px-6 py-10 max-w-2xl mx-auto min-h-[70vh]" ref={topRef}>
-      <h1 className="text-3xl md:text-4xl font-fraunces font-bold text-brand-slate mb-2">
-        Donate to the Campaign
-      </h1>
-      <p className="text-brand-slate/70 font-medium mb-8">
-        No corporate money. Just neighbours.
-      </p>
+    <div className="min-h-screen bg-brand-cream px-5 py-10 md:py-14">
+      <div className="max-w-lg mx-auto md:max-w-2xl flex flex-col gap-8">
 
-      <ProgressBar step={step} />
-
-      {/* ── STEP 1: Ontario Residency ── */}
-      {step === 1 && (
+        {/* Header */}
         <div>
-          <h2 className="text-xl font-fraunces font-bold text-brand-slate mb-6">
-            Ontario Residency Confirmation
-          </h2>
+          <h1 className="text-3xl md:text-4xl font-fraunces font-bold text-brand-slate mb-2">
+            Donate to the Campaign
+          </h1>
+          <p className="text-brand-slate/60 text-sm leading-relaxed">
+            No corporate money. Just neighbours supporting neighbours.
+            All contributions must comply with Ontario&apos;s <em>Municipal Elections Act</em>.
+          </p>
+        </div>
 
-          <div className="flex flex-col gap-5">
-            <div>
-              <Label htmlFor="province" required>Province or Territory</Label>
-              <select
-                id="province"
-                value={form.province}
-                onChange={e => update('province', e.target.value)}
-                className="w-full px-5 py-4 bg-white border-2 border-brand-slate/20 rounded-xl text-brand-slate focus:outline-none focus:border-brand-mustard"
-              >
-                {CANADIAN_PROVINCES.map(p => (
-                  <option key={p.value} value={p.value}>{p.label}</option>
-                ))}
-              </select>
-            </div>
-
-            {form.province !== 'ON' ? (
-              <EligibilityBlock>
-                <p className="font-bold text-brand-slate mb-3">We can't accept your contribution</p>
-                <p className="text-brand-slate/80 text-sm leading-relaxed mb-4">
-                  Toronto municipal election rules require that all contributions come from Ontario residents.
-                  If you live outside Ontario, we appreciate your support but cannot accept your contribution.
-                  You can still help by sharing Lorna's campaign with friends and family in Toronto.
-                </p>
-                <Link
-                  href="/how-to-help"
-                  className="inline-block bg-brand-slate text-brand-cream px-6 py-3 rounded-full font-bold text-sm hover:bg-opacity-90 transition-opacity"
-                >
-                  Share Lorna's campaign
+        {/* ── Section 1: Compliance ── */}
+        <div>
+          <SectionLabel>Step 1 — Eligibility Confirmation</SectionLabel>
+          <div className="flex flex-col gap-3">
+            <ComplianceGate
+              id="toggle-ontario"
+              label="I am a resident of Ontario"
+              sublabel="Toronto municipal law limits contributions to Ontario residents only. If you live outside Ontario we cannot accept your contribution."
+              checked={ontarioResident}
+              onChange={setOntarioResident}
+            />
+            <ComplianceGate
+              id="toggle-individual"
+              label="I am contributing as an individual"
+              sublabel="Contributions from corporations, unions, and other organizations are not permitted under Ontario law."
+              checked={isIndividual}
+              onChange={setIsIndividual}
+            />
+            <ComplianceGate
+              id="toggle-attest"
+              label="These funds are my own"
+              sublabel="I confirm the funds I am contributing belong to me, I have not received them from another person or entity for this purpose, and I am not acting on behalf of anyone else."
+              checked={selfAttested}
+              onChange={setSelfAttested}
+            />
+          </div>
+          {!allCompliant && (
+            <p className="text-xs text-brand-slate/40 text-center mt-4">
+              All three confirmations are required before you can contribute.{' '}
+              {!ontarioResident && (
+                <Link href="/how-to-help" className="underline hover:text-brand-slate transition-colors">
+                  Other ways to help →
                 </Link>
-              </EligibilityBlock>
-            ) : (
-              <div>
-                <div className="flex items-start gap-3">
-                  <input
-                    type="checkbox"
-                    id="ontarioResident"
-                    checked={form.ontarioResident}
-                    onChange={e => update('ontarioResident', e.target.checked)}
-                    aria-required="true"
-                    aria-describedby={errors.ontarioResident ? 'ontarioResident-error' : undefined}
-                    className="mt-1 w-5 h-5 accent-brand-red flex-shrink-0"
-                  />
-                  <label htmlFor="ontarioResident" className="text-brand-slate font-medium text-sm leading-relaxed cursor-pointer">
-                    I confirm that I am a resident of Ontario.
-                  </label>
-                </div>
-                <FieldError id="ontarioResident-error" error={errors.ontarioResident} />
-              </div>
-            )}
-          </div>
-
-          {form.province === 'ON' && (
-            <NavButtons step={1} onNext={() => { if (validateStep1()) goTo(2); }} />
+              )}
+            </p>
           )}
         </div>
-      )}
 
-      {/* ── STEP 2: Contributor Type ── */}
-      {step === 2 && (
-        <div>
-          <h2 className="text-xl font-fraunces font-bold text-brand-slate mb-2">
-            Contributor Type
-          </h2>
-          <p className="text-brand-slate/70 text-sm mb-6">
-            Toronto municipal campaign law only permits contributions from individual donors.
-          </p>
+        {/* ── Section 2: Amount ── */}
+        <div className={`transition-opacity duration-300 ${!allCompliant ? 'opacity-35 pointer-events-none select-none' : ''}`}>
+          <SectionLabel>Step 2 — Contribution Amount</SectionLabel>
 
-          <fieldset className="flex flex-col gap-3">
-            <legend className="sr-only">Select your contributor type</legend>
-            {[
-              { value: 'individual', label: 'I am an individual donor' },
-              { value: 'corporation', label: 'I am donating on behalf of a corporation' },
-              { value: 'union', label: 'I am donating on behalf of a union or association' },
-            ].map(opt => (
-              <label
-                key={opt.value}
-                className={`flex items-center gap-3 px-5 py-4 rounded-xl border-2 cursor-pointer transition-colors ${
-                  form.contributorType === opt.value
-                    ? 'border-brand-red bg-brand-red/5'
-                    : 'border-brand-slate/15 hover:border-brand-slate/40'
+          <div className="grid grid-cols-4 gap-2 mb-3">
+            {[25, 50, 100, 250].map(a => (
+              <button
+                key={a}
+                type="button"
+                onClick={() => { setAmount(a); setCustomAmount('') }}
+                className={`py-3.5 rounded-xl font-bold text-base border-2 transition-all ${
+                  amount === a && !customAmount
+                    ? 'border-brand-red bg-brand-red text-white shadow-sm'
+                    : 'border-brand-slate/12 bg-white text-brand-slate hover:border-brand-red/40'
                 }`}
               >
-                <input
-                  type="radio"
-                  name="contributorType"
-                  value={opt.value}
-                  checked={form.contributorType === opt.value}
-                  onChange={() => update('contributorType', opt.value as FormState['contributorType'])}
-                  className="accent-brand-red"
-                />
-                <span className="font-medium text-brand-slate">{opt.label}</span>
-              </label>
-            ))}
-          </fieldset>
-
-          {(form.contributorType === 'corporation' || form.contributorType === 'union') && (
-            <EligibilityBlock>
-              <p className="font-bold text-brand-slate mb-2">We can't accept this contribution</p>
-              <p className="text-brand-slate/80 text-sm leading-relaxed">
-                Toronto municipal election rules only permit contributions from individual donors.
-                Contributions from corporations, unions, and other entities are not permitted.
-                Thank you for your interest in supporting the campaign.
-              </p>
-            </EligibilityBlock>
-          )}
-
-          {form.contributorType === 'individual' && (
-            <NavButtons step={2} onBack={back} onNext={() => goTo(3)} />
-          )}
-          {form.contributorType === '' && (
-            <NavButtons step={2} onBack={back} onNext={() => goTo(3)} nextDisabled />
-          )}
-          {(form.contributorType === 'corporation' || form.contributorType === 'union') && (
-            <div className="mt-8">
-              <button
-                type="button"
-                onClick={back}
-                className="w-full border-2 border-brand-slate text-brand-slate px-6 py-4 rounded-full font-bold hover:bg-brand-slate hover:text-white transition-colors"
-              >
-                ← Back
-              </button>
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* ── STEP 3: Self-Attestation ── */}
-      {step === 3 && (
-        <div>
-          <h2 className="text-xl font-fraunces font-bold text-brand-slate mb-2">
-            Self-Attestation
-          </h2>
-          <p className="text-brand-slate/70 text-sm mb-6">
-            Ontario law requires that all contributors confirm the following statements.
-          </p>
-
-          <div className="flex flex-col gap-5">
-            {[
-              {
-                id: 'attest1',
-                key: 'selfAttestation1' as const,
-                text: 'I confirm that the funds I am contributing belong to me and that I have not received them from any other person or entity for the purpose of making this contribution.',
-              },
-              {
-                id: 'attest2',
-                key: 'selfAttestation2' as const,
-                text: 'I confirm that I am not contributing on behalf of anyone else, and that I am not being reimbursed for this contribution by any other person or entity.',
-              },
-            ].map(item => (
-              <div key={item.id} className="flex items-start gap-3 p-4 border border-brand-slate/10 rounded-xl bg-brand-cream/30">
-                <input
-                  type="checkbox"
-                  id={item.id}
-                  checked={form[item.key]}
-                  onChange={e => update(item.key, e.target.checked)}
-                  aria-required="true"
-                  aria-describedby={errors.attestation ? 'attestation-error' : undefined}
-                  className="mt-1 w-5 h-5 accent-brand-red flex-shrink-0"
-                />
-                <label htmlFor={item.id} className="text-brand-slate/80 text-sm leading-relaxed cursor-pointer font-medium">
-                  {item.text}
-                </label>
-              </div>
-            ))}
-
-            <FieldError id="attestation-error" error={errors.attestation} />
-          </div>
-
-          <NavButtons step={3} onBack={back} onNext={() => { if (validateStep3()) goTo(4); }} />
-        </div>
-      )}
-
-      {/* ── STEP 4: Contribution Amount ── */}
-      {step === 4 && (
-        <div>
-          <h2 className="text-xl font-fraunces font-bold text-brand-slate mb-6">
-            Contribution Amount
-          </h2>
-
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
-            {[25, 50, 100, 250].map(amt => (
-              <button
-                key={amt}
-                type="button"
-                onClick={() => { update('amount', amt); update('customAmount', ''); }}
-                className={`py-4 rounded-xl font-bold text-lg border-2 transition-all ${
-                  form.amount === amt && !form.customAmount
-                    ? 'border-brand-red bg-brand-red/10 text-brand-red'
-                    : 'border-brand-slate/15 hover:border-brand-red/40 text-brand-slate'
-                }`}
-              >
-                ${amt}
+                ${a}
               </button>
             ))}
           </div>
 
-          <div className="mb-2">
-            <Label htmlFor="customAmount">Custom amount</Label>
-            <div className="flex items-center border-2 border-brand-slate/20 rounded-xl px-4 focus-within:border-brand-mustard bg-white">
-              <span className="text-brand-slate/60 font-bold text-lg">$</span>
-              <input
-                id="customAmount"
-                type="number"
-                min="5"
-                max={CONTRIBUTION_LIMITS.individualMax}
-                step="1"
-                value={form.customAmount}
-                onChange={e => {
-                  const val = e.target.value;
-                  update('customAmount', val);
-                  update('amount', val ? Number(val) : null);
-                }}
-                placeholder="Enter amount"
-                aria-describedby={errors.amount ? 'amount-error' : undefined}
-                className="flex-1 px-2 py-4 bg-transparent focus:outline-none text-lg font-bold text-brand-slate"
-              />
-            </div>
+          <div className="flex items-center bg-white border-2 border-brand-slate/15 rounded-xl px-4 focus-within:border-brand-mustard transition-colors mb-2">
+            <span className="text-brand-slate/40 font-bold text-sm mr-1 flex-shrink-0">$</span>
+            <input
+              type="number"
+              min="5"
+              max={CONTRIBUTION_LIMITS.individualMax}
+              step="1"
+              value={customAmount}
+              onChange={e => {
+                setCustomAmount(e.target.value)
+                setAmount(e.target.value ? Number(e.target.value) : null)
+              }}
+              placeholder="Other amount"
+              className="flex-1 py-3.5 bg-transparent focus:outline-none text-brand-slate font-bold text-sm"
+            />
           </div>
-          <FieldError id="amount-error" error={errors.amount} />
+          {amount && !amountResult.valid && (
+            <p className="text-red-500 text-xs font-medium mb-2">{amountResult.error}</p>
+          )}
 
-          {/* Legal disclosure box */}
-          <div className="mt-6 bg-brand-cream border border-brand-slate/20 rounded-2xl p-5">
-            <p className="font-bold text-brand-slate text-sm mb-3">Important information about your contribution:</p>
-            <ul className="text-brand-slate/75 text-sm space-y-2 leading-relaxed">
-              <li>• The maximum individual contribution to a single Toronto council candidate is <strong>${CONTRIBUTION_LIMITS.individualMax}</strong> for this election cycle.</li>
-              <li>• Contributions over <strong>${CONTRIBUTION_LIMITS.publicDisclosureThreshold}</strong> will be publicly disclosed on the campaign's financial statement filed with the City of Toronto.</li>
-              <li>• Toronto municipal campaign contributions are <strong>NOT</strong> eligible for the federal political contribution tax credit.</li>
-              <li>• Toronto residents may be eligible for the City of Toronto's Contribution Rebate Program. Visit <strong>toronto.ca/elections</strong> to learn more.</li>
-              <li>• A receipt will be issued for contributions over <strong>${CONTRIBUTION_LIMITS.receiptThreshold}</strong>.</li>
-            </ul>
+          <div className="bg-white border border-brand-slate/8 rounded-xl px-5 py-4 text-xs text-brand-slate/55 leading-relaxed space-y-1">
+            <p>• Maximum individual contribution: <strong className="text-brand-slate">${CONTRIBUTION_LIMITS.individualMax} CAD</strong></p>
+            <p>• Contributions over <strong className="text-brand-slate">${CONTRIBUTION_LIMITS.publicDisclosureThreshold}</strong> are publicly disclosed on the campaign&apos;s financial statement</p>
+            <p>• Not eligible for the federal political contribution tax credit</p>
+            <p>• You may be eligible for the <strong className="text-brand-slate">City of Toronto Contribution Rebate Program</strong> — visit toronto.ca/elections</p>
           </div>
-
-          <NavButtons step={4} onBack={back} onNext={() => { if (validateStep4()) goTo(5); }} />
         </div>
-      )}
 
-      {/* ── STEP 5: Donor Information ── */}
-      {step === 5 && (
-        <div>
-          <h2 className="text-xl font-fraunces font-bold text-brand-slate mb-2">
-            Donor Information
-          </h2>
-          <p className="text-brand-slate/70 text-sm mb-6">
-            Required by Ontario law. Your information is kept secure and confidential.
+        {/* ── Section 3: Donor Information ── */}
+        <div className={`transition-opacity duration-300 ${!allCompliant ? 'opacity-35 pointer-events-none select-none' : ''}`}>
+          <SectionLabel>Step 3 — Your Information</SectionLabel>
+          <p className="text-xs text-brand-slate/45 mb-4 leading-relaxed">
+            Required by Ontario law for campaign finance disclosure. Kept secure and confidential.
           </p>
 
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-4">
+            {/* Full name */}
             <div>
-              <Label htmlFor="fullName" required>Full legal name</Label>
+              <label htmlFor="fullName" className="block text-xs font-bold text-brand-slate/55 uppercase tracking-wider mb-1.5">
+                Full Legal Name <span className="text-brand-red">*</span>
+              </label>
               <input
                 id="fullName"
                 type="text"
                 autoComplete="name"
-                value={form.fullName}
-                onChange={e => update('fullName', e.target.value)}
-                aria-required="true"
-                aria-describedby={errors.fullName ? 'fullName-error' : undefined}
-                className={inputClass('fullName')}
+                value={fullName}
+                onChange={e => setFullName(e.target.value)}
+                onBlur={() => touch('fullName')}
                 placeholder="First and last name"
+                className={inputCls('fullName')}
               />
-              <FieldError id="fullName-error" error={errors.fullName} />
+              {fieldError('fullName') && (
+                <p className="text-red-500 text-xs mt-1.5">{fieldError('fullName')}</p>
+              )}
             </div>
 
-            <div>
-              <Label htmlFor="email" required>Email address</Label>
-              <input
-                id="email"
-                type="email"
-                autoComplete="email"
-                value={form.email}
-                onChange={e => update('email', e.target.value)}
-                aria-required="true"
-                aria-describedby={errors.email ? 'email-error' : undefined}
-                className={inputClass('email')}
-                placeholder="your@email.com"
-              />
-              <FieldError id="email-error" error={errors.email} />
+            {/* Email + Phone */}
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="email" className="block text-xs font-bold text-brand-slate/55 uppercase tracking-wider mb-1.5">
+                  Email <span className="text-brand-red">*</span>
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  autoComplete="email"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  onBlur={() => touch('email')}
+                  placeholder="your@email.com"
+                  className={inputCls('email')}
+                />
+                {fieldError('email') && (
+                  <p className="text-red-500 text-xs mt-1.5">{fieldError('email')}</p>
+                )}
+              </div>
+              <div>
+                <label htmlFor="phone" className="block text-xs font-bold text-brand-slate/55 uppercase tracking-wider mb-1.5">
+                  Phone <span className="text-brand-red">*</span>
+                </label>
+                <input
+                  id="phone"
+                  type="tel"
+                  autoComplete="tel"
+                  value={phone}
+                  onChange={e => setPhone(e.target.value)}
+                  onBlur={() => touch('phone')}
+                  placeholder="(416) 555-0100"
+                  className={inputCls('phone')}
+                />
+                {fieldError('phone') && (
+                  <p className="text-red-500 text-xs mt-1.5">{fieldError('phone')}</p>
+                )}
+              </div>
             </div>
 
+            {/* Street address */}
             <div>
-              <Label htmlFor="phone" required>Phone number</Label>
-              <input
-                id="phone"
-                type="tel"
-                autoComplete="tel"
-                value={form.phone}
-                onChange={e => update('phone', e.target.value)}
-                aria-required="true"
-                aria-describedby={errors.phone ? 'phone-error' : undefined}
-                className={inputClass('phone')}
-                placeholder="(416) 555-0100"
-              />
-              <FieldError id="phone-error" error={errors.phone} />
-            </div>
-
-            <div>
-              <Label htmlFor="streetAddress" required>Street address</Label>
+              <label htmlFor="streetAddress" className="block text-xs font-bold text-brand-slate/55 uppercase tracking-wider mb-1.5">
+                Street Address <span className="text-brand-red">*</span>
+              </label>
               <input
                 id="streetAddress"
                 type="text"
                 autoComplete="street-address"
-                value={form.streetAddress}
-                onChange={e => update('streetAddress', e.target.value)}
-                aria-required="true"
-                aria-describedby={errors.streetAddress ? 'streetAddress-error' : undefined}
-                className={inputClass('streetAddress')}
+                value={streetAddress}
+                onChange={e => setStreetAddress(e.target.value)}
+                onBlur={() => touch('streetAddress')}
                 placeholder="123 Main Street"
+                className={inputCls('streetAddress')}
               />
-              <FieldError id="streetAddress-error" error={errors.streetAddress} />
+              {fieldError('streetAddress') && (
+                <p className="text-red-500 text-xs mt-1.5">{fieldError('streetAddress')}</p>
+              )}
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-5">
-              <div>
-                <Label htmlFor="city" required>City</Label>
+            {/* City + Province + Postal code */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+              <div className="col-span-1">
+                <label htmlFor="city" className="block text-xs font-bold text-brand-slate/55 uppercase tracking-wider mb-1.5">
+                  City <span className="text-brand-red">*</span>
+                </label>
                 <input
                   id="city"
                   type="text"
                   autoComplete="address-level2"
-                  value={form.city}
-                  onChange={e => update('city', e.target.value)}
-                  aria-required="true"
-                  aria-describedby={errors.city ? 'city-error' : undefined}
-                  className={inputClass('city')}
+                  value={city}
+                  onChange={e => setCity(e.target.value)}
+                  onBlur={() => touch('city')}
+                  className={inputCls('city')}
                 />
-                <FieldError id="city-error" error={errors.city} />
+                {fieldError('city') && (
+                  <p className="text-red-500 text-xs mt-1.5">{fieldError('city')}</p>
+                )}
               </div>
               <div>
-                <Label htmlFor="province-step5" required>Province</Label>
+                <label className="block text-xs font-bold text-brand-slate/55 uppercase tracking-wider mb-1.5">
+                  Province
+                </label>
                 <input
-                  id="province-step5"
                   type="text"
                   value="Ontario"
                   readOnly
-                  className="w-full px-5 py-4 bg-brand-slate/5 border-2 border-brand-slate/10 rounded-xl text-brand-slate/60 cursor-not-allowed"
+                  className={`${inputBase} border-brand-slate/8 bg-brand-slate/4 text-brand-slate/40 cursor-not-allowed`}
                 />
               </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-5">
-              <div>
-                <Label htmlFor="postalCode" required>Postal code</Label>
+              <div className="col-span-2 sm:col-span-1">
+                <label htmlFor="postalCode" className="block text-xs font-bold text-brand-slate/55 uppercase tracking-wider mb-1.5">
+                  Postal Code <span className="text-brand-red">*</span>
+                </label>
                 <input
                   id="postalCode"
                   type="text"
                   autoComplete="postal-code"
-                  value={form.postalCode}
-                  onChange={e => update('postalCode', e.target.value.toUpperCase())}
-                  aria-required="true"
-                  aria-describedby={errors.postalCode ? 'postalCode-error' : undefined}
-                  className={inputClass('postalCode')}
+                  value={postalCode}
+                  onChange={e => setPostalCode(e.target.value.toUpperCase())}
+                  onBlur={() => touch('postalCode')}
                   placeholder="M3N 1A1"
                   maxLength={7}
+                  className={inputCls('postalCode')}
                 />
-                <p className="text-xs text-brand-slate/50 mt-1">Must start with K, L, M, N, or P (Ontario)</p>
-                <FieldError id="postalCode-error" error={errors.postalCode} />
-              </div>
-              <div>
-                <Label htmlFor="country" required>Country</Label>
-                <input
-                  id="country"
-                  type="text"
-                  value="Canada"
-                  readOnly
-                  className="w-full px-5 py-4 bg-brand-slate/5 border-2 border-brand-slate/10 rounded-xl text-brand-slate/60 cursor-not-allowed"
-                />
+                {fieldError('postalCode') && (
+                  <p className="text-red-500 text-xs mt-1.5">{fieldError('postalCode')}</p>
+                )}
               </div>
             </div>
           </div>
-
-          {/* Confirmation summary */}
-          {!Object.values(errors).some(Boolean) && (
-            <div className="mt-6 bg-brand-cream border border-brand-slate/10 rounded-2xl p-5 text-sm">
-              <p className="font-bold text-brand-slate mb-2">Your contribution so far</p>
-              <ul className="text-brand-slate/70 space-y-1">
-                <li>Amount: <strong>${form.amount?.toLocaleString()} CAD</strong></li>
-                <li>Ontario resident: <strong>Confirmed</strong></li>
-                <li>Individual donor: <strong>Confirmed</strong></li>
-                <li>Self-attestation: <strong>Confirmed</strong></li>
-              </ul>
-            </div>
-          )}
-
-          <NavButtons step={5} onBack={back} onNext={() => { if (validateStep5()) goTo(6); }} nextLabel="Continue to Payment" />
         </div>
-      )}
 
-      {/* ── STEP 6: Payment ── */}
-      {step === 6 && (
-        <div>
-          <h2 className="text-xl font-fraunces font-bold text-brand-slate mb-6">
-            Payment
-          </h2>
+        {/* ── Section 4: Payment — revealed dynamically ── */}
+        {allCompliant && (
+          <div>
+            <SectionLabel>Step 4 — Payment</SectionLabel>
 
-          {paymentLoading && (
-            <div className="text-center py-12 text-brand-slate/60 font-medium">
-              Preparing payment…
-            </div>
-          )}
+            {/* Waiting for amount */}
+            {!amountValid && (
+              <div className="rounded-2xl border-2 border-dashed border-brand-slate/12 px-6 py-8 text-center">
+                <p className="text-sm text-brand-slate/40">Select a contribution amount above to continue.</p>
+              </div>
+            )}
 
-          {paymentError && !paymentLoading && (
-            <div className="bg-red-50 border border-red-200 rounded-2xl p-5" role="alert">
-              <p className="font-bold text-red-700 mb-2">Unable to initialize payment</p>
-              <p className="text-red-600 text-sm">{paymentError}</p>
-              <button
-                type="button"
-                onClick={back}
-                className="mt-4 border-2 border-brand-slate text-brand-slate px-6 py-3 rounded-full font-bold text-sm hover:bg-brand-slate hover:text-white transition-colors"
-              >
-                ← Go Back
-              </button>
-            </div>
-          )}
+            {/* Waiting for donor info */}
+            {amountValid && !donorInfoValid && (
+              <div className="rounded-2xl border-2 border-dashed border-brand-slate/12 px-6 py-8 text-center">
+                <p className="text-sm text-brand-slate/40">Complete your information above to continue.</p>
+              </div>
+            )}
 
-          {!paymentLoading && !paymentError && clientSecret && (
-            <Elements
-              stripe={stripePromise}
-              options={{
-                clientSecret,
-                appearance: {
-                  theme: 'stripe',
-                  variables: { colorPrimary: '#c0392b', borderRadius: '12px' },
-                },
-              }}
-            >
-              <PaymentForm
-                amount={form.amount!}
-                donorName={form.fullName}
-                onBack={back}
-              />
-            </Elements>
-          )}
-        </div>
-      )}
+            {/* Loading PaymentIntent */}
+            {amountValid && donorInfoValid && paymentLoading && (
+              <div className="rounded-2xl border border-brand-slate/8 bg-white px-6 py-10 text-center">
+                <div className="inline-block w-6 h-6 border-2 border-brand-red/30 border-t-brand-red rounded-full animate-spin mb-3" />
+                <p className="text-sm text-brand-slate/50">Preparing secure payment…</p>
+              </div>
+            )}
+
+            {/* PaymentIntent error */}
+            {amountValid && donorInfoValid && paymentError && !paymentLoading && (
+              <div className="bg-red-50 border border-red-200 rounded-2xl p-5" role="alert">
+                <p className="font-bold text-red-700 mb-1 text-sm">Unable to initialize payment</p>
+                <p className="text-red-600 text-sm">{paymentError}</p>
+                <button
+                  type="button"
+                  onClick={() => { setClientSecret(null); setPaymentError(null) }}
+                  className="mt-4 text-sm font-bold text-brand-slate underline underline-offset-2 hover:text-brand-red transition-colors"
+                >
+                  Try again
+                </button>
+              </div>
+            )}
+
+            {/* Stripe payment form */}
+            {amountValid && donorInfoValid && clientSecret && !paymentLoading && !paymentError && (
+              <div className="bg-white rounded-2xl border border-brand-slate/8 shadow-sm p-6">
+                <Elements
+                  stripe={stripePromise}
+                  options={{
+                    clientSecret,
+                    appearance: {
+                      theme: 'stripe',
+                      variables: {
+                        colorPrimary: '#E05A47',
+                        colorText: '#1e293b',
+                        borderRadius: '12px',
+                        fontSizeBase: '14px',
+                      },
+                    },
+                  }}
+                >
+                  <PaymentForm amount={amount!} fullName={fullName} />
+                </Elements>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Legal footer */}
+        <p className="text-[11px] text-brand-slate/30 text-center leading-relaxed pb-4">
+          Authorized by the CFO for the Lorna Antwi Campaign. Contributions are subject to Ontario{' '}
+          <em>Municipal Elections Act</em> limits and disclosure requirements.
+        </p>
+
+      </div>
     </div>
-  );
+  )
 }
