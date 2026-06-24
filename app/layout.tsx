@@ -3,6 +3,7 @@ import { Fraunces, Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
+import { DonationBanner } from '@/components/DonationBanner';
 import { Analytics } from '@vercel/analytics/next';
 
 const fraunces = Fraunces({
@@ -110,6 +111,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main className="flex-1">
           {children}
         </main>
+        <DonationBanner />
         <Footer />
         <Analytics />
       </body>

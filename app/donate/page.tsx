@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, Suspense } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { CheckCircle } from 'lucide-react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
@@ -15,6 +16,20 @@ import {
 } from '@/lib/compliance';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+
+const PRESET_AMOUNTS = [25, 50, 100, 250]
+
+// Reads ?amount= from the URL and calls back once on mount
+function AmountPreloader({ onAmount }: { onAmount: (n: number) => void }) {
+  const searchParams = useSearchParams()
+  useEffect(() => {
+    const raw = searchParams.get('amount')
+    if (!raw) return
+    const n = Number(raw)
+    if (!isNaN(n) && n > 0) onAmount(n)
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  return null
+}
 
 // ── Toggle switch ──────────────────────────────────────────────────────────────
 function Toggle({
@@ -282,6 +297,16 @@ export default function DonatePage() {
     <div className="min-h-screen bg-brand-cream px-5 py-10 md:py-14">
       <div className="max-w-lg mx-auto md:max-w-2xl flex flex-col gap-8">
 
+        {/* Pre-fill amount from ?amount= query param (e.g. from the DonationBanner) */}
+        <Suspense fallback={null}>
+          <AmountPreloader
+            onAmount={n => {
+              setAmount(n)
+              if (!PRESET_AMOUNTS.includes(n)) setCustomAmount(String(n))
+            }}
+          />
+        </Suspense>
+
         {/* Header */}
         <div>
           <h1 className="text-3xl md:text-4xl font-fraunces font-bold text-brand-slate mb-2">
@@ -336,7 +361,7 @@ export default function DonatePage() {
           <SectionLabel>Step 2 — Contribution Amount</SectionLabel>
 
           <div className="grid grid-cols-4 gap-2 mb-3">
-            {[25, 50, 100, 250].map(a => (
+            {PRESET_AMOUNTS.map(a => (
               <button
                 key={a}
                 type="button"
