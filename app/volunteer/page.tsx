@@ -2,199 +2,346 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { FadeIn } from '@/components/FadeIn';
+import { MapPin, Phone, CalendarDays, ClipboardList, Share2, Users, CheckCircle } from 'lucide-react';
+
+const ROLES = [
+  {
+    id: 'canvassing',
+    title: 'Door Knocking & Canvassing',
+    description: "Meet neighbours face-to-face across Ward 7 and share Lorna's message.",
+    icon: MapPin,
+  },
+  {
+    id: 'phone-banking',
+    title: 'Phone Banking',
+    description: 'Connect with voters by phone from wherever you are.',
+    icon: Phone,
+  },
+  {
+    id: 'events',
+    title: 'Event Support & Setup',
+    description: 'Help organize and run campaign events, town halls, and canvass launches.',
+    icon: CalendarDays,
+  },
+  {
+    id: 'data',
+    title: 'Data Entry & Admin',
+    description: 'Keep the campaign organized with accurate records and behind-the-scenes support.',
+    icon: ClipboardList,
+  },
+  {
+    id: 'social-media',
+    title: 'Social Media Support',
+    description: "Create content and help amplify Lorna's voice online.",
+    icon: Share2,
+  },
+  {
+    id: 'outreach',
+    title: 'Community Outreach',
+    description: 'Engage community organizations, attend events, and build grassroots support.',
+    icon: Users,
+  },
+]
+
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="text-[10px] font-bold uppercase tracking-widest text-brand-slate/40 mb-3">
+      {children}
+    </p>
+  )
+}
 
 export default function VolunteerPage() {
-  const [step, setStep] = useState<1 | 2 | 3>(1);
-  const [answers, setAnswers] = useState<Record<number, string>>({});
-  const [selectedRole, setSelectedRole] = useState('');
+  const [selectedRole, setSelectedRole] = useState('')
 
-  const questions = [
-    {
-      question: "What type of work energizes you the most?",
-      options: [
-        { label: "Talking to people and building connections", roles: ["Door Knocking and Canvassing", "Phone Banking"] },
-        { label: "Organizing things and keeping data clean", roles: ["Data Entry and Admin"] },
-        { label: "Being behind the scenes making things run", roles: ["Event Support and Setup", "Data Entry and Admin"] },
-        { label: "Creating content and spreading the word", roles: ["Social Media Support", "Community Outreach"] }
-      ]
-    },
-    {
-      question: "What is your preferred environment for volunteering?",
-      options: [
-        { label: "Outdoors and in the neighborhood", roles: ["Door Knocking and Canvassing", "Community Outreach"] },
-        { label: "From the comfort of my home", roles: ["Phone Banking", "Social Media Support", "Data Entry and Admin"] },
-        { label: "In a dynamic, fast-paced setting", roles: ["Event Support and Setup"] }
-      ]
-    },
-    {
-      question: "Which of these skills best describes you?",
-      options: [
-        { label: "Great listener and empathetic", roles: ["Door Knocking and Canvassing", "Phone Banking"] },
-        { label: "Tech savvy and detail-oriented", roles: ["Data Entry and Admin", "Social Media Support"] },
-        { label: "Strong physical stamina and hands-on", roles: ["Event Support and Setup", "Community Outreach"] },
-        { label: "Creative and good with words", roles: ["Social Media Support"] }
-      ]
-    }
-  ];
+  // Contact fields
+  const [name, setName]               = useState('')
+  const [email, setEmail]             = useState('')
+  const [phone, setPhone]             = useState('')
+  const [postalCode, setPostalCode]   = useState('')
+  const [availability, setAvailability] = useState('')
 
-  const handleAnswerSelect = (questionIndex: number, optionIndex: number) => {
-    const newAnswers = { ...answers, [questionIndex]: questions[questionIndex].options[optionIndex].label };
-    setAnswers(newAnswers);
+  // UI state
+  const [touched, setTouched]         = useState<Record<string, boolean>>({})
+  const [submitting, setSubmitting]   = useState(false)
+  const [submitted, setSubmitted]     = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
 
-    if (Object.keys(newAnswers).length === questions.length) {
-      calculateBestFit(newAnswers);
-    }
-  };
+  function touch(field: string) {
+    setTouched(t => ({ ...t, [field]: true }))
+  }
 
-  const calculateBestFit = (finalAnswers: Record<number, string>) => {
-    const roleCounts: Record<string, number> = {};
+  const errors = {
+    name:         name.trim().split(/\s+/).length < 2    ? 'First and last name required.' : '',
+    email:        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()) ? 'Valid email required.' : '',
+    phone:        phone.replace(/\D/g, '').length !== 10 ? 'Valid 10-digit Canadian phone required.' : '',
+    postalCode:   !postalCode.trim()                     ? 'Postal code required.' : '',
+    availability: !availability.trim()                   ? 'Please share your availability.' : '',
+  }
 
-    questions.forEach((q, qIndex) => {
-      const selectedOptionLabel = finalAnswers[qIndex];
-      const option = q.options.find(o => o.label === selectedOptionLabel);
-      if (option) {
-        option.roles.forEach(r => {
-          roleCounts[r] = (roleCounts[r] || 0) + 1;
-        });
+  function fieldError(field: string) {
+    return touched[field] ? errors[field as keyof typeof errors] : ''
+  }
+
+  const formValid = !!selectedRole && Object.values(errors).every(e => !e)
+
+  const inputBase =
+    'w-full px-4 py-3.5 bg-white border-2 rounded-xl text-brand-slate text-sm focus:outline-none focus:ring-0 transition-colors placeholder:text-brand-slate/30'
+
+  function inputCls(field: string) {
+    return `${inputBase} ${
+      fieldError(field)
+        ? 'border-red-400 focus:border-red-500'
+        : 'border-brand-slate/15 focus:border-brand-mustard'
+    }`
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    setTouched({ name: true, email: true, phone: true, postalCode: true, availability: true })
+    if (!formValid) return
+
+    setSubmitting(true)
+    setSubmitError(null)
+
+    try {
+      const res = await fetch('/api/volunteer', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, phone, postalCode, role: selectedRole, availability }),
+      })
+      if (!res.ok) {
+        const data = await res.json()
+        throw new Error(data.error ?? 'Signup failed. Please try again.')
       }
-    });
+      setSubmitted(true)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    } catch (err: unknown) {
+      setSubmitError(err instanceof Error ? err.message : 'Something went wrong.')
+    } finally {
+      setSubmitting(false)
+    }
+  }
 
-    let bestRole = "Community Outreach";
-    let max = 0;
-    Object.entries(roleCounts).forEach(([role, count]) => {
-      if (count > max) {
-        max = count;
-        bestRole = role;
-      }
-    });
+  // ── Success state ─────────────────────────────────────────────────────────────
+  if (submitted) {
+    return (
+      <div className="min-h-screen bg-brand-cream px-5 py-14">
+        <div className="max-w-lg mx-auto text-center">
+          <div className="w-16 h-16 bg-brand-forest/10 rounded-full flex items-center justify-center mx-auto mb-6">
+            <CheckCircle className="w-8 h-8 text-brand-forest" aria-hidden="true" />
+          </div>
+          <h1 className="text-3xl md:text-4xl font-fraunces font-bold text-brand-slate mb-3">
+            Thank you for joining.
+          </h1>
+          <p className="text-brand-slate/60 font-medium mb-10 leading-relaxed">
+            Someone from the team will be in touch within 48 hours about{' '}
+            <strong className="text-brand-slate">{selectedRole}</strong>.
+          </p>
 
-    setSelectedRole(bestRole);
-    setStep(2);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+          <div className="bg-white rounded-2xl border border-brand-slate/8 shadow-sm p-6 text-left">
+            <h2 className="text-xl font-fraunces font-bold text-brand-slate mb-2">
+              Want to also contribute?
+            </h2>
+            <p className="text-brand-slate/55 text-sm leading-relaxed mb-5">
+              Grassroots donations fund canvassing, signs, and events. No corporate money.
+            </p>
+            <div className="flex flex-col gap-3">
+              <Link
+                href="/donate"
+                className="flex items-center justify-center min-h-[52px] bg-brand-red text-white rounded-full font-bold hover:bg-opacity-90 transition-opacity"
+              >
+                Donate to the Campaign
+              </Link>
+              <Link
+                href="/"
+                className="flex items-center justify-center min-h-[44px] text-brand-slate/45 hover:text-brand-slate text-sm font-medium transition-colors"
+              >
+                Return home
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    setStep(3);
-  };
-
-  const currentQuestionIdx = Object.keys(answers).length;
-
+  // ── Main form ─────────────────────────────────────────────────────────────────
   return (
-    <section className="px-6 py-12 max-w-7xl mx-auto min-h-[70vh]">
-      {step === 1 && (
-        <FadeIn>
-          <div className="text-center max-w-4xl mx-auto mb-8">
-            <h1 className="text-4xl md:text-6xl font-fraunces font-bold mb-3 text-brand-slate">Join the Team.</h1>
-            <p className="text-xl font-medium text-brand-slate/80">Every role matters. Let's find your best fit.</p>
-          </div>
+    <div className="min-h-screen bg-brand-cream px-5 py-10 md:py-14">
+      <div className="max-w-lg mx-auto md:max-w-2xl flex flex-col gap-8">
 
-          <div className="max-w-2xl mx-auto bg-white p-6 md:p-10 rounded-3xl shadow-xl border border-brand-slate/10">
-            {currentQuestionIdx < questions.length && (
+        {/* Header */}
+        <div>
+          <h1 className="text-3xl md:text-4xl font-fraunces font-bold text-brand-slate mb-2">
+            Join the Team
+          </h1>
+          <p className="text-brand-slate/60 text-sm leading-relaxed">
+            Every role matters. Pick what fits your schedule and skills — we&apos;ll take it from there.
+          </p>
+        </div>
+
+        {/* ── Section 1: Role picker ── */}
+        <div>
+          <SectionLabel>Step 1 — Choose Your Role</SectionLabel>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {ROLES.map(({ id, title, description, icon: Icon }) => {
+              const active = selectedRole === title
+              return (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => setSelectedRole(title)}
+                  className={`text-left rounded-2xl border-2 px-5 py-4 transition-all duration-150 ${
+                    active
+                      ? 'border-brand-red bg-brand-red/4 shadow-sm'
+                      : 'border-brand-slate/10 bg-white hover:border-brand-red/30'
+                  }`}
+                >
+                  <div className="flex items-start gap-3">
+                    <Icon
+                      className={`w-5 h-5 mt-0.5 flex-shrink-0 transition-colors ${
+                        active ? 'text-brand-red' : 'text-brand-slate/35'
+                      }`}
+                      aria-hidden="true"
+                    />
+                    <div>
+                      <p className={`font-bold text-sm leading-snug ${active ? 'text-brand-red' : 'text-brand-slate'}`}>
+                        {title}
+                      </p>
+                      <p className="text-xs text-brand-slate/50 mt-1 leading-relaxed">{description}</p>
+                    </div>
+                  </div>
+                  {active && (
+                    <div className="flex items-center gap-1.5 mt-3">
+                      <CheckCircle className="w-3.5 h-3.5 text-brand-red flex-shrink-0" aria-hidden="true" />
+                      <span className="text-xs text-brand-red font-semibold">Selected</span>
+                    </div>
+                  )}
+                </button>
+              )
+            })}
+          </div>
+        </div>
+
+        {/* ── Section 2: Contact info — dimmed until role is chosen ── */}
+        <div className={`transition-opacity duration-300 ${!selectedRole ? 'opacity-35 pointer-events-none select-none' : ''}`}>
+          <SectionLabel>Step 2 — About You</SectionLabel>
+
+          <div className="flex flex-col gap-4">
+            {/* Full name */}
+            <div>
+              <label htmlFor="vol-name" className="block text-xs font-bold text-brand-slate/55 uppercase tracking-wider mb-1.5">
+                Full Name <span className="text-brand-red">*</span>
+              </label>
+              <input
+                id="vol-name"
+                type="text"
+                autoComplete="name"
+                value={name}
+                onChange={e => setName(e.target.value)}
+                onBlur={() => touch('name')}
+                placeholder="First and last name"
+                className={inputCls('name')}
+              />
+              {fieldError('name') && <p className="text-red-500 text-xs mt-1.5">{fieldError('name')}</p>}
+            </div>
+
+            {/* Email + Phone */}
+            <div className="grid sm:grid-cols-2 gap-4">
               <div>
-                <p className="text-brand-red font-bold uppercase tracking-wider mb-3 text-sm">
-                  Question {currentQuestionIdx + 1} of {questions.length}
-                </p>
-                <h2 className="text-xl md:text-2xl font-fraunces font-bold mb-6 text-brand-slate">
-                  {questions[currentQuestionIdx].question}
-                </h2>
-
-                <div className="flex flex-col gap-3">
-                  {questions[currentQuestionIdx].options.map((opt, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => handleAnswerSelect(currentQuestionIdx, idx)}
-                      className="text-left px-5 py-4 rounded-xl border-2 border-brand-slate/10 hover:border-brand-mustard hover:bg-brand-cream/30 transition-all font-medium text-brand-slate"
-                    >
-                      {opt.label}
-                    </button>
-                  ))}
-                </div>
+                <label htmlFor="vol-email" className="block text-xs font-bold text-brand-slate/55 uppercase tracking-wider mb-1.5">
+                  Email <span className="text-brand-red">*</span>
+                </label>
+                <input
+                  id="vol-email"
+                  type="email"
+                  autoComplete="email"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  onBlur={() => touch('email')}
+                  placeholder="your@email.com"
+                  className={inputCls('email')}
+                />
+                {fieldError('email') && <p className="text-red-500 text-xs mt-1.5">{fieldError('email')}</p>}
               </div>
-            )}
-          </div>
-        </FadeIn>
-      )}
-
-      {step === 2 && (
-        <FadeIn className="max-w-2xl mx-auto">
-          <div className="text-center mb-8">
-            <button
-              onClick={() => { setStep(1); setAnswers({}); }}
-              className="text-brand-slate/60 hover:text-brand-red font-medium mb-6 inline-block"
-            >
-              &larr; Retake quiz
-            </button>
-            <h1 className="text-3xl md:text-4xl font-fraunces font-bold mb-4 text-brand-slate">Sign up to volunteer</h1>
-            <p className="text-lg font-medium text-brand-slate/80">Your matched role: <strong className="text-brand-red">{selectedRole}</strong></p>
-          </div>
-
-          <form onSubmit={handleSubmit} className="bg-white p-6 md:p-10 rounded-3xl shadow-xl border border-brand-slate/10 flex flex-col gap-5">
-            <div className="grid md:grid-cols-2 gap-5">
-              <div className="flex flex-col">
-                <label className="mb-2 font-bold text-brand-slate" htmlFor="name">Name</label>
-                <input id="name" type="text" className="px-5 py-4 bg-white border-2 border-brand-slate/20 rounded-xl text-brand-slate focus:outline-none focus:border-brand-mustard focus:ring-0" required />
-              </div>
-              <div className="flex flex-col">
-                <label className="mb-2 font-bold text-brand-slate" htmlFor="email">Email</label>
-                <input id="email" type="email" className="px-5 py-4 bg-white border-2 border-brand-slate/20 rounded-xl text-brand-slate focus:outline-none focus:border-brand-mustard focus:ring-0" required />
+              <div>
+                <label htmlFor="vol-phone" className="block text-xs font-bold text-brand-slate/55 uppercase tracking-wider mb-1.5">
+                  Phone <span className="text-brand-red">*</span>
+                </label>
+                <input
+                  id="vol-phone"
+                  type="tel"
+                  autoComplete="tel"
+                  value={phone}
+                  onChange={e => setPhone(e.target.value)}
+                  onBlur={() => touch('phone')}
+                  placeholder="(416) 555-0100"
+                  className={inputCls('phone')}
+                />
+                {fieldError('phone') && <p className="text-red-500 text-xs mt-1.5">{fieldError('phone')}</p>}
               </div>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-5">
-              <div className="flex flex-col">
-                <label className="mb-2 font-bold text-brand-slate" htmlFor="phone">Phone</label>
-                <input id="phone" type="tel" className="px-5 py-4 bg-white border-2 border-brand-slate/20 rounded-xl text-brand-slate focus:outline-none focus:border-brand-mustard focus:ring-0" required />
-              </div>
-              <div className="flex flex-col">
-                <label className="mb-2 font-bold text-brand-slate" htmlFor="postal">Postal code</label>
-                <input id="postal" type="text" className="px-5 py-4 bg-white border-2 border-brand-slate/20 rounded-xl text-brand-slate focus:outline-none focus:border-brand-mustard focus:ring-0" maxLength={7} required />
-              </div>
+            {/* Postal code */}
+            <div>
+              <label htmlFor="vol-postal" className="block text-xs font-bold text-brand-slate/55 uppercase tracking-wider mb-1.5">
+                Postal Code <span className="text-brand-red">*</span>
+              </label>
+              <input
+                id="vol-postal"
+                type="text"
+                autoComplete="postal-code"
+                value={postalCode}
+                onChange={e => setPostalCode(e.target.value.toUpperCase())}
+                onBlur={() => touch('postalCode')}
+                placeholder="M3N 1A1"
+                maxLength={7}
+                className={`${inputCls('postalCode')} max-w-[200px]`}
+              />
+              {fieldError('postalCode') && <p className="text-red-500 text-xs mt-1.5">{fieldError('postalCode')}</p>}
             </div>
 
-            <div className="flex flex-col">
-              <label className="mb-2 font-bold text-brand-slate" htmlFor="role">Role</label>
-              <input id="role" type="text" value={selectedRole} readOnly className="px-5 py-4 bg-brand-slate/5 border-2 border-brand-slate/10 rounded-xl text-brand-slate/60 font-medium cursor-not-allowed" />
-            </div>
-
-            <div className="flex flex-col">
-              <label className="mb-2 font-bold text-brand-slate" htmlFor="availability">When are you available?</label>
-              <textarea id="availability" rows={3} placeholder="E.g., Weekday evenings, Saturdays..." className="px-5 py-4 bg-white border-2 border-brand-slate/20 rounded-xl text-brand-slate focus:outline-none focus:border-brand-mustard focus:ring-0" required></textarea>
-            </div>
-
-            <button type="submit" className="bg-brand-red text-white py-4 mt-2 rounded-full font-bold text-xl hover:bg-opacity-90 transition-opacity w-full text-center">
-              Sign Me Up
-            </button>
-          </form>
-        </FadeIn>
-      )}
-
-      {step === 3 && (
-        <FadeIn className="max-w-2xl mx-auto text-center py-8">
-          <div className="w-20 h-20 bg-brand-forest/10 text-brand-forest rounded-full flex items-center justify-center mx-auto mb-6">
-            <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-            </svg>
-          </div>
-          <h1 className="text-3xl md:text-4xl font-fraunces font-bold mb-4 text-brand-slate">Thank you for volunteering.</h1>
-          <p className="text-lg font-medium text-brand-slate/80 mb-10">Someone from the team will be in touch within 48 hours.</p>
-
-          <div className="bg-white p-8 rounded-3xl shadow-lg border border-brand-slate/10">
-            <h2 className="text-xl font-fraunces font-bold mb-3 text-brand-slate">Would you also like to contribute to the campaign?</h2>
-            <p className="font-medium text-brand-slate/70 mb-6">Grassroots donations help us build momentum.</p>
-            <div className="flex flex-col items-center gap-4">
-              <Link href="/donate" className="bg-brand-red text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-opacity-90 transition-opacity w-full max-w-sm text-center">
-                Donate Now
-              </Link>
-              <Link href="/" className="text-brand-slate/60 hover:text-brand-slate font-medium underline underline-offset-4">
-                No thanks, just volunteering
-              </Link>
+            {/* Availability */}
+            <div>
+              <label htmlFor="vol-availability" className="block text-xs font-bold text-brand-slate/55 uppercase tracking-wider mb-1.5">
+                Availability <span className="text-brand-red">*</span>
+              </label>
+              <textarea
+                id="vol-availability"
+                rows={3}
+                value={availability}
+                onChange={e => setAvailability(e.target.value)}
+                onBlur={() => touch('availability')}
+                placeholder="e.g. Weekday evenings after 6 pm, Saturdays anytime…"
+                className={`${inputCls('availability')} resize-none`}
+              />
+              {fieldError('availability') && <p className="text-red-500 text-xs mt-1.5">{fieldError('availability')}</p>}
             </div>
           </div>
-        </FadeIn>
-      )}
-    </section>
-  );
+        </div>
+
+        {/* ── Submit ── */}
+        <div className={`transition-opacity duration-300 ${!selectedRole ? 'opacity-35 pointer-events-none select-none' : ''}`}>
+          {submitError && (
+            <p role="alert" className="text-red-600 text-sm font-medium bg-red-50 border border-red-200 rounded-xl px-4 py-3 mb-4">
+              {submitError}
+            </p>
+          )}
+          <button
+            type="button"
+            onClick={handleSubmit}
+            disabled={submitting}
+            className="w-full bg-brand-red text-white py-5 rounded-full font-bold text-base hover:bg-opacity-90 transition-opacity disabled:opacity-40"
+          >
+            {submitting ? 'Signing you up…' : 'Sign Me Up to Volunteer'}
+          </button>
+          <p className="text-[11px] text-brand-slate/30 text-center mt-3 leading-relaxed">
+            Your information is only used to coordinate volunteering with the Lorna Antwi campaign.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  )
 }
