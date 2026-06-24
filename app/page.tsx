@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Facebook, Instagram, Mail } from 'lucide-react';
 import { FadeIn } from '@/components/FadeIn';
 import { ImpactMeter } from '@/components/ImpactMeter';
 import { client } from '@/sanity/client';
@@ -95,6 +96,51 @@ export default async function Home() {
                 Upload candidate photo in Sanity Studio
               </div>
             )}
+          </div>
+        </FadeIn>
+      </section>
+
+      {/* ── Social channels ── */}
+      <section className="px-6 py-10 max-w-7xl mx-auto">
+        <FadeIn>
+          <p className="text-center text-sm font-bold uppercase tracking-widest text-brand-slate/40 mb-6">
+            Follow the Campaign
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a
+              href="https://www.facebook.com/lornaantwi"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-5 bg-white border border-brand-slate/10 rounded-2xl px-6 py-5 shadow-sm hover:shadow-md hover:border-[#1877F2]/30 transition-all min-h-[72px]"
+            >
+              <Facebook className="w-8 h-8 flex-shrink-0 text-[#1877F2]" aria-hidden="true" />
+              <div>
+                <p className="font-fraunces font-bold text-brand-slate text-lg leading-snug group-hover:text-[#1877F2] transition-colors">Facebook</p>
+                <p className="text-xs text-brand-slate/45">Lorna Antwi</p>
+              </div>
+            </a>
+            <a
+              href="https://www.instagram.com/lornaantwi_/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-5 bg-white border border-brand-slate/10 rounded-2xl px-6 py-5 shadow-sm hover:shadow-md hover:border-brand-red/30 transition-all min-h-[72px]"
+            >
+              <Instagram className="w-8 h-8 flex-shrink-0 text-brand-red" aria-hidden="true" />
+              <div>
+                <p className="font-fraunces font-bold text-brand-slate text-lg leading-snug group-hover:text-brand-red transition-colors">Instagram</p>
+                <p className="text-xs text-brand-slate/45">@lornaantwi_</p>
+              </div>
+            </a>
+            <a
+              href="mailto:votelornaantwi@gmail.com"
+              className="group flex items-center gap-5 bg-white border border-brand-slate/10 rounded-2xl px-6 py-5 shadow-sm hover:shadow-md hover:border-brand-mustard/40 transition-all min-h-[72px]"
+            >
+              <Mail className="w-8 h-8 flex-shrink-0 text-brand-mustard" aria-hidden="true" />
+              <div>
+                <p className="font-fraunces font-bold text-brand-slate text-lg leading-snug group-hover:text-brand-mustard transition-colors">Email Us</p>
+                <p className="text-xs text-brand-slate/45">votelornaantwi@gmail.com</p>
+              </div>
+            </a>
           </div>
         </FadeIn>
       </section>
