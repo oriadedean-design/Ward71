@@ -100,6 +100,55 @@ export default async function Home() {
         </FadeIn>
       </section>
 
+      {/* ── Donation strip ── */}
+      <section className="bg-brand-slate text-brand-cream py-10 px-6">
+        <div className="max-w-2xl mx-auto text-center">
+          <FadeIn>
+            <h2 className="font-fraunces font-bold text-2xl md:text-3xl mb-1">
+              Support the Campaign
+            </h2>
+            <p className="text-brand-cream/50 text-sm mb-7">
+              No corporate money. Just neighbours.
+            </p>
+
+            {/* Preset amounts */}
+            <div className="grid grid-cols-4 gap-3 mb-4">
+              {[25, 50, 100, 250].map(a => (
+                <Link
+                  key={a}
+                  href={`/donate?amount=${a}`}
+                  className="py-4 rounded-xl font-bold text-lg border-2 border-white/15 bg-white/8 hover:bg-brand-mustard hover:text-brand-slate hover:border-brand-mustard transition-all"
+                >
+                  ${a}
+                </Link>
+              ))}
+            </div>
+
+            {/* Custom amount — plain GET form navigates to /donate?amount=X */}
+            <form action="/donate" method="GET" className="flex gap-2">
+              <div className="flex-1 flex items-center bg-white/10 border border-white/15 rounded-full px-5 focus-within:border-brand-mustard transition-colors">
+                <span className="text-brand-cream/40 font-bold mr-1 flex-shrink-0">$</span>
+                <input
+                  type="number"
+                  name="amount"
+                  min="5"
+                  max="1200"
+                  step="1"
+                  placeholder="Other amount"
+                  className="flex-1 bg-transparent py-3.5 text-brand-cream text-sm font-bold focus:outline-none placeholder:text-brand-cream/30"
+                />
+              </div>
+              <button
+                type="submit"
+                className="bg-brand-red text-white px-7 py-3.5 rounded-full font-bold text-sm hover:bg-opacity-90 transition-opacity flex-shrink-0"
+              >
+                Donate →
+              </button>
+            </form>
+          </FadeIn>
+        </div>
+      </section>
+
       {/* ── Social channels ── */}
       <section className="px-6 py-10 max-w-7xl mx-auto">
         <FadeIn>

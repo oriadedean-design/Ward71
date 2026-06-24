@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-const HIDE_ON = ['/donate', '/thank-you']
+const HIDE_ON = ['/', '/donate', '/thank-you']
 const AMOUNTS = [25, 50, 100, 250]
 
 export function DonationBanner() {
