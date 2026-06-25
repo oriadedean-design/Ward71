@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { FadeIn } from '@/components/FadeIn';
 
 export function ImpactMeter() {
-  const [currentAmount, setCurrentAmount] = useState(1250);
+  const [currentAmount, setCurrentAmount] = useState(0);
   const targetAmount = 60000;
   
   // In a full Sanity implementation, this would fetch the milestone document:
