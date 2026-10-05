@@ -15,6 +15,17 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://www.lornaantwi.com/how-to-help' },
 };
 
+// TO VERIFY before relying on these: confirm against toronto.ca/elections,
+// then replace the placeholder text (and remove the highlight styling).
+const CONTRIBUTION_MAX_PLACEHOLDER = '[$ MAXIMUM: TO VERIFY]';
+const REBATE_PLACEHOLDER = '[REBATE %: TO VERIFY]';
+
+function Placeholder({ children }: { children: string }) {
+  return (
+    <mark className="bg-brand-mustard/30 text-brand-slate font-bold px-1 rounded">{children}</mark>
+  );
+}
+
 export default function HowToHelpPage() {
   return (
     <>
@@ -113,6 +124,61 @@ export default function HowToHelpPage() {
                 </li>
               ))}
             </ul>
+          </FadeIn>
+        </div>
+
+        {/* ── How do contributions work? ── */}
+        <div className="max-w-4xl mx-auto mt-12">
+          <FadeIn className="bg-white p-8 rounded-3xl shadow-sm border border-brand-slate/10">
+            <h2 className="text-2xl md:text-3xl font-fraunces font-bold mb-4 text-brand-slate">
+              How do contributions work?
+            </h2>
+            <p className="text-base md:text-lg font-medium text-brand-slate/80 leading-relaxed mb-5">
+              Contributions can only come from individual Ontario residents, not corporations or
+              unions, and the City sets a maximum each person can give to a single candidate:{' '}
+              <Placeholder>{CONTRIBUTION_MAX_PLACEHOLDER}</Placeholder>. It&apos;s your money, so
+              here&apos;s the rest of it straight:
+            </p>
+            <ul className="space-y-3 text-base font-medium text-brand-slate/80 leading-relaxed">
+              <li className="flex items-start gap-3">
+                <span className="text-brand-mustard font-bold text-xl leading-none">&bull;</span>
+                <span>
+                  <strong className="text-brand-slate">You may get some of it back.</strong>{' '}
+                  Toronto&apos;s Contribution Rebate Program refunds part of an eligible contribution (
+                  <Placeholder>{REBATE_PLACEHOLDER}</Placeholder>). The City runs it, so the details
+                  and how to apply are at{' '}
+                  <a
+                    href="https://www.toronto.ca/city-government/elections/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-brand-red underline underline-offset-2 hover:opacity-80"
+                  >
+                    toronto.ca/elections
+                  </a>
+                  .
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-brand-mustard font-bold text-xl leading-none">&bull;</span>
+                <span>
+                  <strong className="text-brand-slate">Over $100 is public.</strong> If you give more
+                  than $100, your name and the amount appear in the campaign&apos;s financial filing.
+                  That&apos;s the law, and it&apos;s part of what keeps local elections honest.
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-brand-mustard font-bold text-xl leading-none">&bull;</span>
+                <span>
+                  <strong className="text-brand-slate">It isn&apos;t federally tax deductible.</strong>{' '}
+                  Municipal contributions don&apos;t qualify for the federal political tax credit, so
+                  the City rebate is the main way any of it comes back to you.
+                </span>
+              </li>
+            </ul>
+            <p className="text-base font-medium text-brand-slate/70 leading-relaxed mt-5">
+              Give what feels right for your household. Every contribution is reported the same way,
+              and every dollar goes to the work listed above.
+            </p>
           </FadeIn>
         </div>
 
