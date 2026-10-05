@@ -5,6 +5,8 @@ import { Facebook, Instagram, Mail } from 'lucide-react';
 import { FadeIn } from '@/components/FadeIn';
 import { ImpactMeter } from '@/components/ImpactMeter';
 import { SubscribeForm } from '@/components/SubscribeForm';
+import { Endorsements } from '@/components/Endorsements';
+import { getEndorsements } from '@/lib/endorsements';
 import { client } from '@/sanity/client';
 
 export const metadata: Metadata = {
@@ -19,8 +21,14 @@ export const metadata: Metadata = {
 };
 import { urlFor } from '@/sanity/image';
 
+// Re-fetch Sanity content (photo, endorsements) at most every 5 minutes.
+export const revalidate = 300;
+
 export default async function Home() {
-  const settings = await client.fetch(`*[_type == "siteSettings"][0]{ candidatePhoto }`)
+  const [settings, endorsements] = await Promise.all([
+    client.fetch(`*[_type == "siteSettings"][0]{ candidatePhoto }`),
+    getEndorsements(),
+  ])
   const photoUrl = settings?.candidatePhoto
     ? urlFor(settings.candidatePhoto).width(800).height(1000).fit('crop').url()
     : null
@@ -125,6 +133,8 @@ export default async function Home() {
           </div>
         </FadeIn>
       </section>
+
+      <Endorsements endorsements={endorsements} />
 
       {/* ── Donation strip ── */}
       <section className="bg-brand-slate text-brand-cream py-10 px-6">

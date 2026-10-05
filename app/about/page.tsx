@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { FadeIn } from '@/components/FadeIn';
 import { client } from '@/sanity/client';
 import { urlFor } from '@/sanity/image';
+import { Endorsements } from '@/components/Endorsements';
+import { getEndorsements } from '@/lib/endorsements';
 
 export const metadata: Metadata = {
   title: 'About Lorna Antwi',
@@ -16,8 +18,14 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://www.lornaantwi.com/about' },
 };
 
+// Re-fetch Sanity content (photo, endorsements) at most every 5 minutes.
+export const revalidate = 300;
+
 export default async function AboutPage() {
-  const settings = await client.fetch(`*[_type == "siteSettings"][0]{ candidatePhoto }`)
+  const [settings, endorsements] = await Promise.all([
+    client.fetch(`*[_type == "siteSettings"][0]{ candidatePhoto }`),
+    getEndorsements(),
+  ])
   const photoUrl = settings?.candidatePhoto
     ? urlFor(settings.candidatePhoto).width(600).height(800).fit('crop').url()
     : null
@@ -95,6 +103,8 @@ export default async function AboutPage() {
           </div>
         </div>
       </section>
+
+      <Endorsements endorsements={endorsements} />
     </>
   );
 }

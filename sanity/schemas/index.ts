@@ -7,6 +7,7 @@ import volunteerSubmission from './volunteerSubmission';
 import donationMilestone from './donationMilestone';
 import donationRecord from './donationRecord';
 import inquiry from './inquiry';
+import endorsement from './endorsement';
 
 export const schemaTypes = [
   siteSettings,
@@ -18,4 +19,5 @@ export const schemaTypes = [
   donationMilestone,
   donationRecord,
   inquiry,
+  endorsement,
 ];
