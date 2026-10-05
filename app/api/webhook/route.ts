@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { writeClient } from '@/sanity/client';
+import { sendTeamEmail } from '@/lib/email';
+import { CONTRIBUTION_LIMITS } from '@/lib/compliance';
 
 // Initialised lazily so the module loads cleanly at build time
 // without requiring STRIPE_SECRET_KEY to be present.
@@ -67,6 +69,37 @@ export async function POST(req: Request) {
           .patch(milestone._id)
           .inc({ currentAmount: amountCad, donorCount: 1 })
           .commit();
+      }
+
+      // 3. Notify the team. Caught so Stripe doesn't retry the webhook and
+      //    create a duplicate donation record.
+      try {
+        const disclosed = amountCad > CONTRIBUTION_LIMITS.publicDisclosureThreshold;
+        const receipt = amountCad > CONTRIBUTION_LIMITS.receiptThreshold;
+        await sendTeamEmail({
+          subject: `New donation: $${amountCad} from ${m.donor_name}`,
+          heading: `New donation of $${amountCad} CAD`,
+          intro: `${m.donor_name} made a contribution through the website. Payment was confirmed by Stripe.`,
+          rows: [
+            ['Amount', `$${amountCad} CAD`],
+            ['Donor', m.donor_name],
+            ['Email', m.donor_email],
+            ['Phone', m.donor_phone],
+            ['Address', [m.donor_street, m.donor_city, m.donor_province, m.donor_postal_code].filter(Boolean).join(', ')],
+            ['Contributor type', m.contributor_type],
+            ['Ontario residency confirmed', m.residency_confirmed === 'true' ? 'Yes' : 'No'],
+            ['Self-attested eligibility', m.self_attested === 'true' ? 'Yes' : 'No'],
+            ['Receipt required', receipt ? `Yes (over $${CONTRIBUTION_LIMITS.receiptThreshold})` : 'No'],
+            ['Public disclosure', disclosed ? `Yes (over $${CONTRIBUTION_LIMITS.publicDisclosureThreshold})` : 'No'],
+            ['Stripe payment ID', intent.id],
+          ],
+          nextStep: receipt
+            ? `Issue an official contribution receipt to ${m.donor_name} and send a thank-you. The record is saved in Sanity Studio under Donation Records.`
+            : `Send ${m.donor_name} a thank-you. The record is saved in Sanity Studio under Donation Records.`,
+          replyTo: m.donor_email,
+        });
+      } catch (emailError) {
+        console.error('Donation notification email failed:', emailError);
       }
     }
 

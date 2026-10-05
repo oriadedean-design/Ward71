@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { writeClient } from '@/sanity/client';
+import { sendTeamEmail } from '@/lib/email';
 
 const CATEGORIES = [
   'Housing',
@@ -36,6 +37,27 @@ export async function POST(req: Request) {
       submittedAt: new Date().toISOString(),
       status: 'New',
     });
+
+    // Already saved in Sanity, so a failed email shouldn't fail the submission.
+    const topic = CATEGORIES.includes(category) ? category : 'Other';
+    try {
+      await sendTeamEmail({
+        subject: `Community inquiry (${topic}): ${name.trim()}`,
+        heading: 'New community inquiry',
+        intro: `${name.trim()} sent a message about ${topic} through the Community page.`,
+        rows: [
+          ['Name', name.trim()],
+          ['Email', email.trim()],
+          ['Postal code', postalCode?.trim()],
+          ['Topic', topic],
+        ],
+        message: message.trim(),
+        nextStep: `Reply to this email to respond to ${name.trim()} directly. The inquiry is also saved in Sanity Studio under Inquiries.`,
+        replyTo: email.trim(),
+      });
+    } catch (emailError) {
+      console.error('Inquiry notification email failed:', emailError);
+    }
 
     return NextResponse.json({ ok: true });
   } catch (error) {

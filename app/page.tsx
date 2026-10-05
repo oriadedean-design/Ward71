@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Facebook, Instagram, Mail } from 'lucide-react';
 import { FadeIn } from '@/components/FadeIn';
 import { ImpactMeter } from '@/components/ImpactMeter';
+import { SubscribeForm } from '@/components/SubscribeForm';
 import { client } from '@/sanity/client';
 
 export const metadata: Metadata = {
@@ -201,17 +202,7 @@ export default async function Home() {
             <p className="text-lg md:text-xl text-brand-mustard mb-8 font-bold">
               Join the community to stay updated on the campaign.
             </p>
-            <form className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto relative z-10">
-              <input
-                type="email"
-                placeholder="Email address"
-                className="flex-1 px-6 py-4 rounded-full bg-white text-brand-slate font-medium text-lg border-2 border-brand-slate/20 focus:border-brand-mustard focus:outline-none focus:ring-0"
-                required
-              />
-              <button type="submit" className="bg-brand-mustard text-brand-slate px-8 py-4 rounded-full font-bold hover:bg-opacity-90 transition-opacity">
-                Join Us
-              </button>
-            </form>
+            <SubscribeForm />
 
             <div className="mt-8 text-left bg-brand-cream/10 p-6 rounded-2xl border border-brand-cream/20">
               <h3 className="text-xl font-bold font-fraunces mb-4 border-b border-brand-cream/20 pb-3">Key Voting Timelines - 2026</h3>
