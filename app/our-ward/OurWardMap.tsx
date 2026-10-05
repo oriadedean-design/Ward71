@@ -9,12 +9,20 @@ import { neighbourhoods, type Neighbourhood, type AccentColor } from '@/lib/ward
 // ViewBox: 0 0 440 520
 // North = Steeles Ave W (y=0)   South = Hwy 401 (y=520)
 // West  = Humber River  (x=0)   East  = Keele St (x=440)
-// Dividers: Finch Ave W (y=200), Sheppard Ave W (y=355), Jane St (x=155), east column (x=315)
+// Dividers: Finch Ave W (y=200), Sheppard Ave W (y=355), Jane St (x=155), east column (x=315),
+// Humber Summit / Glenfield-Jane Heights (x=70)
 const SVG_ZONES = [
   {
+    id: 'humber-summit',
+    d: 'M 0,0 L 70,0 L 70,200 L 0,200 Z',
+    cx: 35,
+    cy: 100,
+    lines: ['Humber', 'Summit'],
+  },
+  {
     id: 'glenfield-jane-heights',
-    d: 'M 0,0 L 155,0 L 155,200 L 0,200 Z',
-    cx: 77,
+    d: 'M 70,0 L 155,0 L 155,200 L 70,200 Z',
+    cx: 112,
     cy: 100,
     lines: ['Glenfield-', 'Jane Heights'],
   },
@@ -396,11 +404,12 @@ function IntroPanel() {
           />
         </svg>
       </div>
-      <h2 className="text-xl font-fraunces font-bold text-brand-slate mb-3">
-        Select a Neighbourhood
-      </h2>
+      <p className="text-xl font-fraunces font-bold text-brand-slate mb-3">
+        Pick a neighbourhood
+      </p>
       <p className="text-brand-slate/55 text-base leading-relaxed max-w-[260px]">
-        Click any zone on the map to hear what residents are telling Lorna.
+        Click any part of the map to read about that neighbourhood and what people there are
+        telling me.
       </p>
     </div>
   )
@@ -415,7 +424,7 @@ function NeighbourhoodPanel({ n }: { n: Neighbourhood }) {
         >
           Ward 7 · Humber River-Black Creek
         </span>
-        <h2 className="text-3xl font-fraunces font-bold text-brand-slate">{n.name}</h2>
+        <h3 className="text-3xl font-fraunces font-bold text-brand-slate">{n.name}</h3>
       </div>
 
       <div>
@@ -455,40 +464,42 @@ function NeighbourhoodCard({
         isOpen ? accentBorder(n.accentColor) : 'border-brand-slate/10'
       }`}
     >
-      <button
-        onClick={onToggle}
-        aria-expanded={isOpen}
-        className="w-full flex items-center justify-between gap-3 px-5 py-4 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-inset"
-        style={{ minHeight: '56px' }}
-      >
-        <div className="flex items-center gap-3 min-w-0">
-          <span
-            className={`w-3 h-3 rounded-full flex-shrink-0 ${accentDot(n.accentColor)}`}
+      <h3>
+        <button
+          onClick={onToggle}
+          aria-expanded={isOpen}
+          aria-controls={`${n.id}-details`}
+          className="w-full flex items-center justify-between gap-3 px-5 py-4 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-inset"
+          style={{ minHeight: '56px' }}
+        >
+          <div className="flex items-center gap-3 min-w-0">
+            <span
+              className={`w-3 h-3 rounded-full flex-shrink-0 ${accentDot(n.accentColor)}`}
+              aria-hidden="true"
+            />
+            <span className="font-fraunces font-bold text-[1.05rem] text-brand-slate leading-snug">
+              {n.name}
+            </span>
+          </div>
+          <ChevronDown
+            size={20}
             aria-hidden="true"
+            className={`text-brand-slate/40 flex-shrink-0 transition-transform duration-200 ${
+              isOpen ? 'rotate-180' : ''
+            }`}
           />
-          <span className="font-fraunces font-bold text-[1.05rem] text-brand-slate leading-snug">
-            {n.name}
-          </span>
-        </div>
-        <ChevronDown
-          size={20}
-          aria-hidden="true"
-          className={`text-brand-slate/40 flex-shrink-0 transition-transform duration-200 ${
-            isOpen ? 'rotate-180' : ''
-          }`}
-        />
-      </button>
+        </button>
+      </h3>
 
-      {isOpen && (
-        <div className="px-5 pb-5 pt-4 border-t border-brand-slate/5">
-          <p className="text-brand-slate/75 text-sm leading-relaxed mb-4">{n.description}</p>
-          <span
-            className={`inline-block text-sm font-bold px-4 py-2 rounded-full ${accentTag(n.accentColor)}`}
-          >
-            {n.priority}
-          </span>
-        </div>
-      )}
+      {/* Always rendered so the copy is in the page HTML; hidden while collapsed */}
+      <div id={`${n.id}-details`} hidden={!isOpen} className="px-5 pb-5 pt-4 border-t border-brand-slate/5">
+        <p className="text-brand-slate/75 text-sm leading-relaxed mb-4">{n.description}</p>
+        <span
+          className={`inline-block text-sm font-bold px-4 py-2 rounded-full ${accentTag(n.accentColor)}`}
+        >
+          {n.priority}
+        </span>
+      </div>
     </div>
   )
 }
@@ -521,13 +532,57 @@ export function OurWardMap() {
       <section className="px-6 py-10 md:py-16 max-w-7xl mx-auto">
         <FadeIn>
           <h1 className="text-4xl md:text-5xl font-fraunces font-bold leading-tight mb-5">
-            Our Ward,{' '}
-            <span className="text-brand-red">Block by Block</span>
+            Ward 7: <span className="text-brand-red">Humber River-Black Creek</span>
           </h1>
           <p className="text-lg md:text-xl text-brand-slate/75 max-w-2xl leading-relaxed">
-            I know Humber River-Black Creek because I&apos;ve worked in it for years. Here&apos;s
-            what I&apos;m hearing from residents across our neighbourhoods — and what I&apos;ll do
-            about it.
+            Ward 7 is one of Toronto&apos;s 25 council wards. It covers Humber River-Black Creek in
+            northwest North York, and one city councillor represents it at City Hall. I know these
+            streets because I&apos;ve spent years working in them, helping neighbours find housing and
+            get through systems that don&apos;t always make it easy.
+          </p>
+        </FadeIn>
+      </section>
+
+      {/* ── What ward am I in? ── */}
+      <section className="px-6 pb-10 max-w-7xl mx-auto">
+        <FadeIn>
+          <div className="max-w-2xl bg-white rounded-2xl border border-brand-slate/10 p-6 md:p-8">
+            <h2 className="text-2xl md:text-3xl font-fraunces font-bold text-brand-slate mb-3">
+              What ward am I in?
+            </h2>
+            <p className="text-brand-slate/80 leading-relaxed font-medium mb-3">
+              If you live in Humber River-Black Creek, you&apos;re in Ward 7. The ward runs from Steeles
+              Avenue in the north to Highway 401 in the south, and from the Humber River in the west
+              to Keele Street in the east.
+            </p>
+            <p className="text-brand-slate/80 leading-relaxed font-medium mb-3">
+              That takes in Jane and Finch, Black Creek, Glenfield-Jane Heights, Downsview,
+              Humbermede, Humber Summit and Oakdale-Beverley Heights. Plenty of people aren&apos;t
+              sure which ward they&apos;re in, especially near the edges, so if you want to be certain,
+              put your address into the City&apos;s lookup at{' '}
+              <a
+                href="https://www.toronto.ca/city-government/elections/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-brand-red underline underline-offset-2 hover:opacity-80"
+              >
+                toronto.ca/elections
+              </a>
+              . It takes about a minute.
+            </p>
+          </div>
+        </FadeIn>
+      </section>
+
+      {/* ── Neighbourhoods ── */}
+      <section className="px-6 pb-6 max-w-7xl mx-auto">
+        <FadeIn>
+          <h2 className="text-2xl md:text-3xl font-fraunces font-bold text-brand-slate mb-2">
+            Neighbourhoods in Ward 7
+          </h2>
+          <p className="text-brand-slate/70 leading-relaxed font-medium max-w-2xl">
+            Seven neighbourhoods, each with its own character. Here&apos;s how I see them, and what
+            people keep telling me at their doors.
           </p>
         </FadeIn>
       </section>
@@ -539,7 +594,7 @@ export function OurWardMap() {
         <div className="md:hidden">
           <FadeIn>
             <p className="text-sm text-brand-slate/50 text-center mb-3">
-              Tap a zone to jump to that neighbourhood ↓
+              Tap the map to jump to a neighbourhood ↓
             </p>
             {/* Fixed-height wrapper: SVG scales to fit */}
             <div
@@ -585,7 +640,7 @@ export function OurWardMap() {
               />
             </div>
             <p className="text-xs text-brand-slate/40 text-center mt-2">
-              Click a neighbourhood zone to explore
+              Click a neighbourhood to read about it
             </p>
           </FadeIn>
 

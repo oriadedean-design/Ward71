@@ -3,14 +3,14 @@ import { OurWardMap } from './OurWardMap'
 import { WardStats } from '@/components/WardStats'
 
 export const metadata: Metadata = {
-  title: 'Our Ward | Lorna Antwi for Toronto City Council, Ward 7',
+  title: 'Ward 7: Humber River-Black Creek Neighbourhoods',
   description:
-    'Neighbourhood by neighbourhood — what Lorna Antwi is hearing from residents across Humber River-Black Creek (Ward 7) and what she\'ll do about it.',
+    'What ward am I in? Ward 7 covers Humber River-Black Creek in northwest North York, from Steeles to the 401 and the Humber River to Keele: Jane and Finch, Black Creek, Downsview, Humbermede, Humber Summit and more.',
   alternates: { canonical: 'https://www.lornaantwi.com/our-ward' },
   openGraph: {
-    title: 'Our Ward, Block by Block | Lorna Antwi',
+    title: 'Ward 7: Humber River-Black Creek Neighbourhoods | Lorna Antwi',
     description:
-      'Explore what residents across Ward 7 are telling Lorna — from Jane & Finch to Downsview to Oakdale — and her platform response to each neighbourhood.',
+      'The seven neighbourhoods of Ward 7, from Jane and Finch to Humber Summit to Oakdale-Beverley Heights, and what residents are telling Lorna Antwi.',
     url: 'https://www.lornaantwi.com/our-ward',
   },
 }
