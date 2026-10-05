@@ -15,17 +15,9 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://www.lornaantwi.com/how-to-help' },
 };
 
-// TO VERIFY before relying on these: confirm against toronto.ca/elections,
-// then replace the placeholder text (and remove the highlight styling).
-const CONTRIBUTION_MAX_PLACEHOLDER = '[$ MAXIMUM: TO VERIFY]';
-const REBATE_PLACEHOLDER = '[REBATE %: TO VERIFY]';
-
-function Placeholder({ children }: { children: string }) {
-  return (
-    <mark className="bg-brand-mustard/30 text-brand-slate font-bold px-1 rounded">{children}</mark>
-  );
-}
-
+// 2026 figures from toronto.ca/elections (Manage a Campaign). Re-check before
+// each election: council contribution limit and the Contribution Rebate Program
+// (75% up to $300, then 50% of the amount over $300 + $225, up to $1,000).
 export default function HowToHelpPage() {
   return (
     <>
@@ -135,18 +127,18 @@ export default function HowToHelpPage() {
             </h2>
             <p className="text-base md:text-lg font-medium text-brand-slate/80 leading-relaxed mb-5">
               Contributions can only come from individual Ontario residents, not corporations or
-              unions, and the City sets a maximum each person can give to a single candidate:{' '}
-              <Placeholder>{CONTRIBUTION_MAX_PLACEHOLDER}</Placeholder>. It&apos;s your money, so
-              here&apos;s the rest of it straight:
+              unions, and each person can give up to $1,200 to a single council candidate.
+              It&apos;s your money, so here&apos;s the rest of it straight:
             </p>
             <ul className="space-y-3 text-base font-medium text-brand-slate/80 leading-relaxed">
               <li className="flex items-start gap-3">
                 <span className="text-brand-mustard font-bold text-xl leading-none">&bull;</span>
                 <span>
                   <strong className="text-brand-slate">You may get some of it back.</strong>{' '}
-                  Toronto&apos;s Contribution Rebate Program refunds part of an eligible contribution (
-                  <Placeholder>{REBATE_PLACEHOLDER}</Placeholder>). The City runs it, so the details
-                  and how to apply are at{' '}
+                  Toronto&apos;s Contribution Rebate Program refunds 75% of eligible contributions
+                  over $25 and up to $300, and a smaller share of larger amounts. A $100 contribution
+                  gets $75 back; a $1,200 contribution gets about $642 back. The City runs the
+                  program, so the details and how to apply are at{' '}
                   <a
                     href="https://www.toronto.ca/city-government/elections/"
                     target="_blank"
