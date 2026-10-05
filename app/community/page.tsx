@@ -10,9 +10,9 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Community Voices | Lorna Antwi for Toronto City Council',
     description: 'What residents across Humber River-Black Creek are saying — and how Lorna is listening.',
-    url: 'https://lornaantwi.ca/community',
+    url: 'https://www.lornaantwi.com/community',
   },
-  alternates: { canonical: 'https://lornaantwi.ca/community' },
+  alternates: { canonical: 'https://www.lornaantwi.com/community' },
 };
 
 export default async function CommunityPage() {

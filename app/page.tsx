@@ -10,11 +10,11 @@ import { client } from '@/sanity/client';
 export const metadata: Metadata = {
   title: 'Lorna Antwi for Toronto City Council | Ward 7',
   description: 'Vote Lorna Antwi for Toronto City Council, Humber River-Black Creek (Ward 7). Affordable housing, community safety, youth opportunity, and real change for our neighbourhood.',
-  alternates: { canonical: 'https://lornaantwi.ca' },
+  alternates: { canonical: 'https://www.lornaantwi.com' },
   openGraph: {
     title: 'Lorna Antwi for Toronto City Council | Ward 7',
     description: 'Stronger Together. Real change for Humber River-Black Creek. Join our grassroots campaign.',
-    url: 'https://lornaantwi.ca',
+    url: 'https://www.lornaantwi.com',
   },
 };
 import { urlFor } from '@/sanity/image';
@@ -39,11 +39,11 @@ export default async function Home() {
             "@graph": [
               {
                 "@type": "Person",
-                "@id": "https://lornaantwi.ca/#lorna",
+                "@id": "https://www.lornaantwi.com/#lorna",
                 "name": "Lorna Antwi",
                 "jobTitle": "Candidate for Toronto City Council, Ward 7 (Humber River-Black Creek)",
                 "description": "Counsellor with Toronto Shelter & Support Services and community advocate running for Toronto City Council in Humber River-Black Creek (Ward 7).",
-                "url": "https://lornaantwi.ca",
+                "url": "https://www.lornaantwi.com",
                 "image": candidateImage,
                 "alumniOf": ["Brookview Middle School", "Seneca Polytechnic"],
                 "homeLocation": {
@@ -53,11 +53,11 @@ export default async function Home() {
               },
               {
                 "@type": "Organization",
-                "@id": "https://lornaantwi.ca/#campaign",
+                "@id": "https://www.lornaantwi.com/#campaign",
                 "name": "Lorna Antwi for Toronto City Council",
-                "url": "https://lornaantwi.ca",
+                "url": "https://www.lornaantwi.com",
                 "logo": candidateImage,
-                "founder": { "@id": "https://lornaantwi.ca/#lorna" },
+                "founder": { "@id": "https://www.lornaantwi.com/#lorna" },
                 "areaServed": "Humber River-Black Creek (Ward 7), Toronto, Ontario"
               }
             ]

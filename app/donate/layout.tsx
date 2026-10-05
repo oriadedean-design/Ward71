@@ -7,9 +7,9 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Donate | Lorna Antwi for Toronto City Council',
     description: 'Power a grassroots campaign. Our goal is $25,000 — every dollar goes directly into community outreach in Ward 7.',
-    url: 'https://lornaantwi.ca/donate',
+    url: 'https://www.lornaantwi.com/donate',
   },
-  alternates: { canonical: 'https://lornaantwi.ca/donate' },
+  alternates: { canonical: 'https://www.lornaantwi.com/donate' },
 }
 
 export default function DonateLayout({ children }: { children: ReactNode }) {

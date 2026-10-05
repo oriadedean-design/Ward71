@@ -21,7 +21,7 @@ const jakarta = Plus_Jakarta_Sans({
 const OG_IMAGE = 'https://cdn.sanity.io/images/kfgyh53r/production/3279f5a4bbd66e1b50076368d2372c9980c7b90d-3696x5371.jpg';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://lornaantwi.ca'),
+  metadataBase: new URL('https://www.lornaantwi.com'),
   title: {
     default: 'Lorna Antwi for Toronto City Council | Ward 7',
     template: '%s | Lorna Antwi for Toronto City Council',
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_CA',
-    url: 'https://lornaantwi.ca',
+    url: 'https://www.lornaantwi.com',
     siteName: 'Lorna Antwi for Toronto City Council',
     title: 'Lorna Antwi for Toronto City Council | Ward 7',
     description: 'Vote Lorna Antwi for Toronto City Council, Humber River-Black Creek (Ward 7). Affordable housing, community safety, and real change.',
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: 'https://lornaantwi.ca',
+    canonical: 'https://www.lornaantwi.com',
   },
 };
 
@@ -78,7 +78,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 "name": "Lorna Antwi",
                 "jobTitle": "Candidate for Toronto City Council",
                 "description": "Running for Toronto City Council in Humber River-Black Creek (Ward 7) in the 2026 municipal election.",
-                "url": "https://lornaantwi.ca",
+                "url": "https://www.lornaantwi.com",
                 "image": OG_IMAGE,
                 "sameAs": [],
                 "seeksOrOffer": {
@@ -90,11 +90,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 "@context": "https://schema.org",
                 "@type": "Organization",
                 "name": "Lorna Antwi Campaign",
-                "url": "https://lornaantwi.ca",
+                "url": "https://www.lornaantwi.com",
                 "logo": OG_IMAGE,
                 "contactPoint": {
                   "@type": "ContactPoint",
-                  "email": "campaign@lornaantwi.ca",
+                  "email": "votelornaantwi@gmail.com",
                   "contactType": "Campaign Office"
                 }
               },
@@ -102,7 +102,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 "@context": "https://schema.org",
                 "@type": "WebSite",
                 "name": "Lorna Antwi for Toronto City Council",
-                "url": "https://lornaantwi.ca"
+                "url": "https://www.lornaantwi.com"
               }
             ])
           }}

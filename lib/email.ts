@@ -45,7 +45,7 @@ function render({ heading, intro, rows, message, nextStep }: TeamEmail) {
     ...(message ? ['', 'Message:', message] : []),
     ...(nextStep ? ['', `Next step: ${nextStep}`] : []),
     '',
-    `Received ${received} (Toronto time) via lornaantwi.ca`,
+    `Received ${received} (Toronto time) via www.lornaantwi.com`,
   ].join('\n');
 
   const tableRows = filled
@@ -76,7 +76,7 @@ function render({ heading, intro, rows, message, nextStep }: TeamEmail) {
           : ''
       }
     </div>
-    <p style="margin:12px 0 0;color:#9ca3af;font-size:12px;text-align:center;">Received ${escapeHtml(received)} (Toronto time) via lornaantwi.ca</p>
+    <p style="margin:12px 0 0;color:#9ca3af;font-size:12px;text-align:center;">Received ${escapeHtml(received)} (Toronto time) via www.lornaantwi.com</p>
   </div>`;
 
   return { text, html };

@@ -11,9 +11,9 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'About Lorna Antwi | Toronto City Council Ward 7',
     description: 'Rooted in service. Built for our community. Read Lorna\'s story and why she\'s running for Ward 7.',
-    url: 'https://lornaantwi.ca/about',
+    url: 'https://www.lornaantwi.com/about',
   },
-  alternates: { canonical: 'https://lornaantwi.ca/about' },
+  alternates: { canonical: 'https://www.lornaantwi.com/about' },
 };
 
 export default async function AboutPage() {
@@ -32,7 +32,7 @@ export default async function AboutPage() {
             "@type": "Person",
             "name": "Lorna Antwi",
             "jobTitle": "Political Candidate for Toronto City Council",
-            "url": "https://lornaantwi.ca",
+            "url": "https://www.lornaantwi.com",
             "description": "Running for Toronto City Council in Humber River-Black Creek (Ward 7)."
           })
         }}

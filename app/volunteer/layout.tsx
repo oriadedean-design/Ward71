@@ -7,9 +7,9 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Volunteer | Lorna Antwi for Toronto City Council',
     description: 'Join the team. From door knocking to phone banking, every role matters in our grassroots campaign for Ward 7.',
-    url: 'https://lornaantwi.ca/volunteer',
+    url: 'https://www.lornaantwi.com/volunteer',
   },
-  alternates: { canonical: 'https://lornaantwi.ca/volunteer' },
+  alternates: { canonical: 'https://www.lornaantwi.com/volunteer' },
 }
 
 export default function VolunteerLayout({ children }: { children: ReactNode }) {

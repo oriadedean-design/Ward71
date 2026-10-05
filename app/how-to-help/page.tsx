@@ -10,9 +10,9 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'How to Help | Lorna Antwi for Toronto City Council',
     description: 'Donate, volunteer, or spread the word. Every action powers our grassroots campaign in Ward 7.',
-    url: 'https://lornaantwi.ca/how-to-help',
+    url: 'https://www.lornaantwi.com/how-to-help',
   },
-  alternates: { canonical: 'https://lornaantwi.ca/how-to-help' },
+  alternates: { canonical: 'https://www.lornaantwi.com/how-to-help' },
 };
 
 export default function HowToHelpPage() {
@@ -53,7 +53,7 @@ export default function HowToHelpPage() {
             </p>
             <div className="grid grid-cols-2 gap-3">
               <a
-                href="https://www.facebook.com/sharer/sharer.php?u=https://lornaantwi.ca"
+                href="https://www.facebook.com/sharer/sharer.php?u=https://www.lornaantwi.com"
                 target="_blank" rel="noopener noreferrer"
                 className="flex justify-center items-center gap-2 bg-brand-cream text-brand-forest py-3 rounded-xl font-bold hover:bg-opacity-90 transition-opacity"
               >
@@ -67,14 +67,14 @@ export default function HowToHelpPage() {
                 <Instagram className="w-5 h-5" /> Instagram
               </a>
               <a
-                href="https://twitter.com/intent/tweet?url=https://lornaantwi.ca&text=Vote+Lorna+Antwi+for+Toronto+City+Council+Ward+7"
+                href="https://twitter.com/intent/tweet?url=https://www.lornaantwi.com&text=Vote+Lorna+Antwi+for+Toronto+City+Council+Ward+7"
                 target="_blank" rel="noopener noreferrer"
                 className="flex justify-center items-center gap-2 bg-brand-cream text-brand-forest py-3 rounded-xl font-bold hover:bg-opacity-90 transition-opacity"
               >
                 <Twitter className="w-5 h-5" /> X
               </a>
               <a
-                href="https://www.linkedin.com/sharing/share-offsite/?url=https://lornaantwi.ca"
+                href="https://www.linkedin.com/sharing/share-offsite/?url=https://www.lornaantwi.com"
                 target="_blank" rel="noopener noreferrer"
                 className="flex justify-center items-center gap-2 bg-brand-cream text-brand-forest py-3 rounded-xl font-bold hover:bg-opacity-90 transition-opacity"
               >
