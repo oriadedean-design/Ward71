@@ -23,48 +23,112 @@ const ADVANCE_LOCATIONS = [
   { name: 'Driftwood Community Recreation Centre', address: '4401 Jane Street' },
 ];
 
-// Plain-text answers for the FAQPage JSON-LD. Keep in sync with the
-// visible voting section below.
-const votingFaqs = [
+// Single source for both the visible voting section and the FAQPage JSON-LD.
+// Each answer's first paragraph must fully answer the question on its own.
+// "toronto.ca/elections" is linked automatically when rendered.
+type Faq = { question: string; paragraphs: string[]; showLocations?: boolean };
+
+const votingFaqs: Faq[] = [
   {
-    question: 'When can I vote in Ward 7?',
-    answer:
-      'Advance voting runs Tuesday, October 6 to Sunday, October 11, 2026, from 10 a.m. to 7 p.m. Election Day is Monday, October 26, 2026, from 10 a.m. to 8 p.m.',
+    question: 'How do I vote in the 2026 Toronto municipal election?',
+    paragraphs: [
+      "Make sure you're on the voters list, find out where to go, bring ID with your name and Toronto address, and vote during advance voting (October 6 to 11) or on Election Day, Monday, October 26, 2026.",
+      "That's honestly all there is to it. If this is your first time voting in Toronto, or your first time voting since becoming a citizen, you belong there as much as anyone, and the election workers will walk you through it.",
+    ],
   },
   {
-    question: 'Where can I vote early in Ward 7?',
-    answer:
-      'Any Ward 7 voter can vote at either ward-wide advance voting location: Domenico DiLuca Community Rec Centre, 25 Stanley Road, or Driftwood Community Recreation Centre, 4401 Jane Street.',
+    question: 'When is advance voting?',
+    paragraphs: [
+      'Advance voting in Ward 7 runs Tuesday, October 6 to Sunday, October 11, 2026.',
+      "That's six days, including a full weekend. If Election Day is a work day for you, or you'd just like it done, this is your chance.",
+    ],
+  },
+  {
+    question: 'What are the voting hours?',
+    paragraphs: [
+      'Advance voting is open 10 a.m. to 7 p.m. each day from October 6 to 11. On Election Day, Monday, October 26, polls are open 10 a.m. to 8 p.m.',
+      'The City sets these hours. If anything changes, toronto.ca/elections will have it first.',
+    ],
+  },
+  {
+    question: 'Where are the advance voting locations in Ward 7?',
+    paragraphs: [
+      'Ward 7 has two advance voting locations, and any Ward 7 voter can use either one:',
+      "Go to whichever is easier for you to get to. You don't need an appointment.",
+    ],
+    showLocations: true,
   },
   {
     question: 'Where do I vote on Election Day?',
-    answer:
-      'Election Day polling places are assigned by address and vary across Ward 7. Find your assigned voting place using MyVote at toronto.ca/elections, or check the voter information card mailed to you by the City of Toronto.',
+    paragraphs: [
+      "On Election Day you vote at the polling place assigned to your address, which may not be one of the advance voting locations. It's printed on the voter information card the City mailed you, and you can also look it up on MyVote at toronto.ca/elections.",
+      "It's worth checking the night before. It might not be where you voted last time.",
+    ],
   },
   {
     question: 'What do I need to bring?',
-    answer:
-      'Bring identification that shows your name and your Toronto address. The full list of accepted ID is at toronto.ca/elections.',
+    paragraphs: [
+      'Bring ID that shows your name and your Toronto address.',
+      "Lots of documents count, not just a driver's licence. Check the City's full list at toronto.ca/elections before you head out so you're not turned around at the door.",
+    ],
   },
   {
     question: 'Am I registered to vote?',
-    answer:
-      'Check or update your registration using MyVote at toronto.ca/elections. You can also register in person at the polls if you bring qualifying ID.',
+    paragraphs: [
+      'You can check in a couple of minutes on MyVote at toronto.ca/elections, and update your details there if anything has changed.',
+      "If you're not on the list, you can still register in person when you vote, as long as you bring qualifying ID. If you've moved recently, check anyway, because your old address could send you to the wrong place.",
+    ],
   },
 ];
 
-const otherFaqs = [
+const otherFaqs: Faq[] = [
   {
     question: 'Am I in Ward 7 (Humber River-Black Creek)?',
-    answer:
-      "Ward 7 covers the Humber River-Black Creek area of Toronto. The postal areas (FSAs) M3L, M3M, M3N, M9L, M9M and M9N fall largely within the ward and are a useful general guide, but ward boundaries do not follow postal codes exactly. Confirm your ward by entering your address in the City's ward lookup at toronto.ca/elections — the official lookup is the definitive source.",
+    paragraphs: [
+      "If you live in Humber River-Black Creek, between Steeles and the 401 and between the Humber River and Keele, you're in Ward 7. The City's ward lookup at toronto.ca/elections will confirm it for your exact address.",
+      "Postal codes starting with M3L, M3M, M3N, M9L, M9M and M9N are mostly in the ward, but boundaries don't follow postal codes exactly, so near the edges it's worth the minute to check.",
+    ],
   },
   {
     question: 'How can I get involved beyond voting?',
-    answer:
-      'There are many ways to help. You can volunteer with the campaign, make a contribution, or explore other ways to support. Visit the Volunteer, Donate, and How to Help pages on this site to get started.',
+    paragraphs: [
+      "You can volunteer, chip in a contribution, or just tell your neighbours about the campaign. All of it helps, and none of it requires experience.",
+    ],
   },
 ];
+
+function faqText(f: Faq): string {
+  const [first, ...rest] = f.paragraphs;
+  const locations = f.showLocations
+    ? [ADVANCE_LOCATIONS.map((l) => `${l.name}, ${l.address}`).join('; ') + '.']
+    : [];
+  return [first, ...locations, ...rest].join(' ');
+}
+
+const ELECTIONS_LINK_TEXT = 'toronto.ca/elections';
+
+function Linkified({ text }: { text: string }) {
+  const parts = text.split(ELECTIONS_LINK_TEXT);
+  return (
+    <>
+      {parts.map((part, i) => (
+        <span key={i}>
+          {part}
+          {i < parts.length - 1 && (
+            <a
+              href={ELECTIONS_URL}
+              className="text-brand-red underline underline-offset-2 hover:opacity-80"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {ELECTIONS_LINK_TEXT}
+            </a>
+          )}
+        </span>
+      ))}
+    </>
+  );
+}
 
 export default function ResourcesPage() {
   return (
@@ -78,7 +142,7 @@ export default function ResourcesPage() {
             mainEntity: [...votingFaqs, ...otherFaqs].map((f) => ({
               '@type': 'Question',
               name: f.question,
-              acceptedAnswer: { '@type': 'Answer', text: f.answer },
+              acceptedAnswer: { '@type': 'Answer', text: faqText(f) },
             })),
           }),
         }}
@@ -92,9 +156,9 @@ export default function ResourcesPage() {
               How to Vote in Ward 7
             </h1>
             <p className="text-lg md:text-xl text-brand-slate/80 leading-relaxed font-medium">
-              Everything you need to vote in the 2026 Toronto municipal election in Humber
-              River-Black Creek (Ward 7): how to register, where to vote, key dates, and what to
-              bring.
+              Dates, locations, ID and registration for the 2026 Toronto municipal election in
+              Humber River-Black Creek (Ward 7), in plain language. For anything official, the City
+              of Toronto has the final word.
             </p>
           </FadeIn>
         </div>
@@ -199,114 +263,44 @@ export default function ResourcesPage() {
 
       {/* ── Voting information ── */}
       <section className="px-6 pb-10 max-w-2xl mx-auto flex flex-col gap-5" aria-label="Ward 7 voting information">
-        <FadeIn>
-          <div className="bg-white rounded-2xl border border-brand-slate/10 p-6">
-            <h2 className="font-fraunces font-bold text-xl md:text-2xl text-brand-slate mb-4">
-              When can I vote in Ward 7?
-            </h2>
-            <div className="grid sm:grid-cols-2 gap-6">
-              <div>
-                <p className="font-bold text-brand-slate mb-1">Advance Voting</p>
-                <p className="text-brand-slate/70 font-medium">Tue, Oct 6 – Sun, Oct 11, 2026</p>
-                <p className="text-sm text-brand-slate/55 mt-1">10 a.m. – 7 p.m.</p>
+        {votingFaqs.map((f) => {
+          const [first, ...rest] = f.paragraphs;
+          return (
+            <FadeIn key={f.question}>
+              <div className="bg-white rounded-2xl border border-brand-slate/10 p-6">
+                <h2 className="font-fraunces font-bold text-xl md:text-2xl text-brand-slate mb-2">
+                  {f.question}
+                </h2>
+                <p className="text-brand-slate/80 leading-relaxed font-medium">
+                  <Linkified text={first} />
+                </p>
+                {f.showLocations && (
+                  <ul className="flex flex-col gap-3 mt-4">
+                    {ADVANCE_LOCATIONS.map((loc) => (
+                      <li key={loc.name} className="rounded-xl bg-brand-cream px-4 py-3">
+                        <p className="font-bold text-brand-slate leading-snug">{loc.name}</p>
+                        <p className="text-sm text-brand-slate/65">{loc.address}</p>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {rest.map((para) => (
+                  <p key={para} className="text-brand-slate/70 text-sm leading-relaxed mt-3">
+                    <Linkified text={para} />
+                  </p>
+                ))}
               </div>
-              <div>
-                <p className="font-bold text-brand-slate mb-1">Election Day</p>
-                <p className="text-brand-slate/70 font-medium">Mon, October 26, 2026</p>
-                <p className="text-sm text-brand-slate/55 mt-1">10 a.m. – 8 p.m.</p>
-              </div>
-            </div>
-          </div>
-        </FadeIn>
-
-        <FadeIn>
-          <div className="bg-white rounded-2xl border border-brand-slate/10 p-6">
-            <h2 className="font-fraunces font-bold text-xl md:text-2xl text-brand-slate mb-2">
-              Where can I vote early in Ward 7?
-            </h2>
-            <p className="text-brand-slate/70 text-sm leading-relaxed mb-4">
-              Any Ward 7 voter can use either ward-wide advance voting location, October 6 to 11,
-              10 a.m. to 7 p.m.
-            </p>
-            <ul className="flex flex-col gap-3">
-              {ADVANCE_LOCATIONS.map((loc) => (
-                <li key={loc.name} className="rounded-xl bg-brand-cream px-4 py-3">
-                  <p className="font-bold text-brand-slate leading-snug">{loc.name}</p>
-                  <p className="text-sm text-brand-slate/65">{loc.address}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </FadeIn>
-
-        <FadeIn>
-          <div className="bg-white rounded-2xl border border-brand-slate/10 p-6">
-            <h2 className="font-fraunces font-bold text-xl md:text-2xl text-brand-slate mb-2">
-              Where do I vote on Election Day?
-            </h2>
-            <p className="text-brand-slate/80 leading-relaxed font-medium">
-              Election Day polling places are assigned by address and vary across Ward 7. Find your
-              assigned voting place using MyVote at{' '}
-              <a
-                href={ELECTIONS_URL}
-                className="text-brand-red underline underline-offset-2 hover:opacity-80"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                toronto.ca/elections
-              </a>
-              , or check the voter information card mailed to you by the City of Toronto.
-            </p>
-          </div>
-        </FadeIn>
-
-        <FadeIn>
-          <div className="bg-white rounded-2xl border border-brand-slate/10 p-6">
-            <h2 className="font-fraunces font-bold text-xl md:text-2xl text-brand-slate mb-2">
-              What do I need to bring?
-            </h2>
-            <p className="text-brand-slate/80 leading-relaxed font-medium">
-              Bring identification that shows your name and your Toronto address. See the full list
-              of accepted ID at{' '}
-              <a
-                href={ELECTIONS_URL}
-                className="text-brand-red underline underline-offset-2 hover:opacity-80"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                toronto.ca/elections
-              </a>
-              .
-            </p>
-          </div>
-        </FadeIn>
-
-        <FadeIn>
-          <div className="bg-white rounded-2xl border border-brand-slate/10 p-6">
-            <h2 className="font-fraunces font-bold text-xl md:text-2xl text-brand-slate mb-2">
-              Am I registered to vote?
-            </h2>
-            <p className="text-brand-slate/80 leading-relaxed font-medium">
-              Check or update your registration using MyVote at{' '}
-              <a
-                href={ELECTIONS_URL}
-                className="text-brand-red underline underline-offset-2 hover:opacity-80"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                toronto.ca/elections
-              </a>
-              . You can also register in person at the polls if you bring qualifying ID.
-            </p>
-          </div>
-        </FadeIn>
+            </FadeIn>
+          );
+        })}
 
         <FadeIn>
           <div className="rounded-2xl border-2 border-brand-mustard bg-brand-mustard/10 p-6">
             <p className="text-brand-slate leading-relaxed font-medium">
-              Lorna Antwi is running for Toronto City Council in Ward 7, Humber River-Black Creek.
-              Whether you vote early or on October 26, you&apos;ll find her name on the ballot for
-              City Councillor.{' '}
+              Lorna Antwi is running for Toronto City Council in Ward 7, Humber River-Black Creek,
+              so whether you vote early or on October 26, her name will be on your ballot for City
+              Councillor. She&apos;s spent years helping neighbours get through complicated systems,
+              and she&apos;d like voting to be one thing that feels simple.{' '}
               <Link href="/about" className="font-bold text-brand-red underline underline-offset-2 hover:opacity-80">
                 Learn more about Lorna
               </Link>
@@ -326,32 +320,21 @@ export default function ResourcesPage() {
         <div className="flex flex-col gap-8">
           <FadeIn>
             <h3 className="text-xl font-fraunces font-bold mb-2 text-brand-red">
-              Am I in Ward 7 (Humber River-Black Creek)?
+              {otherFaqs[0].question}
             </h3>
-            <p className="text-brand-slate/80 leading-relaxed font-medium">
-              Ward 7 covers the Humber River-Black Creek area of Toronto. The postal areas (FSAs){' '}
-              <strong className="text-brand-slate">M3L, M3M, M3N, M9L, M9M and M9N</strong> fall
-              largely within the ward and are a useful general guide, but ward boundaries do not
-              follow postal codes exactly. Confirm your ward by entering your address in the City&apos;s
-              ward lookup at{' '}
-              <a
-                href="https://www.toronto.ca/city-government/elections/"
-                className="text-brand-red underline underline-offset-2 hover:opacity-80"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                toronto.ca/elections
-              </a>
-              .
-            </p>
+            {otherFaqs[0].paragraphs.map((para, i) => (
+              <p key={para} className={`text-brand-slate/80 leading-relaxed font-medium ${i > 0 ? 'mt-3' : ''}`}>
+                <Linkified text={para} />
+              </p>
+            ))}
           </FadeIn>
 
           <FadeIn>
             <h3 className="text-xl font-fraunces font-bold mb-2 text-brand-red">
-              How can I get involved beyond voting?
+              {otherFaqs[1].question}
             </h3>
             <p className="text-brand-slate/80 leading-relaxed font-medium mb-4">
-              There are many ways to help build this campaign:
+              {otherFaqs[1].paragraphs[0]}
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
