@@ -4,6 +4,7 @@ import './globals.css';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { DonationBanner } from '@/components/DonationBanner';
+import { VotingBanner } from '@/components/VotingBanner';
 import { Analytics } from '@vercel/analytics/next';
 
 const fraunces = Fraunces({
@@ -107,6 +108,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             ])
           }}
         />
+        <VotingBanner />
         <Header />
         <main className="flex-1">
           {children}

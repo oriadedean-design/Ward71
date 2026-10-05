@@ -101,6 +101,31 @@ export default async function Home() {
         </FadeIn>
       </section>
 
+      {/* ── How to vote callout ── */}
+      <section className="px-6 pb-10 max-w-7xl mx-auto">
+        <FadeIn>
+          <div className="rounded-2xl border-2 border-brand-mustard bg-white p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-5 md:gap-8">
+            <div className="flex-1">
+              <h2 className="font-fraunces font-bold text-2xl md:text-3xl text-brand-slate mb-2">
+                <Link href="/resources" className="hover:text-brand-red transition-colors">
+                  How to vote in Ward 7
+                </Link>
+              </h2>
+              <p className="text-brand-slate/75 font-medium leading-relaxed">
+                Advance voting runs October 6 to 11, 10 a.m. to 7 p.m., at two ward-wide locations.
+                Election Day is Monday, October 26, 10 a.m. to 8 p.m.
+              </p>
+            </div>
+            <Link
+              href="/resources"
+              className="flex items-center justify-center min-h-[48px] bg-brand-slate text-white px-6 py-3 rounded-full font-bold text-center hover:bg-opacity-90 transition-opacity md:flex-shrink-0"
+            >
+              Where to vote, dates, and ID →
+            </Link>
+          </div>
+        </FadeIn>
+      </section>
+
       {/* ── Donation strip ── */}
       <section className="bg-brand-slate text-brand-cream py-10 px-6">
         <div className="max-w-2xl mx-auto text-center">
@@ -218,6 +243,12 @@ export default async function Home() {
                   <p className="text-sm opacity-80 mt-1">10:00 AM - 8:00 PM</p>
                 </div>
               </div>
+              <Link
+                href="/resources"
+                className="inline-block mt-5 font-bold text-brand-mustard underline underline-offset-2 hover:opacity-80"
+              >
+                Where to vote in Ward 7: locations, dates, and ID →
+              </Link>
             </div>
           </FadeIn>
         </div>

@@ -8,7 +8,7 @@ const links = [
   { href: '/about', label: 'About Me' },
   { href: '/our-ward', label: 'Our Ward' },
   { href: '/community', label: 'Community' },
-  { href: '/resources', label: 'Voter Resources' },
+  { href: '/resources', label: 'How to Vote' },
   { href: '/how-to-help', label: 'How to Help' },
   { href: '/volunteer', label: 'Volunteer' },
 ]
