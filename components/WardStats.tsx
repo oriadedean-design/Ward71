@@ -114,11 +114,7 @@ export function WardStats() {
           Ward 7 by the Numbers
         </h2>
         <p className="text-ink/55 text-base max-w-2xl leading-relaxed mb-10">
-          Verified 2021 Census data for Humber River-Black Creek. Update figures in{' '}
-          <code className="text-xs bg-ink/5 px-1.5 py-0.5 rounded font-mono">
-            lib/wardStats.ts
-          </code>{' '}
-          and all cards refresh automatically.
+          Key facts about Humber River-Black Creek from the 2021 Census of Population.
         </p>
       </FadeIn>
 

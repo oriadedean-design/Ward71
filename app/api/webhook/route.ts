@@ -31,7 +31,8 @@ export async function POST(req: Request) {
       event = stripe.webhooks.constructEvent(body, sig, webhookSecret);
     } catch (err: any) {
       console.error(`Webhook signature error: ${err.message}`);
-      return NextResponse.json({ error: `Webhook Error: ${err.message}` }, { status: 400 });
+      // Details stay in the server logs; callers only learn the request was rejected.
+      return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
     }
 
     if (event.type === 'payment_intent.succeeded') {
