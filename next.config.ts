@@ -32,6 +32,13 @@ const nextConfig: NextConfig = {
     ],
   },
   output: 'standalone',
+  // Easy-to-remember addresses for the content editor (Sanity Studio).
+  async redirects() {
+    return [
+      { source: '/admin', destination: '/studio', permanent: false },
+      { source: '/login', destination: '/studio', permanent: false },
+    ];
+  },
   webpack: (config, {dev}) => {
     // HMR is disabled in AI Studio via DISABLE_HMR env var.
     // Do not modifyâfile watching is disabled to prevent flickering during agent edits.
