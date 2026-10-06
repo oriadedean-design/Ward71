@@ -6,6 +6,8 @@ import { Footer } from '@/components/Footer';
 import { DonationBanner } from '@/components/DonationBanner';
 import { VotingBanner } from '@/components/VotingBanner';
 import { Analytics } from '@vercel/analytics/next';
+import { SanityLive } from '@/sanity/live';
+import { getSiteSettings } from '@/lib/content';
 
 const fraunces = Fraunces({
   subsets: ['latin'],
@@ -65,7 +67,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const settings = await getSiteSettings();
+
   return (
     <html lang="en" className={`${fraunces.variable} ${jakarta.variable}`}>
       <body className="min-h-screen flex flex-col font-sans" suppressHydrationWarning>
@@ -95,7 +99,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 "logo": OG_IMAGE,
                 "contactPoint": {
                   "@type": "ContactPoint",
-                  "email": "votelornaantwi@gmail.com",
+                  "email": settings.contactEmail,
                   "contactType": "Campaign Office"
                 }
               },
@@ -108,14 +112,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             ])
           }}
         />
-        <VotingBanner />
+        <VotingBanner {...settings.votingBanner} />
         <Header />
         <main className="flex-1">
           {children}
         </main>
-        <DonationBanner />
-        <Footer />
+        <DonationBanner {...settings.donationBanner} />
+        <Footer settings={settings} />
         <Analytics />
+        <SanityLive />
       </body>
     </html>
   );

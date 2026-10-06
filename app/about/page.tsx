@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FadeIn } from '@/components/FadeIn';
-import { client } from '@/sanity/client';
+import { getPageContent, getSiteSettings, paragraphs } from '@/lib/content';
 import { urlFor } from '@/sanity/image';
 import { Endorsements } from '@/components/Endorsements';
 import { getEndorsements } from '@/lib/endorsements';
@@ -18,15 +18,13 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://www.lornaantwi.com/about' },
 };
 
-// Re-fetch Sanity content (photo, endorsements) at most every 5 minutes.
-export const revalidate = 300;
-
 export default async function AboutPage() {
-  const [settings, endorsements] = await Promise.all([
-    client.fetch(`*[_type == "siteSettings"][0]{ candidatePhoto }`),
+  const [c, settings, endorsements] = await Promise.all([
+    getPageContent('aboutPage'),
+    getSiteSettings(),
     getEndorsements(),
   ])
-  const photoUrl = settings?.candidatePhoto
+  const photoUrl = settings.candidatePhoto?.asset
     ? urlFor(settings.candidatePhoto).width(600).height(800).fit('crop').url()
     : null
 
@@ -48,8 +46,8 @@ export default async function AboutPage() {
       <section className="px-6 py-12 max-w-7xl mx-auto">
         <div className="text-center max-w-4xl mx-auto mb-10">
           <FadeIn>
-            <h1 className="text-4xl md:text-6xl font-fraunces font-bold mb-4 text-brand-slate">My Story.</h1>
-            <p className="text-xl md:text-3xl font-fraunces text-brand-red italic">Rooted in service. Built for our community.</p>
+            <h1 className="text-4xl md:text-6xl font-fraunces font-bold mb-4 text-brand-slate">{c.hero.heading}</h1>
+            <p className="text-xl md:text-3xl font-fraunces text-brand-red italic">{c.hero.tagline}</p>
           </FadeIn>
         </div>
 
@@ -68,36 +66,30 @@ export default async function AboutPage() {
 
           <div className="lg:w-2/3 prose prose-lg prose-slate max-w-none prose-p:leading-relaxed prose-p:mb-6 font-medium text-brand-slate/90">
             <FadeIn>
-              <p>
-                My connection to Humber River-Black Creek is both personal and professional. I attended Brookview Middle School and later studied at Seneca Polytechnic at York — experiences that shaped my understanding of the community and the importance of opportunity, education, and support for young people and families.
-              </p>
-              <p>
-                Over the years I have worked closely with children, youth, families, seniors, newcomers, and refugees from many backgrounds. Through community advocacy and social services, I have helped residents facing housing instability, food insecurity, unemployment, mental health challenges, and barriers to opportunity — building meaningful relationships throughout the ward and a deep understanding of both its challenges and its strengths.
-              </p>
+              {paragraphs(c.story.body).map((para) => (
+                <p key={para}>{para}</p>
+              ))}
             </FadeIn>
 
             <FadeIn className="my-10">
               <blockquote className="text-2xl md:text-3xl font-fraunces font-bold text-brand-red leading-tight border-none p-0">
-                "Every resident deserves access to opportunity, support, safety, and leadership that is present, accountable, and community-focused."
+                &ldquo;{c.story.quote}&rdquo;
               </blockquote>
             </FadeIn>
 
             <FadeIn>
-              <h2 className="text-3xl font-fraunces font-bold mb-4 text-brand-slate">Why I'm Running</h2>
-              <p>
-                I am running because the people of Humber River-Black Creek deserve leadership that is present, compassionate, and focused on real solutions. Through years of work in community advocacy and social services — including as a counsellor with Toronto Shelter & Support Services — I have seen firsthand the challenges residents face: rising housing costs, food insecurity, unemployment, mental health struggles, and a lack of opportunities for youth and families.
-              </p>
-              <p>
-                I have listened to single parents worried about rent, youth searching for mentorship, seniors struggling with affordability, and newcomers navigating a new city. These experiences showed me that our community needs a strong voice at City Hall — someone connected to the community, who understands its realities, and is committed to creating safer neighbourhoods, affordable housing, and stronger supports for all.
-              </p>
+              <h2 className="text-3xl font-fraunces font-bold mb-4 text-brand-slate">{c.whyRunning.heading}</h2>
+              {paragraphs(c.whyRunning.body).map((para) => (
+                <p key={para}>{para}</p>
+              ))}
             </FadeIn>
 
             <FadeIn className="mt-10 text-center">
               <blockquote className="text-2xl md:text-4xl font-fraunces font-bold text-brand-mustard leading-tight mb-8">
-                "This campaign is about service, representation, and building a stronger future together."
+                &ldquo;{c.closing.quote}&rdquo;
               </blockquote>
               <Link href="/volunteer" className="bg-brand-slate text-brand-cream px-10 py-4 rounded-full font-bold text-lg inline-block hover:bg-opacity-90 transition-opacity no-underline">
-                Volunteer With Me
+                {c.closing.buttonLabel}
               </Link>
             </FadeIn>
           </div>

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { sendTeamEmail } from '@/lib/email';
+import { writeClient } from '@/sanity/client';
 
 export async function POST(req: Request) {
   try {
@@ -7,6 +8,18 @@ export async function POST(req: Request) {
 
     if (!email?.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return NextResponse.json({ error: 'A valid email address is required.' }, { status: 400 });
+    }
+
+    // Keep a list in Sanity (Inbox → Email Subscribers); the email still goes out if this fails.
+    try {
+      await writeClient.create({
+        _type: 'emailSubscriber',
+        email: email.trim(),
+        status: 'Active',
+        submittedAt: new Date().toISOString(),
+      });
+    } catch (saveError) {
+      console.error('Failed to save subscriber to Sanity:', saveError);
     }
 
     await sendTeamEmail({

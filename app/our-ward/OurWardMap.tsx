@@ -3,7 +3,35 @@
 import { useState, useRef } from 'react'
 import { ChevronDown } from 'lucide-react'
 import { FadeIn } from '@/components/FadeIn'
-import { neighbourhoods, type Neighbourhood, type AccentColor } from '@/lib/wardData'
+import { neighbourhoods as defaultNeighbourhoods, type Neighbourhood, type AccentColor } from '@/lib/wardData'
+import { Linkified } from '@/components/Linkified'
+import type { ourWardPageDefaults } from '@/lib/content/defaults'
+
+type OurWardContent = typeof ourWardPageDefaults
+
+const ACCENTS: AccentColor[] = ['red', 'mustard', 'forest']
+
+// Sanity entries are matched to map areas by mapId; any missing area keeps
+// its built-in text so the map always has all seven zones.
+function toNeighbourhoods(items: OurWardContent['neighbourhoods']): Neighbourhood[] {
+  return defaultNeighbourhoods.map((fallback) => {
+    const item = items.find((i) => i?.mapId === fallback.id)
+    if (!item) return fallback
+    return {
+      ...fallback,
+      name: item.name || fallback.name,
+      description: item.description || fallback.description,
+      priority: item.priority || fallback.priority,
+      accentColor: ACCENTS.includes(item.accentColor as AccentColor)
+        ? (item.accentColor as AccentColor)
+        : fallback.accentColor,
+    }
+  })
+}
+
+function paragraphs(text: string): string[] {
+  return text.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean)
+}
 
 // ─── SVG zone geometry ────────────────────────────────────────────────────────
 // ViewBox: 0 0 440 520
@@ -116,10 +144,12 @@ function WardMapSVG({
   activeId,
   onSelect,
   svgClassName,
+  neighbourhoods,
 }: {
   activeId: string | null
   onSelect: (id: string) => void
   svgClassName?: string
+  neighbourhoods: Neighbourhood[]
 }) {
   const [hoveredId, setHoveredId] = useState<string | null>(null)
 
@@ -505,7 +535,8 @@ function NeighbourhoodCard({
 }
 
 // ─── Main export ──────────────────────────────────────────────────────────────
-export function OurWardMap() {
+export function OurWardMap({ content }: { content: OurWardContent }) {
+  const neighbourhoods = toNeighbourhoods(content.neighbourhoods)
   const [activeId, setActiveId] = useState<string | null>(null)
   const cardRefs = useRef<Record<string, HTMLDivElement | null>>({})
 
@@ -532,13 +563,11 @@ export function OurWardMap() {
       <section className="px-6 py-10 md:py-16 max-w-7xl mx-auto">
         <FadeIn>
           <h1 className="text-4xl md:text-5xl font-fraunces font-bold leading-tight mb-5">
-            Ward 7: <span className="text-brand-red">Humber River-Black Creek</span>
+            {content.intro.headingPrefix}{' '}
+            <span className="text-brand-red">{content.intro.headingHighlight}</span>
           </h1>
           <p className="text-lg md:text-xl text-brand-slate/75 max-w-2xl leading-relaxed">
-            Ward 7 is one of Toronto&apos;s 25 council wards. It covers Humber River-Black Creek in
-            northwest North York, and one city councillor represents it at City Hall. I know these
-            streets because I&apos;ve spent years working in them, helping neighbours find housing and
-            get through systems that don&apos;t always make it easy.
+            {content.intro.body}
           </p>
         </FadeIn>
       </section>
@@ -548,28 +577,13 @@ export function OurWardMap() {
         <FadeIn>
           <div className="max-w-2xl bg-white rounded-2xl border border-brand-slate/10 p-6 md:p-8">
             <h2 className="text-2xl md:text-3xl font-fraunces font-bold text-brand-slate mb-3">
-              What ward am I in?
+              {content.whatWard.heading}
             </h2>
-            <p className="text-brand-slate/80 leading-relaxed font-medium mb-3">
-              If you live in Humber River-Black Creek, you&apos;re in Ward 7. The ward runs from Steeles
-              Avenue in the north to Highway 401 in the south, and from the Humber River in the west
-              to Keele Street in the east.
-            </p>
-            <p className="text-brand-slate/80 leading-relaxed font-medium mb-3">
-              That takes in Jane and Finch, Black Creek, Glenfield-Jane Heights, Downsview,
-              Humbermede, Humber Summit and Oakdale-Beverley Heights. Plenty of people aren&apos;t
-              sure which ward they&apos;re in, especially near the edges, so if you want to be certain,
-              put your address into the City&apos;s lookup at{' '}
-              <a
-                href="https://www.toronto.ca/city-government/elections/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-brand-red underline underline-offset-2 hover:opacity-80"
-              >
-                toronto.ca/elections
-              </a>
-              . It takes about a minute.
-            </p>
+            {paragraphs(content.whatWard.body).map((para) => (
+              <p key={para} className="text-brand-slate/80 leading-relaxed font-medium mb-3">
+                <Linkified text={para} />
+              </p>
+            ))}
           </div>
         </FadeIn>
       </section>
@@ -578,11 +592,10 @@ export function OurWardMap() {
       <section className="px-6 pb-6 max-w-7xl mx-auto">
         <FadeIn>
           <h2 className="text-2xl md:text-3xl font-fraunces font-bold text-brand-slate mb-2">
-            Neighbourhoods in Ward 7
+            {content.neighbourhoodsSection.heading}
           </h2>
           <p className="text-brand-slate/70 leading-relaxed font-medium max-w-2xl">
-            Seven neighbourhoods, each with its own character. Here&apos;s how I see them, and what
-            people keep telling me at their doors.
+            {content.neighbourhoodsSection.intro}
           </p>
         </FadeIn>
       </section>
@@ -605,6 +618,7 @@ export function OurWardMap() {
                 activeId={activeId}
                 onSelect={handleMapSelect}
                 svgClassName="h-full w-auto"
+                neighbourhoods={neighbourhoods}
               />
             </div>
           </FadeIn>
@@ -637,6 +651,7 @@ export function OurWardMap() {
                 activeId={activeId}
                 onSelect={handleMapSelect}
                 svgClassName="w-full h-auto block"
+                neighbourhoods={neighbourhoods}
               />
             </div>
             <p className="text-xs text-brand-slate/40 text-center mt-2">

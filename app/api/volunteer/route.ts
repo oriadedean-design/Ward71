@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { sendTeamEmail } from '@/lib/email'
+import { writeClient } from '@/sanity/client'
 
 export async function POST(req: Request) {
   try {
@@ -9,8 +10,24 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'All fields are required.' }, { status: 400 })
     }
 
-    // The email is the team's only record of this signup, so a failed send
-    // returns an error and the volunteer can try again.
+    // Keep a record in Sanity (Inbox → Volunteer Submissions); the email is the
+    // main notification, so only a failed email returns an error.
+    try {
+      await writeClient.create({
+        _type: 'volunteerSubmission',
+        name,
+        email,
+        phone,
+        postalCode,
+        calculatedRole: role,
+        availability,
+        submittedAt: new Date().toISOString(),
+        status: 'New',
+      })
+    } catch (saveError) {
+      console.error('Failed to save volunteer to Sanity:', saveError)
+    }
+
     await sendTeamEmail({
       subject: `New volunteer: ${name} (${role})`,
       heading: 'New volunteer signup',

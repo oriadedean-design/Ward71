@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { Facebook, Instagram, Twitter, Linkedin, Link as LinkIcon } from 'lucide-react';
 import { FadeIn } from '@/components/FadeIn';
 import { ImpactMeter } from '@/components/ImpactMeter';
+import { Linkified } from '@/components/Linkified';
+import { getPageContent, paragraphs } from '@/lib/content';
 
 export const metadata: Metadata = {
   title: 'How to Help',
@@ -15,44 +17,46 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://www.lornaantwi.com/how-to-help' },
 };
 
-// 2026 figures from toronto.ca/elections (Manage a Campaign). Re-check before
-// each election: council contribution limit and the Contribution Rebate Program
-// (75% up to $300, then 50% of the amount over $300 + $225, up to $1,000).
-export default function HowToHelpPage() {
+// Contribution figures are edited in Sanity (Pages → How to Help). 2026 rules
+// from toronto.ca/elections: $1,200 council limit; rebate 75% up to $300, then
+// 50% of the amount over $300 + $225, up to $1,000.
+export default async function HowToHelpPage() {
+  const c = await getPageContent('howToHelpPage');
+
   return (
     <>
       <section className="px-6 py-12 max-w-7xl mx-auto">
         <div className="text-center max-w-4xl mx-auto mb-8">
           <FadeIn>
-            <h1 className="text-4xl md:text-6xl font-fraunces font-bold mb-4 text-brand-slate">Three ways to make a difference.</h1>
+            <h1 className="text-4xl md:text-6xl font-fraunces font-bold mb-4 text-brand-slate">{c.hero.heading}</h1>
           </FadeIn>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-6 mb-12">
           <FadeIn delay={0.1} className="bg-brand-red text-white p-8 rounded-3xl shadow-xl flex flex-col h-full">
-            <h2 className="text-2xl font-fraunces font-bold mb-4">Donate</h2>
+            <h2 className="text-2xl font-fraunces font-bold mb-4">{c.donateCard.heading}</h2>
             <p className="text-lg opacity-90 mb-8 flex-1 font-medium leading-relaxed">
-              Power a grassroots campaign. Every dollar helps us reach more residents and listen to more stories.
+              {c.donateCard.body}
             </p>
             <Link href="/donate" className="bg-white text-brand-red px-8 py-4 rounded-full font-bold text-center hover:bg-opacity-90 transition-opacity">
-              Donate Now
+              {c.donateCard.buttonLabel}
             </Link>
           </FadeIn>
 
           <FadeIn delay={0.2} className="bg-brand-mustard text-brand-slate p-8 rounded-3xl shadow-xl flex flex-col h-full">
-            <h2 className="text-2xl font-fraunces font-bold mb-4">Volunteer</h2>
+            <h2 className="text-2xl font-fraunces font-bold mb-4">{c.volunteerCard.heading}</h2>
             <p className="text-lg opacity-90 mb-8 flex-1 font-medium leading-relaxed">
-              Join the team. From door knocking to phone banking, every role matters.
+              {c.volunteerCard.body}
             </p>
             <Link href="/volunteer" className="bg-brand-slate text-brand-cream px-8 py-4 rounded-full font-bold text-center hover:bg-opacity-90 transition-opacity">
-              Volunteer With Me
+              {c.volunteerCard.buttonLabel}
             </Link>
           </FadeIn>
 
           <FadeIn delay={0.3} className="bg-brand-forest text-brand-cream p-8 rounded-3xl shadow-xl flex flex-col h-full">
-            <h2 className="text-2xl font-fraunces font-bold mb-4">Spread the Word</h2>
+            <h2 className="text-2xl font-fraunces font-bold mb-4">{c.shareCard.heading}</h2>
             <p className="text-lg opacity-90 mb-8 flex-1 font-medium leading-relaxed">
-              Share Lorna's campaign with your neighbours, family, and community.
+              {c.shareCard.body}
             </p>
             <div className="grid grid-cols-2 gap-3">
               <a
@@ -89,27 +93,18 @@ export default function HowToHelpPage() {
 
         <div className="max-w-4xl mx-auto flex flex-col md:flex-row gap-10 items-start">
           <FadeIn className="md:w-1/2">
-            <h2 className="text-3xl font-fraunces font-bold mb-4 text-brand-slate">Why Grassroots?</h2>
+            <h2 className="text-3xl font-fraunces font-bold mb-4 text-brand-slate">{c.whyGrassroots.heading}</h2>
             <div className="prose prose-lg prose-p:leading-relaxed font-medium text-brand-slate/80">
-              <p>
-                This campaign is rooted in people, not big money. Our goal is to build a grassroots movement powered by residents and community members who believe in stronger neighbourhoods, safer communities, and real change at City Hall.
-              </p>
-              <p>
-                Your contribution is not just a donation — it is an investment in a stronger, more connected future for everyone in our community.
-              </p>
+              {paragraphs(c.whyGrassroots.body).map((para) => (
+                <p key={para}>{para}</p>
+              ))}
             </div>
           </FadeIn>
 
           <FadeIn delay={0.2} className="md:w-1/2 bg-white p-8 rounded-3xl shadow-sm border border-brand-slate/10">
-            <h2 className="text-xl font-fraunces font-bold mb-4 text-brand-red">Where your contribution goes</h2>
+            <h2 className="text-xl font-fraunces font-bold mb-4 text-brand-red">{c.contributionUses.heading}</h2>
             <ul className="space-y-3 text-base font-medium text-brand-slate/80">
-              {[
-                "Community outreach materials (flyers, brochures, signage)",
-                "Door-to-door canvassing",
-                "Community events and town halls",
-                "Volunteer coordination and training",
-                "Basic campaign operations (transportation, communication, supplies)"
-              ].map((item, idx) => (
+              {c.contributionUses.items.map((item, idx) => (
                 <li key={idx} className="flex items-start gap-3">
                   <span className="text-brand-mustard font-bold text-xl leading-none">&bull;</span>
                   {item}
@@ -123,53 +118,24 @@ export default function HowToHelpPage() {
         <div className="max-w-4xl mx-auto mt-12">
           <FadeIn className="bg-white p-8 rounded-3xl shadow-sm border border-brand-slate/10">
             <h2 className="text-2xl md:text-3xl font-fraunces font-bold mb-4 text-brand-slate">
-              How do contributions work?
+              {c.contributions.heading}
             </h2>
             <p className="text-base md:text-lg font-medium text-brand-slate/80 leading-relaxed mb-5">
-              Contributions can only come from individual Ontario residents, not corporations or
-              unions, and each person can give up to $1,200 to a single council candidate.
-              It&apos;s your money, so here&apos;s the rest of it straight:
+              {c.contributions.intro}
             </p>
             <ul className="space-y-3 text-base font-medium text-brand-slate/80 leading-relaxed">
-              <li className="flex items-start gap-3">
-                <span className="text-brand-mustard font-bold text-xl leading-none">&bull;</span>
-                <span>
-                  <strong className="text-brand-slate">You may get some of it back.</strong>{' '}
-                  Toronto&apos;s Contribution Rebate Program refunds 75% of eligible contributions
-                  over $25 and up to $300, and a smaller share of larger amounts. A $100 contribution
-                  gets $75 back; a $1,200 contribution gets about $642 back. The City runs the
-                  program, so the details and how to apply are at{' '}
-                  <a
-                    href="https://www.toronto.ca/city-government/elections/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-brand-red underline underline-offset-2 hover:opacity-80"
-                  >
-                    toronto.ca/elections
-                  </a>
-                  .
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-brand-mustard font-bold text-xl leading-none">&bull;</span>
-                <span>
-                  <strong className="text-brand-slate">Over $100 is public.</strong> If you give more
-                  than $100, your name and the amount appear in the campaign&apos;s financial filing.
-                  That&apos;s the law, and it&apos;s part of what keeps local elections honest.
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-brand-mustard font-bold text-xl leading-none">&bull;</span>
-                <span>
-                  <strong className="text-brand-slate">It isn&apos;t federally tax deductible.</strong>{' '}
-                  Municipal contributions don&apos;t qualify for the federal political tax credit, so
-                  the City rebate is the main way any of it comes back to you.
-                </span>
-              </li>
+              {c.contributions.points.map((point) => (
+                <li key={point.title} className="flex items-start gap-3">
+                  <span className="text-brand-mustard font-bold text-xl leading-none">&bull;</span>
+                  <span>
+                    <strong className="text-brand-slate">{point.title}</strong>{' '}
+                    <Linkified text={point.body ?? ''} />
+                  </span>
+                </li>
+              ))}
             </ul>
             <p className="text-base font-medium text-brand-slate/70 leading-relaxed mt-5">
-              Give what feels right for your household. Every contribution is reported the same way,
-              and every dollar goes to the work listed above.
+              {c.contributions.closing}
             </p>
           </FadeIn>
         </div>

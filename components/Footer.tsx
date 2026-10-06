@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Facebook, Instagram, Twitter, Linkedin, Mail } from 'lucide-react';
+import type { getSiteSettings } from '@/lib/content';
 
 const footerLinks = [
   { href: '/',            label: 'Home' },
@@ -12,40 +13,22 @@ const footerLinks = [
   { href: '/donate',      label: 'Donate' },
 ];
 
-const socialLinks = [
-  {
-    href: 'https://www.facebook.com/lornaantwi',
-    label: 'Facebook',
-    icon: Facebook,
-    external: true,
-  },
-  {
-    href: 'https://www.instagram.com/lornaantwi_/',
-    label: 'Instagram',
-    icon: Instagram,
-    external: true,
-  },
-  {
-    href: '#',
-    label: 'X / Twitter',
-    icon: Twitter,
-    external: false,
-  },
-  {
-    href: '#',
-    label: 'LinkedIn',
-    icon: Linkedin,
-    external: false,
-  },
-  {
-    href: 'mailto:votelornaantwi@gmail.com',
-    label: 'Email',
-    icon: Mail,
-    external: false,
-  },
-];
+type Settings = Awaited<ReturnType<typeof getSiteSettings>>;
 
-export function Footer() {
+function socialLinksFrom(settings: Settings) {
+  const { social, contactEmail } = settings;
+  return [
+    { href: social.facebookUrl, label: 'Facebook', icon: Facebook, external: true },
+    { href: social.instagramUrl, label: 'Instagram', icon: Instagram, external: true },
+    { href: social.xUrl, label: 'X / Twitter', icon: Twitter, external: true },
+    { href: social.linkedinUrl, label: 'LinkedIn', icon: Linkedin, external: true },
+    { href: contactEmail ? `mailto:${contactEmail}` : '', label: 'Email', icon: Mail, external: false },
+  ].filter((link) => link.href);
+}
+
+export function Footer({ settings }: { settings: Settings }) {
+  const socialLinks = socialLinksFrom(settings);
+
   return (
     <footer className="bg-brand-slate text-brand-cream py-12 px-6">
       <div className="max-w-7xl mx-auto flex flex-col items-center gap-8 text-center">
@@ -59,7 +42,7 @@ export function Footer() {
             Lorna Antwi
           </Link>
           <p className="text-brand-cream/50 text-sm mt-1">
-            Candidate for Toronto City Council, Ward 7
+            {settings.footer.tagline}
           </p>
         </div>
 
@@ -96,9 +79,9 @@ export function Footer() {
 
         {/* Contact / legal */}
         <p className="text-brand-cream/55 text-sm max-w-sm leading-relaxed">
-          votelornaantwi@gmail.com
+          {settings.contactEmail}
           <br />
-          Authorized by the CFO for the Lorna Antwi Campaign.
+          {settings.footer.authorization}
         </p>
       </div>
     </footer>

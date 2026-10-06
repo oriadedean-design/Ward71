@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import { OurWardMap } from './OurWardMap'
 import { WardStats } from '@/components/WardStats'
+import { getPageContent } from '@/lib/content'
 
 export const metadata: Metadata = {
   title: 'Ward 7: Humber River-Black Creek Neighbourhoods',
@@ -15,10 +16,11 @@ export const metadata: Metadata = {
   },
 }
 
-export default function OurWardPage() {
+export default async function OurWardPage() {
+  const content = await getPageContent('ourWardPage')
   return (
     <>
-      <OurWardMap />
+      <OurWardMap content={content} />
       <WardStats />
     </>
   )

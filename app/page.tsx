@@ -7,7 +7,7 @@ import { ImpactMeter } from '@/components/ImpactMeter';
 import { SubscribeForm } from '@/components/SubscribeForm';
 import { Endorsements } from '@/components/Endorsements';
 import { getEndorsements } from '@/lib/endorsements';
-import { client } from '@/sanity/client';
+import { getPageContent, getSiteSettings } from '@/lib/content';
 
 export const metadata: Metadata = {
   title: 'Lorna Antwi for Toronto City Council | Ward 7',
@@ -21,15 +21,13 @@ export const metadata: Metadata = {
 };
 import { urlFor } from '@/sanity/image';
 
-// Re-fetch Sanity content (photo, endorsements) at most every 5 minutes.
-export const revalidate = 300;
-
 export default async function Home() {
-  const [settings, endorsements] = await Promise.all([
-    client.fetch(`*[_type == "siteSettings"][0]{ candidatePhoto }`),
+  const [c, settings, endorsements] = await Promise.all([
+    getPageContent('homePage'),
+    getSiteSettings(),
     getEndorsements(),
   ])
-  const photoUrl = settings?.candidatePhoto
+  const photoUrl = settings.candidatePhoto?.asset
     ? urlFor(settings.candidatePhoto).width(800).height(1000).fit('crop').url()
     : null
 
@@ -76,22 +74,22 @@ export default async function Home() {
         <div className="contents md:flex md:flex-col md:w-1/2">
           <FadeIn className="order-1 md:order-none w-full">
             <h1 className="text-4xl md:text-6xl font-bold font-fraunces leading-tight mb-4">
-              Stronger Together. <span className="text-brand-red">Real Change</span> for Ward 7.
+              {c.hero.headingStart} <span className="text-brand-red">{c.hero.headingHighlight}</span> {c.hero.headingEnd}
             </h1>
           </FadeIn>
           <FadeIn className="order-3 md:order-none w-full">
             <p className="text-lg md:text-xl text-brand-slate/80 mb-4 leading-relaxed font-medium">
-              Lorna Antwi for Toronto City Council, Humber River-Black Creek.
+              {c.hero.intro}
             </p>
             <p className="text-base md:text-lg text-brand-slate/70 mb-8 leading-relaxed font-semibold">
-              Counsellor with Toronto Shelter &amp; Support Services. Lifelong Humber River-Black Creek resident. Running on lived experience.
+              {c.hero.subIntro}
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/donate" className="bg-brand-red text-white px-8 py-4 rounded-full font-bold text-center hover:bg-opacity-90 transition-opacity">
-                Donate Now
+                {c.hero.primaryButton}
               </Link>
               <Link href="/volunteer" className="border-2 border-brand-slate text-brand-slate px-8 py-4 rounded-full font-bold text-center hover:bg-brand-slate hover:text-white transition-colors">
-                Volunteer With Me
+                {c.hero.secondaryButton}
               </Link>
             </div>
           </FadeIn>
@@ -99,7 +97,7 @@ export default async function Home() {
         <FadeIn className="order-2 md:order-none w-full md:w-1/2 flex justify-center">
           <div className="relative w-full aspect-[4/5] max-w-sm rounded-2xl overflow-hidden shadow-2xl">
             {photoUrl ? (
-              <Image src={photoUrl} alt="Lorna Antwi" fill className="object-cover" priority />
+              <Image src={photoUrl} alt={settings.candidatePhoto?.alt || 'Lorna Antwi'} fill className="object-cover" priority />
             ) : (
               <div className="w-full h-full bg-brand-slate/10 flex items-center justify-center text-brand-slate/40 text-sm">
                 Upload candidate photo in Sanity Studio
@@ -116,19 +114,18 @@ export default async function Home() {
             <div className="flex-1">
               <h2 className="font-fraunces font-bold text-2xl md:text-3xl text-brand-slate mb-2">
                 <Link href="/resources" className="hover:text-brand-red transition-colors">
-                  How to vote in Ward 7
+                  {c.votingCallout.heading}
                 </Link>
               </h2>
               <p className="text-brand-slate/75 font-medium leading-relaxed">
-                Advance voting runs October 6 to 11, 10 a.m. to 7 p.m., at two ward-wide locations.
-                Election Day is Monday, October 26, 10 a.m. to 8 p.m.
+                {c.votingCallout.body}
               </p>
             </div>
             <Link
               href="/resources"
               className="flex items-center justify-center min-h-[48px] bg-brand-slate text-white px-6 py-3 rounded-full font-bold text-center hover:bg-opacity-90 transition-opacity md:flex-shrink-0"
             >
-              Where to vote, dates, and ID →
+              {c.votingCallout.buttonLabel}
             </Link>
           </div>
         </FadeIn>
@@ -141,10 +138,10 @@ export default async function Home() {
         <div className="max-w-2xl mx-auto text-center">
           <FadeIn>
             <h2 className="font-fraunces font-bold text-2xl md:text-3xl mb-1">
-              Support the Campaign
+              {c.donationStrip.heading}
             </h2>
             <p className="text-brand-cream/50 text-sm mb-7">
-              No corporate money. Just neighbours.
+              {c.donationStrip.subheading}
             </p>
 
             {/* Preset amounts */}
@@ -189,11 +186,11 @@ export default async function Home() {
       <section className="px-6 py-10 max-w-7xl mx-auto">
         <FadeIn>
           <p className="text-center text-sm font-bold uppercase tracking-widest text-brand-slate/40 mb-6">
-            Follow the Campaign
+            {c.social.label}
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <a
-              href="https://www.facebook.com/lornaantwi"
+              href={settings.social.facebookUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center gap-5 bg-white border border-brand-slate/10 rounded-2xl px-6 py-5 shadow-sm hover:shadow-md hover:border-[#1877F2]/30 transition-all min-h-[72px]"
@@ -201,11 +198,11 @@ export default async function Home() {
               <Facebook className="w-8 h-8 flex-shrink-0 text-[#1877F2]" aria-hidden="true" />
               <div>
                 <p className="font-fraunces font-bold text-brand-slate text-lg leading-snug group-hover:text-[#1877F2] transition-colors">Facebook</p>
-                <p className="text-xs text-brand-slate/45">Lorna Antwi</p>
+                <p className="text-xs text-brand-slate/45">{settings.social.facebookName}</p>
               </div>
             </a>
             <a
-              href="https://www.instagram.com/lornaantwi_/"
+              href={settings.social.instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center gap-5 bg-white border border-brand-slate/10 rounded-2xl px-6 py-5 shadow-sm hover:shadow-md hover:border-brand-red/30 transition-all min-h-[72px]"
@@ -213,17 +210,17 @@ export default async function Home() {
               <Instagram className="w-8 h-8 flex-shrink-0 text-brand-red" aria-hidden="true" />
               <div>
                 <p className="font-fraunces font-bold text-brand-slate text-lg leading-snug group-hover:text-brand-red transition-colors">Instagram</p>
-                <p className="text-xs text-brand-slate/45">@lornaantwi_</p>
+                <p className="text-xs text-brand-slate/45">{settings.social.instagramHandle}</p>
               </div>
             </a>
             <a
-              href="mailto:votelornaantwi@gmail.com"
+              href={`mailto:${settings.contactEmail}`}
               className="group flex items-center gap-5 bg-white border border-brand-slate/10 rounded-2xl px-6 py-5 shadow-sm hover:shadow-md hover:border-brand-mustard/40 transition-all min-h-[72px]"
             >
               <Mail className="w-8 h-8 flex-shrink-0 text-brand-mustard" aria-hidden="true" />
               <div>
                 <p className="font-fraunces font-bold text-brand-slate text-lg leading-snug group-hover:text-brand-mustard transition-colors">Email Us</p>
-                <p className="text-xs text-brand-slate/45">votelornaantwi@gmail.com</p>
+                <p className="text-xs text-brand-slate/45">{settings.contactEmail}</p>
               </div>
             </a>
           </div>
@@ -233,31 +230,31 @@ export default async function Home() {
       <section className="bg-brand-slate text-brand-cream py-12 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <FadeIn>
-            <h2 className="text-3xl md:text-4xl font-fraunces font-bold mb-4">Vote for Lorna Antwi</h2>
+            <h2 className="text-3xl md:text-4xl font-fraunces font-bold mb-4">{c.subscribe.heading}</h2>
             <p className="text-lg md:text-xl text-brand-mustard mb-8 font-bold">
-              Join the community to stay updated on the campaign.
+              {c.subscribe.subheading}
             </p>
             <SubscribeForm />
 
             <div className="mt-8 text-left bg-brand-cream/10 p-6 rounded-2xl border border-brand-cream/20">
-              <h3 className="text-xl font-bold font-fraunces mb-4 border-b border-brand-cream/20 pb-3">Key Voting Timelines - 2026</h3>
+              <h3 className="text-xl font-bold font-fraunces mb-4 border-b border-brand-cream/20 pb-3">{c.votingTimeline.heading}</h3>
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <h4 className="text-lg font-bold text-brand-mustard mb-1">Advance Voting</h4>
-                  <p className="font-medium">Tuesday, October 6 to Sunday, October 11</p>
-                  <p className="text-sm opacity-80 mt-1">10:00 AM - 7:00 PM</p>
+                  <h4 className="text-lg font-bold text-brand-mustard mb-1">{c.votingTimeline.advanceLabel}</h4>
+                  <p className="font-medium">{c.votingTimeline.advanceDates}</p>
+                  <p className="text-sm opacity-80 mt-1">{c.votingTimeline.advanceHours}</p>
                 </div>
                 <div>
-                  <h4 className="text-lg font-bold text-brand-mustard mb-1">Election Day</h4>
-                  <p className="font-medium">Monday, October 26</p>
-                  <p className="text-sm opacity-80 mt-1">10:00 AM - 8:00 PM</p>
+                  <h4 className="text-lg font-bold text-brand-mustard mb-1">{c.votingTimeline.electionLabel}</h4>
+                  <p className="font-medium">{c.votingTimeline.electionDate}</p>
+                  <p className="text-sm opacity-80 mt-1">{c.votingTimeline.electionHours}</p>
                 </div>
               </div>
               <Link
                 href="/resources"
                 className="inline-block mt-5 font-bold text-brand-mustard underline underline-offset-2 hover:opacity-80"
               >
-                Where to vote in Ward 7: locations, dates, and ID →
+                {c.votingTimeline.linkText}
               </Link>
             </div>
           </FadeIn>
@@ -266,24 +263,13 @@ export default async function Home() {
 
       <section className="py-12 px-6 max-w-7xl mx-auto">
         <FadeIn>
-          <h2 className="text-3xl md:text-4xl font-fraunces font-bold mb-8 text-center">What I'll Fight For in Ward 7</h2>
+          <h2 className="text-3xl md:text-4xl font-fraunces font-bold mb-8 text-center">{c.priorities.heading}</h2>
         </FadeIn>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[
-            { title: "Affordable Housing and Tenant Protections", desc: "Fighting for rent control, stronger eviction prevention, faster construction, and reducing the 10-year wait for subsidized housing. Supporting first-time homebuyers facing affordability barriers." },
-            { title: "Community Safety and Mental Health", desc: "Investing in prevention, youth outreach, after-school programs, and mental health supports that address root causes." },
-            { title: "Streets, Parks, and Infrastructure", desc: "Cleaner streets, faster pothole repairs, more parks with pools, and safe gathering spaces for families." },
-            { title: "Youth Opportunity and Mentorship", desc: "Expanding youth employment, training, and mentorship so young people have clear pathways to success." },
-            { title: "Small Business and Local Economy", desc: "Reducing barriers for local entrepreneurs and improving access to city supports for community-based businesses." },
-            { title: "Affordability for Seniors and Families", desc: "Property tax fairness and stronger supports for seniors, newcomers, and low- to moderate-income households." },
-            { title: "Food Security and Ending Hunger", desc: "Stronger community food programs, affordable and culturally appropriate food, support for food banks and community kitchens, and long-term solutions to poverty." },
-            { title: "Support for Families and Children with Disabilities", desc: "Accessible community services, inclusive recreation, educational supports, and real resources for families raising children with disabilities. No parent should struggle alone." },
-            { title: "Lower Property Taxes", desc: "Fighting for responsible spending and lower property taxes at City Hall. Residents already face rising costs for housing, groceries, and essentials — taxpayers deserve a government that spends wisely, reduces waste, and delivers real value for every dollar collected." },
-            { title: "Safe and Welcoming Community Spaces", desc: "Every resident deserves access to safe, inclusive community spaces where people of all ages, backgrounds, and abilities can connect and thrive. I'll invest in community centres, parks, and programming that truly serves Ward 7 residents." }
-          ].map((item, idx) => (
+          {c.priorities.items.map((item, idx) => (
             <FadeIn key={idx} delay={idx * 0.1} className="bg-white p-6 rounded-2xl shadow-sm border border-brand-slate/5 hover:shadow-md transition-shadow">
               <h3 className="text-xl font-fraunces font-bold mb-3">{item.title}</h3>
-              <p className="text-brand-slate/80 leading-relaxed">{item.desc}</p>
+              <p className="text-brand-slate/80 leading-relaxed">{item.description}</p>
             </FadeIn>
           ))}
         </div>
@@ -293,13 +279,13 @@ export default async function Home() {
 
       <section className="bg-brand-slate text-brand-cream py-14 px-6 text-center">
         <FadeIn className="max-w-3xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-fraunces font-bold mb-6">Join us. This campaign is built by neighbours.</h2>
+          <h2 className="text-3xl md:text-4xl font-fraunces font-bold mb-6">{c.closingCta.heading}</h2>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/donate" className="bg-brand-mustard text-brand-slate px-10 py-4 rounded-full font-bold text-lg hover:bg-opacity-90 transition-opacity">
-              Donate
+              {c.closingCta.primaryButton}
             </Link>
             <Link href="/volunteer" className="border-2 border-brand-cream text-brand-cream px-10 py-4 rounded-full font-bold text-lg hover:bg-brand-cream hover:text-brand-slate transition-colors">
-              Volunteer
+              {c.closingCta.secondaryButton}
             </Link>
           </div>
         </FadeIn>

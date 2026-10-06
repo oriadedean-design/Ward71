@@ -1,4 +1,4 @@
-import { client } from '@/sanity/client';
+import { sanityFetch } from '@/sanity/live';
 import { urlFor } from '@/sanity/image';
 
 export interface Endorsement {
@@ -38,11 +38,12 @@ interface SanityEndorsement {
 export async function getEndorsements(): Promise<Endorsement[]> {
   let fromStudio: Endorsement[] = [];
   try {
-    const docs: SanityEndorsement[] = await client.fetch(
-      `*[_type == "endorsement" && defined(name)] | order(coalesce(order, 9999) asc, _createdAt asc){
+    const { data } = await sanityFetch({
+      query: `*[_type == "endorsement" && defined(name)] | order(coalesce(order, 9999) asc, _createdAt asc){
         name, category, description, logo, sourceUrl
-      }`
-    );
+      }`,
+    });
+    const docs = (data ?? []) as SanityEndorsement[];
     fromStudio = docs
       .filter((d) => d.name && d.description)
       .map((d) => ({

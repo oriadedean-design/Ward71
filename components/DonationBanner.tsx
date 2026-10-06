@@ -6,9 +6,9 @@ import { usePathname } from 'next/navigation'
 const HIDE_ON = ['/', '/donate', '/thank-you']
 const AMOUNTS = [25, 50, 100, 250]
 
-export function DonationBanner() {
+export function DonationBanner({ heading, subheading }: { heading: string; subheading: string }) {
   const pathname = usePathname()
-  if (HIDE_ON.includes(pathname)) return null
+  if (HIDE_ON.includes(pathname) || pathname.startsWith('/studio')) return null
 
   return (
     <section className="bg-brand-slate text-brand-cream py-7 px-6">
@@ -17,10 +17,10 @@ export function DonationBanner() {
         {/* Label */}
         <div className="flex-shrink-0">
           <p className="font-fraunces font-bold text-xl md:text-2xl leading-tight">
-            Support Lorna Antwi
+            {heading}
           </p>
           <p className="text-brand-cream/50 text-sm mt-0.5">
-            No corporate money. Just neighbours.
+            {subheading}
           </p>
         </div>
 
