@@ -37,6 +37,14 @@ const nextConfig: NextConfig = {
     return [
       { source: '/admin', destination: '/studio', permanent: false },
       { source: '/login', destination: '/studio', permanent: false },
+      // The production deployment's vercel.app address serves the same site;
+      // send it to the real domain so search engines see one copy.
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'ward71-d7bo.vercel.app' }],
+        destination: 'https://www.lornaantwi.com/:path*',
+        permanent: true,
+      },
     ];
   },
   webpack: (config, {dev}) => {

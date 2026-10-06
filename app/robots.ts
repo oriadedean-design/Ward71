@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: '/studio/',
+        disallow: ['/studio', '/api/', '/thank-you'],
       },
     ],
     sitemap: 'https://www.lornaantwi.com/sitemap.xml',
