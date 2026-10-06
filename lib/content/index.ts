@@ -3,6 +3,11 @@ import { PAGE_DEFAULTS, type PageId, type SanityImage } from './defaults';
 
 export type { PageId, SanityImage };
 
+// Shown if the candidate photo is ever removed from Site Settings, so visitors
+// never see an empty box or editor instructions.
+export const FALLBACK_CANDIDATE_PHOTO =
+  'https://cdn.sanity.io/images/kfgyh53r/production/3279f5a4bbd66e1b50076368d2372c9980c7b90d-3696x5371.jpg';
+
 /**
  * Overlays Sanity content on the defaults. Empty strings, missing fields and
  * empty lists fall back to the default, so the site never renders blank.

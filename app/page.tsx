@@ -7,7 +7,7 @@ import { ImpactMeter } from '@/components/ImpactMeter';
 import { SubscribeForm } from '@/components/SubscribeForm';
 import { Endorsements } from '@/components/Endorsements';
 import { getEndorsements } from '@/lib/endorsements';
-import { getPageContent, getSiteSettings } from '@/lib/content';
+import { FALLBACK_CANDIDATE_PHOTO, getPageContent, getSiteSettings } from '@/lib/content';
 
 export const metadata: Metadata = {
   title: 'Lorna Antwi for Toronto City Council | Ward 7',
@@ -31,9 +31,7 @@ export default async function Home() {
     ? urlFor(settings.candidatePhoto).width(800).height(1000).fit('crop').url()
     : null
 
-  const candidateImage =
-    photoUrl ??
-    'https://cdn.sanity.io/images/kfgyh53r/production/3279f5a4bbd66e1b50076368d2372c9980c7b90d-3696x5371.jpg'
+  const candidateImage = photoUrl ?? `${FALLBACK_CANDIDATE_PHOTO}?w=800&h=1000&fit=crop`
 
   return (
     <>
@@ -96,13 +94,7 @@ export default async function Home() {
         </div>
         <FadeIn className="order-2 md:order-none w-full md:w-1/2 flex justify-center">
           <div className="relative w-full aspect-[4/5] max-w-sm rounded-2xl overflow-hidden shadow-2xl">
-            {photoUrl ? (
-              <Image src={photoUrl} alt={settings.candidatePhoto?.alt || 'Lorna Antwi'} fill className="object-cover" priority />
-            ) : (
-              <div className="w-full h-full bg-brand-slate/10 flex items-center justify-center text-brand-slate/40 text-sm">
-                Upload candidate photo in Sanity Studio
-              </div>
-            )}
+            <Image src={candidateImage} alt={settings.candidatePhoto?.alt || 'Lorna Antwi'} fill className="object-cover" priority />
           </div>
         </FadeIn>
       </section>

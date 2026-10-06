@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FadeIn } from '@/components/FadeIn';
-import { getPageContent, getSiteSettings, paragraphs } from '@/lib/content';
+import { FALLBACK_CANDIDATE_PHOTO, getPageContent, getSiteSettings, paragraphs } from '@/lib/content';
 import { urlFor } from '@/sanity/image';
 import { Endorsements } from '@/components/Endorsements';
 import { getEndorsements } from '@/lib/endorsements';
@@ -54,13 +54,12 @@ export default async function AboutPage() {
         <div className="flex flex-col lg:flex-row gap-10 items-start">
           <FadeIn className="lg:w-1/3 sticky top-32">
             <div className="relative w-full aspect-[3/4] rounded-2xl overflow-hidden shadow-xl">
-              {photoUrl ? (
-                <Image src={photoUrl} alt="Lorna Antwi in the community" fill className="object-cover" />
-              ) : (
-                <div className="w-full h-full bg-brand-slate/10 flex items-center justify-center text-brand-slate/40 text-sm p-4 text-center">
-                  Upload candidate photo in Sanity Studio
-                </div>
-              )}
+              <Image
+                src={photoUrl ?? `${FALLBACK_CANDIDATE_PHOTO}?w=600&h=800&fit=crop`}
+                alt="Lorna Antwi in the community"
+                fill
+                className="object-cover"
+              />
             </div>
           </FadeIn>
 

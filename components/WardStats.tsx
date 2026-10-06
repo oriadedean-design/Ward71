@@ -199,18 +199,6 @@ export function WardStats() {
           Source: {wardStats.source}
         </p>
       </FadeIn>
-
-      {/* Phase 2 scope note */}
-      <FadeIn delay={0.35}>
-        <div className="mt-6 bg-brand-slate/3 border border-brand-slate/10 rounded-2xl px-6 py-5 text-sm text-brand-slate/55">
-          <p className="font-semibold text-brand-slate/65 mb-1">Phase 2 — Planned additions</p>
-          <p className="leading-relaxed">
-            Map overlay toggles for transit corridors, zoning categories, and landmark detail cards
-            are scoped for a future release. The SVG zone structure and React state already support
-            togglable overlay layers.
-          </p>
-        </div>
-      </FadeIn>
     </section>
   )
 }

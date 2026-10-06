@@ -42,6 +42,7 @@ export default async function CommunityPage() {
           ))}
         </div>
 
+        {gallery.length > 0 && (
         <div className="mt-12 mb-8">
           <FadeIn>
             <h2 className="text-3xl font-fraunces font-bold mb-3 text-brand-slate text-center">{c.gallerySection.heading}</h2>
@@ -50,27 +51,22 @@ export default async function CommunityPage() {
             </p>
           </FadeIn>
 
-          {gallery.length > 0 ? (
-            <div className="columns-1 md:columns-2 lg:columns-3 gap-4 space-y-4">
-              {gallery.map((img, idx) => (
-                <FadeIn key={img._key ?? idx} delay={idx * 0.05} className="break-inside-avoid">
-                  <div className="relative w-full rounded-2xl overflow-hidden shadow-sm group">
-                    <img
-                      src={urlFor(img).width(600).url()}
-                      alt={img.alt ?? 'Campaign photo'}
-                      loading="lazy"
-                      className="object-cover w-full h-auto group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                </FadeIn>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-16 text-brand-slate/40 border-2 border-dashed border-brand-slate/20 rounded-2xl">
-              Upload gallery photos in Sanity Studio → Pages → Community → Photo gallery
-            </div>
-          )}
+          <div className="columns-1 md:columns-2 lg:columns-3 gap-4 space-y-4">
+            {gallery.map((img, idx) => (
+              <FadeIn key={img._key ?? idx} delay={idx * 0.05} className="break-inside-avoid">
+                <div className="relative w-full rounded-2xl overflow-hidden shadow-sm group">
+                  <img
+                    src={urlFor(img).width(600).url()}
+                    alt={img.alt ?? 'Campaign photo'}
+                    loading="lazy"
+                    className="object-cover w-full h-auto group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+              </FadeIn>
+            ))}
+          </div>
         </div>
+        )}
 
         <FadeIn className="my-10 text-center max-w-4xl mx-auto">
           <blockquote className="text-2xl md:text-4xl font-fraunces font-bold text-brand-slate leading-tight">

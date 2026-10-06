@@ -184,10 +184,10 @@ export const resourcesPageDefaults = {
       'Dates, locations, ID and registration for the 2026 Toronto municipal election in Humber River-Black Creek (Ward 7), in plain language. For anything official, the City of Toronto has the final word.',
   },
   registrationCard: {
-    label: 'Voter Registration',
-    deadline: 'Deadline TBC',
-    source: 'City of Toronto · Elections Ontario',
-    badge: 'Confirm at toronto.ca/elections',
+    label: 'Voters\' list deadline (online)',
+    deadline: 'Sun, Oct 11, 7 p.m.',
+    source: 'City of Toronto · MyVote',
+    badge: 'Update at toronto.ca/elections',
     question: 'Can I still register on voting day?',
     answer:
       'Yes. In Ontario municipal elections you can register to vote in-person at your polling station on election day and during advance voting. Bring qualifying ID that shows your name and your Toronto address.',
