@@ -92,17 +92,19 @@ const SVG_ZONES = [
 ]
 
 // ─── Color helpers ────────────────────────────────────────────────────────────
+// Map colours are CSS variables (app/globals.css) so they switch with the
+// device's light/dark setting. Light values match the brand palette.
 const ACCENT_FILLS: Record<AccentColor, string> = {
-  red: '#E05A47',
-  mustard: '#E8B130',
-  forest: '#1F4E3C',
+  red: 'var(--map-red)',
+  mustard: 'var(--map-gold)',
+  forest: 'var(--map-forest)',
 }
 const ACCENT_HOVER: Record<AccentColor, string> = {
-  red: '#EA7D6E',
-  mustard: '#EDCA6A',
-  forest: '#2D6E55',
+  red: 'var(--map-red-hover)',
+  mustard: 'var(--map-gold-hover)',
+  forest: 'var(--map-forest-hover)',
 }
-const IDLE_FILL = '#DDD8CE'
+const IDLE_FILL = 'var(--map-idle)'
 
 function zoneFill(color: AccentColor, active: boolean, hovered: boolean): string {
   if (active) return ACCENT_FILLS[color]
@@ -111,31 +113,31 @@ function zoneFill(color: AccentColor, active: boolean, hovered: boolean): string
 }
 
 function zoneLabelFill(color: AccentColor, active: boolean): string {
-  if (!active) return '#1e293b'
-  return color === 'mustard' ? '#1e293b' : '#ffffff'
+  if (!active) return 'var(--map-label)'
+  return color === 'mustard' ? 'var(--map-on-gold)' : '#ffffff'
 }
 
 function accentTag(color: AccentColor): string {
   switch (color) {
-    case 'red': return 'bg-brand-red text-white'
-    case 'mustard': return 'bg-brand-mustard text-brand-slate'
-    case 'forest': return 'bg-brand-forest text-white'
+    case 'red': return 'bg-cta text-white'
+    case 'mustard': return 'bg-brand-mustard text-on-gold'
+    case 'forest': return 'bg-trust-fill text-white'
   }
 }
 
 function accentDot(color: AccentColor): string {
   switch (color) {
-    case 'red': return 'bg-brand-red'
+    case 'red': return 'bg-cta'
     case 'mustard': return 'bg-brand-mustard'
-    case 'forest': return 'bg-brand-forest'
+    case 'forest': return 'bg-trust-fill'
   }
 }
 
 function accentBorder(color: AccentColor): string {
   switch (color) {
-    case 'red': return 'border-brand-red'
+    case 'red': return 'border-accent'
     case 'mustard': return 'border-brand-mustard'
-    case 'forest': return 'border-brand-forest'
+    case 'forest': return 'border-trust'
   }
 }
 
@@ -161,7 +163,7 @@ function WardMapSVG({
       aria-label="Simplified map of Ward 7 Humber River-Black Creek neighbourhoods"
     >
       {/* Background tile */}
-      <rect x="0" y="0" width="440" height="520" fill="#F0ECE4" />
+      <rect x="0" y="0" width="440" height="520" fill="#F0ECE4" className="map-tile" />
 
       {/* Humber River (decorative west edge) */}
       <path
@@ -187,8 +189,8 @@ function WardMapSVG({
           <g key={zone.id}>
             <path
               d={zone.d}
-              fill={fill}
               stroke="#FDFBF7"
+              className="map-gap"
               strokeWidth="2.5"
               tabIndex={0}
               role="button"
@@ -203,7 +205,7 @@ function WardMapSVG({
               }}
               onMouseEnter={() => setHoveredId(zone.id)}
               onMouseLeave={() => setHoveredId(null)}
-              style={{ cursor: 'pointer', transition: 'fill 0.18s ease', outline: 'none' }}
+              style={{ fill, cursor: 'pointer', transition: 'fill 0.18s ease', outline: 'none' }}
             />
             {/* Keyboard focus ring rendered as a separate overlay rect-ish outline */}
             {active && (
@@ -223,11 +225,11 @@ function WardMapSVG({
               x={zone.cx}
               y={textStartY}
               textAnchor="middle"
-              fill={textFill}
               fontSize="11"
               fontWeight={active ? '700' : '500'}
               fontFamily="ui-sans-serif, system-ui, sans-serif"
               style={{
+                fill: textFill,
                 pointerEvents: 'none',
                 userSelect: 'none',
                 transition: 'fill 0.18s ease',
@@ -249,33 +251,33 @@ function WardMapSVG({
       <line
         x1="0" y1="200" x2="440" y2="200"
         stroke="#FDFBF7" strokeWidth="1" strokeDasharray="5 3"
-        className="hidden md:block"
+        className="map-gap hidden md:block"
       />
       {/* Sheppard Ave W – horizontal at y=355 */}
       <line
         x1="0" y1="355" x2="440" y2="355"
         stroke="#FDFBF7" strokeWidth="1" strokeDasharray="5 3"
-        className="hidden md:block"
+        className="map-gap hidden md:block"
       />
       {/* Jane St – vertical at x=155, north portion */}
       <line
         x1="155" y1="0" x2="155" y2="355"
         stroke="#FDFBF7" strokeWidth="1" strokeDasharray="5 3"
-        className="hidden md:block"
+        className="map-gap hidden md:block"
       />
       {/* Weston Rd – vertical at x=82, Humbermede zone */}
       <line
         x1="82" y1="200" x2="82" y2="355"
         stroke="#FDFBF7" strokeWidth="1" strokeDasharray="3 4"
         opacity="0.6"
-        className="hidden md:block"
+        className="map-gap hidden md:block"
       />
       {/* Hwy 400 – vertical at x=118, south half */}
       <line
         x1="118" y1="355" x2="118" y2="520"
         stroke="#FDFBF7" strokeWidth="1" strokeDasharray="3 4"
         opacity="0.6"
-        className="hidden md:block"
+        className="map-gap hidden md:block"
       />
 
       {/* ── Road labels (desktop only) ── */}
@@ -286,7 +288,7 @@ function WardMapSVG({
         fontSize="7.5"
         fontFamily="ui-sans-serif, system-ui, sans-serif"
         opacity="0.45"
-        className="hidden md:block"
+        className="map-roadlabel hidden md:block"
         style={{ pointerEvents: 'none' }}
       >
         Finch Ave W
@@ -298,7 +300,7 @@ function WardMapSVG({
         fontSize="7.5"
         fontFamily="ui-sans-serif, system-ui, sans-serif"
         opacity="0.45"
-        className="hidden md:block"
+        className="map-roadlabel hidden md:block"
         style={{ pointerEvents: 'none' }}
       >
         Sheppard Ave W
@@ -312,7 +314,7 @@ function WardMapSVG({
         fontFamily="ui-sans-serif, system-ui, sans-serif"
         opacity="0.45"
         transform="rotate(-90, 155, 62)"
-        className="hidden md:block"
+        className="map-roadlabel hidden md:block"
         style={{ pointerEvents: 'none' }}
       >
         Jane St
@@ -326,7 +328,7 @@ function WardMapSVG({
         fontFamily="ui-sans-serif, system-ui, sans-serif"
         opacity="0.35"
         transform="rotate(-90, 82, 252)"
-        className="hidden md:block"
+        className="map-roadlabel hidden md:block"
         style={{ pointerEvents: 'none' }}
       >
         Weston Rd
@@ -340,7 +342,7 @@ function WardMapSVG({
         fontFamily="ui-sans-serif, system-ui, sans-serif"
         opacity="0.35"
         transform="rotate(-90, 118, 420)"
-        className="hidden md:block"
+        className="map-roadlabel hidden md:block"
         style={{ pointerEvents: 'none' }}
       >
         Hwy 400
@@ -354,7 +356,7 @@ function WardMapSVG({
         fontSize="7"
         fontFamily="ui-sans-serif, system-ui, sans-serif"
         opacity="0.35"
-        className="hidden md:block"
+        className="map-roadlabel hidden md:block"
         style={{ pointerEvents: 'none' }}
       >
         Steeles Ave W
@@ -366,7 +368,7 @@ function WardMapSVG({
         fontSize="7"
         fontFamily="ui-sans-serif, system-ui, sans-serif"
         opacity="0.35"
-        className="hidden md:block"
+        className="map-roadlabel hidden md:block"
         style={{ pointerEvents: 'none' }}
       >
         Highway 401
@@ -379,7 +381,7 @@ function WardMapSVG({
         fontFamily="ui-sans-serif, system-ui, sans-serif"
         opacity="0.35"
         transform="rotate(90, 437, 260)"
-        className="hidden md:block"
+        className="map-roadlabel hidden md:block"
         style={{ pointerEvents: 'none' }}
       >
         Keele St
@@ -403,6 +405,7 @@ function WardMapSVG({
         x="0" y="0" width="440" height="520"
         fill="none"
         stroke="#C4BFB6"
+        className="map-border"
         strokeWidth="2"
         style={{ pointerEvents: 'none' }}
       />
@@ -414,13 +417,13 @@ function WardMapSVG({
 function IntroPanel() {
   return (
     <div className="flex flex-col items-center justify-center flex-1 text-center py-10">
-      <div className="w-14 h-14 rounded-full bg-brand-slate/5 flex items-center justify-center mb-5">
+      <div className="w-14 h-14 rounded-full bg-ink/5 flex items-center justify-center mb-5">
         <svg
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
           strokeWidth="1.5"
-          className="w-7 h-7 text-brand-slate/40"
+          className="w-7 h-7 text-ink/40"
         >
           <path
             strokeLinecap="round"
@@ -434,10 +437,10 @@ function IntroPanel() {
           />
         </svg>
       </div>
-      <p className="text-xl font-fraunces font-bold text-brand-slate mb-3">
+      <p className="text-xl font-fraunces font-bold text-ink mb-3">
         Pick a neighbourhood
       </p>
-      <p className="text-brand-slate/55 text-base leading-relaxed max-w-[260px]">
+      <p className="text-ink/55 text-base leading-relaxed max-w-[260px]">
         Click any part of the map to read about that neighbourhood and what people there are
         telling me.
       </p>
@@ -454,18 +457,18 @@ function NeighbourhoodPanel({ n }: { n: Neighbourhood }) {
         >
           Ward 7 · Humber River-Black Creek
         </span>
-        <h3 className="text-3xl font-fraunces font-bold text-brand-slate">{n.name}</h3>
+        <h3 className="text-3xl font-fraunces font-bold text-ink">{n.name}</h3>
       </div>
 
       <div>
-        <p className="text-[10px] font-bold uppercase tracking-widest text-brand-slate/40 mb-2">
+        <p className="text-[10px] font-bold uppercase tracking-widest text-ink/40 mb-2">
           In This Neighbourhood
         </p>
-        <p className="text-brand-slate/80 text-[1.05rem] leading-relaxed">{n.description}</p>
+        <p className="text-ink/80 text-[1.05rem] leading-relaxed">{n.description}</p>
       </div>
 
       <div>
-        <p className="text-[10px] font-bold uppercase tracking-widest text-brand-slate/40 mb-2">
+        <p className="text-[10px] font-bold uppercase tracking-widest text-ink/40 mb-2">
           Platform Priority
         </p>
         <span
@@ -490,8 +493,8 @@ function NeighbourhoodCard({
 }) {
   return (
     <div
-      className={`rounded-2xl border-2 bg-white shadow-sm overflow-hidden transition-colors duration-150 ${
-        isOpen ? accentBorder(n.accentColor) : 'border-brand-slate/10'
+      className={`rounded-2xl border-2 bg-surface shadow-sm overflow-hidden transition-colors duration-150 ${
+        isOpen ? accentBorder(n.accentColor) : 'border-ink/10'
       }`}
     >
       <h3>
@@ -499,7 +502,7 @@ function NeighbourhoodCard({
           onClick={onToggle}
           aria-expanded={isOpen}
           aria-controls={`${n.id}-details`}
-          className="w-full flex items-center justify-between gap-3 px-5 py-4 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-inset"
+          className="w-full flex items-center justify-between gap-3 px-5 py-4 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-inset"
           style={{ minHeight: '56px' }}
         >
           <div className="flex items-center gap-3 min-w-0">
@@ -507,14 +510,14 @@ function NeighbourhoodCard({
               className={`w-3 h-3 rounded-full flex-shrink-0 ${accentDot(n.accentColor)}`}
               aria-hidden="true"
             />
-            <span className="font-fraunces font-bold text-[1.05rem] text-brand-slate leading-snug">
+            <span className="font-fraunces font-bold text-[1.05rem] text-ink leading-snug">
               {n.name}
             </span>
           </div>
           <ChevronDown
             size={20}
             aria-hidden="true"
-            className={`text-brand-slate/40 flex-shrink-0 transition-transform duration-200 ${
+            className={`text-ink/40 flex-shrink-0 transition-transform duration-200 ${
               isOpen ? 'rotate-180' : ''
             }`}
           />
@@ -522,8 +525,8 @@ function NeighbourhoodCard({
       </h3>
 
       {/* Always rendered so the copy is in the page HTML; hidden while collapsed */}
-      <div id={`${n.id}-details`} hidden={!isOpen} className="px-5 pb-5 pt-4 border-t border-brand-slate/5">
-        <p className="text-brand-slate/75 text-sm leading-relaxed mb-4">{n.description}</p>
+      <div id={`${n.id}-details`} hidden={!isOpen} className="px-5 pb-5 pt-4 border-t border-ink/5">
+        <p className="text-ink/75 text-sm leading-relaxed mb-4">{n.description}</p>
         <span
           className={`inline-block text-sm font-bold px-4 py-2 rounded-full ${accentTag(n.accentColor)}`}
         >
@@ -564,9 +567,9 @@ export function OurWardMap({ content }: { content: OurWardContent }) {
         <FadeIn>
           <h1 className="text-4xl md:text-5xl font-fraunces font-bold leading-tight mb-5">
             {content.intro.headingPrefix}{' '}
-            <span className="text-brand-red">{content.intro.headingHighlight}</span>
+            <span className="text-accent">{content.intro.headingHighlight}</span>
           </h1>
-          <p className="text-lg md:text-xl text-brand-slate/75 max-w-2xl leading-relaxed">
+          <p className="text-lg md:text-xl text-ink/75 max-w-2xl leading-relaxed">
             {content.intro.body}
           </p>
         </FadeIn>
@@ -575,12 +578,12 @@ export function OurWardMap({ content }: { content: OurWardContent }) {
       {/* ── What ward am I in? ── */}
       <section className="px-6 pb-10 max-w-7xl mx-auto">
         <FadeIn>
-          <div className="max-w-2xl bg-white rounded-2xl border border-brand-slate/10 p-6 md:p-8">
-            <h2 className="text-2xl md:text-3xl font-fraunces font-bold text-brand-slate mb-3">
+          <div className="max-w-2xl bg-surface rounded-2xl border border-ink/10 p-6 md:p-8">
+            <h2 className="text-2xl md:text-3xl font-fraunces font-bold text-ink mb-3">
               {content.whatWard.heading}
             </h2>
             {paragraphs(content.whatWard.body).map((para) => (
-              <p key={para} className="text-brand-slate/80 leading-relaxed font-medium mb-3">
+              <p key={para} className="text-ink/80 leading-relaxed font-medium mb-3">
                 <Linkified text={para} />
               </p>
             ))}
@@ -591,10 +594,10 @@ export function OurWardMap({ content }: { content: OurWardContent }) {
       {/* ── Neighbourhoods ── */}
       <section className="px-6 pb-6 max-w-7xl mx-auto">
         <FadeIn>
-          <h2 className="text-2xl md:text-3xl font-fraunces font-bold text-brand-slate mb-2">
+          <h2 className="text-2xl md:text-3xl font-fraunces font-bold text-ink mb-2">
             {content.neighbourhoodsSection.heading}
           </h2>
-          <p className="text-brand-slate/70 leading-relaxed font-medium max-w-2xl">
+          <p className="text-ink/70 leading-relaxed font-medium max-w-2xl">
             {content.neighbourhoodsSection.intro}
           </p>
         </FadeIn>
@@ -606,12 +609,12 @@ export function OurWardMap({ content }: { content: OurWardContent }) {
         {/* ── MOBILE: compact map + accordion ── */}
         <div className="md:hidden">
           <FadeIn>
-            <p className="text-sm text-brand-slate/50 text-center mb-3">
+            <p className="text-sm text-ink/50 text-center mb-3">
               Tap the map to jump to a neighbourhood ↓
             </p>
             {/* Fixed-height wrapper: SVG scales to fit */}
             <div
-              className="flex justify-center mb-6 rounded-2xl overflow-hidden shadow-sm border border-brand-slate/10"
+              className="flex justify-center mb-6 rounded-2xl overflow-hidden shadow-sm border border-ink/10"
               style={{ height: '210px' }}
             >
               <WardMapSVG
@@ -646,7 +649,7 @@ export function OurWardMap({ content }: { content: OurWardContent }) {
         <div className="hidden md:flex gap-10 items-start">
           {/* Left: SVG map ~55% */}
           <FadeIn className="flex-[55]">
-            <div className="rounded-2xl overflow-hidden shadow-sm border border-brand-slate/10">
+            <div className="rounded-2xl overflow-hidden shadow-sm border border-ink/10">
               <WardMapSVG
                 activeId={activeId}
                 onSelect={handleMapSelect}
@@ -654,14 +657,14 @@ export function OurWardMap({ content }: { content: OurWardContent }) {
                 neighbourhoods={neighbourhoods}
               />
             </div>
-            <p className="text-xs text-brand-slate/40 text-center mt-2">
+            <p className="text-xs text-ink/40 text-center mt-2">
               Click a neighbourhood to read about it
             </p>
           </FadeIn>
 
           {/* Right: info panel ~45% */}
           <FadeIn className="flex-[45] sticky top-24" delay={0.08}>
-            <div className="bg-white rounded-2xl shadow-sm border border-brand-slate/5 p-8 min-h-[420px] flex flex-col">
+            <div className="bg-surface rounded-2xl shadow-sm border border-ink/5 p-8 min-h-[420px] flex flex-col">
               {active ? <NeighbourhoodPanel n={active} /> : <IntroPanel />}
             </div>
           </FadeIn>

@@ -19,7 +19,7 @@ const ROLE_ICONS: Record<string, LucideIcon> = {
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <p className="text-[10px] font-bold uppercase tracking-widest text-brand-slate/40 mb-3">
+    <p className="text-[10px] font-bold uppercase tracking-widest text-ink/40 mb-3">
       {children}
     </p>
   )
@@ -63,13 +63,13 @@ export function VolunteerForm({ content }: { content: VolunteerContent }) {
   const formValid = !!selectedRole && Object.values(errors).every(e => !e)
 
   const inputBase =
-    'w-full px-4 py-3.5 bg-white border-2 rounded-xl text-brand-slate text-sm focus:outline-none focus:ring-0 transition-colors placeholder:text-brand-slate/30'
+    'w-full px-4 py-3.5 bg-surface border-2 rounded-xl text-ink text-sm focus:outline-none focus:ring-0 transition-colors placeholder:text-ink/30'
 
   function inputCls(field: string) {
     return `${inputBase} ${
       fieldError(field)
-        ? 'border-red-400 focus:border-red-500'
-        : 'border-brand-slate/15 focus:border-brand-mustard'
+        ? 'border-red-400 focus:border-red-500 dark:border-red-400/70'
+        : 'border-ink/15 focus:border-brand-mustard'
     }`
   }
 
@@ -103,36 +103,36 @@ export function VolunteerForm({ content }: { content: VolunteerContent }) {
   // ── Success state ─────────────────────────────────────────────────────────────
   if (submitted) {
     return (
-      <div className="min-h-screen bg-brand-cream px-5 py-14">
+      <div className="min-h-screen bg-canvas px-5 py-14">
         <div className="max-w-lg mx-auto text-center">
-          <div className="w-16 h-16 bg-brand-forest/10 rounded-full flex items-center justify-center mx-auto mb-6">
-            <CheckCircle className="w-8 h-8 text-brand-forest" aria-hidden="true" />
+          <div className="w-16 h-16 bg-trust/10 rounded-full flex items-center justify-center mx-auto mb-6">
+            <CheckCircle className="w-8 h-8 text-trust" aria-hidden="true" />
           </div>
-          <h1 className="text-3xl md:text-4xl font-fraunces font-bold text-brand-slate mb-3">
+          <h1 className="text-3xl md:text-4xl font-fraunces font-bold text-ink mb-3">
             {content.success.heading}
           </h1>
-          <p className="text-brand-slate/60 font-medium mb-10 leading-relaxed">
+          <p className="text-ink/60 font-medium mb-10 leading-relaxed">
             {content.success.body}{' '}
-            <strong className="text-brand-slate">{selectedRole}</strong>.
+            <strong className="text-ink">{selectedRole}</strong>.
           </p>
 
-          <div className="bg-white rounded-2xl border border-brand-slate/8 shadow-sm p-6 text-left">
-            <h2 className="text-xl font-fraunces font-bold text-brand-slate mb-2">
+          <div className="bg-surface rounded-2xl border border-ink/8 shadow-sm p-6 text-left">
+            <h2 className="text-xl font-fraunces font-bold text-ink mb-2">
               {content.success.donateHeading}
             </h2>
-            <p className="text-brand-slate/55 text-sm leading-relaxed mb-5">
+            <p className="text-ink/55 text-sm leading-relaxed mb-5">
               {content.success.donateBody}
             </p>
             <div className="flex flex-col gap-3">
               <Link
                 href="/donate"
-                className="flex items-center justify-center min-h-[52px] bg-brand-red text-white rounded-full font-bold hover:bg-opacity-90 transition-opacity"
+                className="flex items-center justify-center min-h-[52px] bg-cta text-white rounded-full font-bold hover:bg-opacity-90 transition-opacity"
               >
                 {content.success.donateButton}
               </Link>
               <Link
                 href="/"
-                className="flex items-center justify-center min-h-[44px] text-brand-slate/45 hover:text-brand-slate text-sm font-medium transition-colors"
+                className="flex items-center justify-center min-h-[44px] text-ink/45 hover:text-ink text-sm font-medium transition-colors"
               >
                 Return home
               </Link>
@@ -145,15 +145,15 @@ export function VolunteerForm({ content }: { content: VolunteerContent }) {
 
   // ── Main form ─────────────────────────────────────────────────────────────────
   return (
-    <div className="min-h-screen bg-brand-cream px-5 py-10 md:py-14">
+    <div className="min-h-screen bg-canvas px-5 py-10 md:py-14">
       <div className="max-w-lg mx-auto md:max-w-2xl flex flex-col gap-8">
 
         {/* Header */}
         <div>
-          <h1 className="text-3xl md:text-4xl font-fraunces font-bold text-brand-slate mb-2">
+          <h1 className="text-3xl md:text-4xl font-fraunces font-bold text-ink mb-2">
             {content.hero.heading}
           </h1>
-          <p className="text-brand-slate/60 text-sm leading-relaxed">
+          <p className="text-ink/60 text-sm leading-relaxed">
             {content.hero.intro}
           </p>
         </div>
@@ -171,28 +171,28 @@ export function VolunteerForm({ content }: { content: VolunteerContent }) {
                   onClick={() => setSelectedRole(title)}
                   className={`text-left rounded-2xl border-2 px-5 py-4 transition-all duration-150 ${
                     active
-                      ? 'border-brand-red bg-brand-red/4 shadow-sm'
-                      : 'border-brand-slate/10 bg-white hover:border-brand-red/30'
+                      ? 'border-accent bg-accent/4 shadow-sm'
+                      : 'border-ink/10 bg-surface hover:border-accent/30'
                   }`}
                 >
                   <div className="flex items-start gap-3">
                     <Icon
                       className={`w-5 h-5 mt-0.5 flex-shrink-0 transition-colors ${
-                        active ? 'text-brand-red' : 'text-brand-slate/35'
+                        active ? 'text-accent' : 'text-ink/35'
                       }`}
                       aria-hidden="true"
                     />
                     <div>
-                      <p className={`font-bold text-sm leading-snug ${active ? 'text-brand-red' : 'text-brand-slate'}`}>
+                      <p className={`font-bold text-sm leading-snug ${active ? 'text-accent' : 'text-ink'}`}>
                         {title}
                       </p>
-                      <p className="text-xs text-brand-slate/50 mt-1 leading-relaxed">{description}</p>
+                      <p className="text-xs text-ink/50 mt-1 leading-relaxed">{description}</p>
                     </div>
                   </div>
                   {active && (
                     <div className="flex items-center gap-1.5 mt-3">
-                      <CheckCircle className="w-3.5 h-3.5 text-brand-red flex-shrink-0" aria-hidden="true" />
-                      <span className="text-xs text-brand-red font-semibold">Selected</span>
+                      <CheckCircle className="w-3.5 h-3.5 text-accent flex-shrink-0" aria-hidden="true" />
+                      <span className="text-xs text-accent font-semibold">Selected</span>
                     </div>
                   )}
                 </button>
@@ -208,8 +208,8 @@ export function VolunteerForm({ content }: { content: VolunteerContent }) {
           <div className="flex flex-col gap-4">
             {/* Full name */}
             <div>
-              <label htmlFor="vol-name" className="block text-xs font-bold text-brand-slate/55 uppercase tracking-wider mb-1.5">
-                Full Name <span className="text-brand-red">*</span>
+              <label htmlFor="vol-name" className="block text-xs font-bold text-ink/55 uppercase tracking-wider mb-1.5">
+                Full Name <span className="text-accent">*</span>
               </label>
               <input
                 id="vol-name"
@@ -221,14 +221,14 @@ export function VolunteerForm({ content }: { content: VolunteerContent }) {
                 placeholder="First and last name"
                 className={inputCls('name')}
               />
-              {fieldError('name') && <p className="text-red-500 text-xs mt-1.5">{fieldError('name')}</p>}
+              {fieldError('name') && <p className="text-red-500 dark:text-red-300 text-xs mt-1.5">{fieldError('name')}</p>}
             </div>
 
             {/* Email + Phone */}
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="vol-email" className="block text-xs font-bold text-brand-slate/55 uppercase tracking-wider mb-1.5">
-                  Email <span className="text-brand-red">*</span>
+                <label htmlFor="vol-email" className="block text-xs font-bold text-ink/55 uppercase tracking-wider mb-1.5">
+                  Email <span className="text-accent">*</span>
                 </label>
                 <input
                   id="vol-email"
@@ -240,11 +240,11 @@ export function VolunteerForm({ content }: { content: VolunteerContent }) {
                   placeholder="your@email.com"
                   className={inputCls('email')}
                 />
-                {fieldError('email') && <p className="text-red-500 text-xs mt-1.5">{fieldError('email')}</p>}
+                {fieldError('email') && <p className="text-red-500 dark:text-red-300 text-xs mt-1.5">{fieldError('email')}</p>}
               </div>
               <div>
-                <label htmlFor="vol-phone" className="block text-xs font-bold text-brand-slate/55 uppercase tracking-wider mb-1.5">
-                  Phone <span className="text-brand-red">*</span>
+                <label htmlFor="vol-phone" className="block text-xs font-bold text-ink/55 uppercase tracking-wider mb-1.5">
+                  Phone <span className="text-accent">*</span>
                 </label>
                 <input
                   id="vol-phone"
@@ -256,14 +256,14 @@ export function VolunteerForm({ content }: { content: VolunteerContent }) {
                   placeholder="(416) 555-0100"
                   className={inputCls('phone')}
                 />
-                {fieldError('phone') && <p className="text-red-500 text-xs mt-1.5">{fieldError('phone')}</p>}
+                {fieldError('phone') && <p className="text-red-500 dark:text-red-300 text-xs mt-1.5">{fieldError('phone')}</p>}
               </div>
             </div>
 
             {/* Postal code */}
             <div>
-              <label htmlFor="vol-postal" className="block text-xs font-bold text-brand-slate/55 uppercase tracking-wider mb-1.5">
-                Postal Code <span className="text-brand-red">*</span>
+              <label htmlFor="vol-postal" className="block text-xs font-bold text-ink/55 uppercase tracking-wider mb-1.5">
+                Postal Code <span className="text-accent">*</span>
               </label>
               <input
                 id="vol-postal"
@@ -276,13 +276,13 @@ export function VolunteerForm({ content }: { content: VolunteerContent }) {
                 maxLength={7}
                 className={`${inputCls('postalCode')} max-w-[200px]`}
               />
-              {fieldError('postalCode') && <p className="text-red-500 text-xs mt-1.5">{fieldError('postalCode')}</p>}
+              {fieldError('postalCode') && <p className="text-red-500 dark:text-red-300 text-xs mt-1.5">{fieldError('postalCode')}</p>}
             </div>
 
             {/* Availability */}
             <div>
-              <label htmlFor="vol-availability" className="block text-xs font-bold text-brand-slate/55 uppercase tracking-wider mb-1.5">
-                Availability <span className="text-brand-red">*</span>
+              <label htmlFor="vol-availability" className="block text-xs font-bold text-ink/55 uppercase tracking-wider mb-1.5">
+                Availability <span className="text-accent">*</span>
               </label>
               <textarea
                 id="vol-availability"
@@ -293,7 +293,7 @@ export function VolunteerForm({ content }: { content: VolunteerContent }) {
                 placeholder="e.g. Weekday evenings after 6 pm, Saturdays anytime…"
                 className={`${inputCls('availability')} resize-none`}
               />
-              {fieldError('availability') && <p className="text-red-500 text-xs mt-1.5">{fieldError('availability')}</p>}
+              {fieldError('availability') && <p className="text-red-500 dark:text-red-300 text-xs mt-1.5">{fieldError('availability')}</p>}
             </div>
           </div>
         </div>
@@ -301,7 +301,7 @@ export function VolunteerForm({ content }: { content: VolunteerContent }) {
         {/* ── Submit ── */}
         <div className={`transition-opacity duration-300 ${!selectedRole ? 'opacity-35 pointer-events-none select-none' : ''}`}>
           {submitError && (
-            <p role="alert" className="text-red-600 text-sm font-medium bg-red-50 border border-red-200 rounded-xl px-4 py-3 mb-4">
+            <p role="alert" className="text-red-600 dark:text-red-300 text-sm font-medium bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-400/40 rounded-xl px-4 py-3 mb-4">
               {submitError}
             </p>
           )}
@@ -309,11 +309,11 @@ export function VolunteerForm({ content }: { content: VolunteerContent }) {
             type="button"
             onClick={handleSubmit}
             disabled={submitting}
-            className="w-full bg-brand-red text-white py-5 rounded-full font-bold text-base hover:bg-opacity-90 transition-opacity disabled:opacity-40"
+            className="w-full bg-cta text-white py-5 rounded-full font-bold text-base hover:bg-opacity-90 transition-opacity disabled:opacity-40"
           >
             {submitting ? 'Signing you up…' : 'Sign Me Up to Volunteer'}
           </button>
-          <p className="text-[11px] text-brand-slate/30 text-center mt-3 leading-relaxed">
+          <p className="text-[11px] text-ink/30 text-center mt-3 leading-relaxed">
             Your information is only used to coordinate volunteering with the Lorna Antwi campaign.
           </p>
         </div>

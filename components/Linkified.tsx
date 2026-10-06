@@ -4,7 +4,7 @@ const ELECTIONS_LINK_TEXT = 'toronto.ca/elections';
 /** Renders text, turning every "toronto.ca/elections" into a link. */
 export function Linkified({
   text,
-  linkClassName = 'text-brand-red underline underline-offset-2 hover:opacity-80',
+  linkClassName = 'text-accent underline underline-offset-2 hover:opacity-80',
 }: {
   text: string;
   linkClassName?: string;

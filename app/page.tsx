@@ -72,21 +72,21 @@ export default async function Home() {
         <div className="contents md:flex md:flex-col md:w-1/2">
           <FadeIn className="order-1 md:order-none w-full">
             <h1 className="text-4xl md:text-6xl font-bold font-fraunces leading-tight mb-4">
-              {c.hero.headingStart} <span className="text-brand-red">{c.hero.headingHighlight}</span> {c.hero.headingEnd}
+              {c.hero.headingStart} <span className="text-accent">{c.hero.headingHighlight}</span> {c.hero.headingEnd}
             </h1>
           </FadeIn>
           <FadeIn className="order-3 md:order-none w-full">
-            <p className="text-lg md:text-xl text-brand-slate/80 mb-4 leading-relaxed font-medium">
+            <p className="text-lg md:text-xl text-ink/80 mb-4 leading-relaxed font-medium">
               {c.hero.intro}
             </p>
-            <p className="text-base md:text-lg text-brand-slate/70 mb-8 leading-relaxed font-semibold">
+            <p className="text-base md:text-lg text-ink/70 mb-8 leading-relaxed font-semibold">
               {c.hero.subIntro}
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/donate" className="bg-brand-red text-white px-8 py-4 rounded-full font-bold text-center hover:bg-opacity-90 transition-opacity">
+              <Link href="/donate" className="bg-cta text-white px-8 py-4 rounded-full font-bold text-center hover:bg-opacity-90 transition-opacity">
                 {c.hero.primaryButton}
               </Link>
-              <Link href="/volunteer" className="border-2 border-brand-slate text-brand-slate px-8 py-4 rounded-full font-bold text-center hover:bg-brand-slate hover:text-white transition-colors">
+              <Link href="/volunteer" className="border-2 border-secondary text-secondary px-8 py-4 rounded-full font-bold text-center hover:bg-secondary hover:text-white dark:hover:text-on-gold transition-colors">
                 {c.hero.secondaryButton}
               </Link>
             </div>
@@ -102,20 +102,20 @@ export default async function Home() {
       {/* ── How to vote callout ── */}
       <section className="px-6 pb-10 max-w-7xl mx-auto">
         <FadeIn>
-          <div className="rounded-2xl border-2 border-brand-mustard bg-white p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-5 md:gap-8">
+          <div className="rounded-2xl border-2 border-brand-mustard bg-surface p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-5 md:gap-8">
             <div className="flex-1">
-              <h2 className="font-fraunces font-bold text-2xl md:text-3xl text-brand-slate mb-2">
-                <Link href="/resources" className="hover:text-brand-red transition-colors">
+              <h2 className="font-fraunces font-bold text-2xl md:text-3xl text-ink mb-2">
+                <Link href="/resources" className="hover:text-accent transition-colors">
                   {c.votingCallout.heading}
                 </Link>
               </h2>
-              <p className="text-brand-slate/75 font-medium leading-relaxed">
+              <p className="text-ink/75 font-medium leading-relaxed">
                 {c.votingCallout.body}
               </p>
             </div>
             <Link
               href="/resources"
-              className="flex items-center justify-center min-h-[48px] bg-brand-slate text-white px-6 py-3 rounded-full font-bold text-center hover:bg-opacity-90 transition-opacity md:flex-shrink-0"
+              className="flex items-center justify-center min-h-[48px] bg-secondary text-white dark:text-on-gold px-6 py-3 rounded-full font-bold text-center hover:bg-opacity-90 transition-opacity md:flex-shrink-0"
             >
               {c.votingCallout.buttonLabel}
             </Link>
@@ -126,7 +126,7 @@ export default async function Home() {
       <Endorsements endorsements={endorsements} />
 
       {/* ── Donation strip ── */}
-      <section className="bg-brand-slate text-brand-cream py-10 px-6">
+      <section className="bg-band text-brand-cream py-10 px-6">
         <div className="max-w-2xl mx-auto text-center">
           <FadeIn>
             <h2 className="font-fraunces font-bold text-2xl md:text-3xl mb-1">
@@ -142,7 +142,7 @@ export default async function Home() {
                 <Link
                   key={a}
                   href={`/donate?amount=${a}`}
-                  className="py-4 rounded-xl font-bold text-lg border-2 border-white/15 bg-white/8 hover:bg-brand-mustard hover:text-brand-slate hover:border-brand-mustard transition-all"
+                  className="py-4 rounded-xl font-bold text-lg border-2 border-white/15 bg-white/8 hover:bg-brand-mustard hover:text-on-gold hover:border-brand-mustard transition-all"
                 >
                   ${a}
                 </Link>
@@ -165,7 +165,7 @@ export default async function Home() {
               </div>
               <button
                 type="submit"
-                className="bg-brand-red text-white px-7 py-3.5 rounded-full font-bold text-sm hover:bg-opacity-90 transition-opacity flex-shrink-0"
+                className="bg-cta text-white px-7 py-3.5 rounded-full font-bold text-sm hover:bg-opacity-90 transition-opacity flex-shrink-0"
               >
                 Donate →
               </button>
@@ -177,7 +177,7 @@ export default async function Home() {
       {/* ── Social channels ── */}
       <section className="px-6 py-10 max-w-7xl mx-auto">
         <FadeIn>
-          <p className="text-center text-sm font-bold uppercase tracking-widest text-brand-slate/40 mb-6">
+          <p className="text-center text-sm font-bold uppercase tracking-widest text-ink/40 mb-6">
             {c.social.label}
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -185,41 +185,41 @@ export default async function Home() {
               href={settings.social.facebookUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-5 bg-white border border-brand-slate/10 rounded-2xl px-6 py-5 shadow-sm hover:shadow-md hover:border-[#1877F2]/30 transition-all min-h-[72px]"
+              className="group flex items-center gap-5 bg-surface border border-ink/10 rounded-2xl px-6 py-5 shadow-sm hover:shadow-md hover:border-[#1877F2]/30 transition-all min-h-[72px]"
             >
               <Facebook className="w-8 h-8 flex-shrink-0 text-[#1877F2]" aria-hidden="true" />
               <div>
-                <p className="font-fraunces font-bold text-brand-slate text-lg leading-snug group-hover:text-[#1877F2] transition-colors">Facebook</p>
-                <p className="text-xs text-brand-slate/45">{settings.social.facebookName}</p>
+                <p className="font-fraunces font-bold text-ink text-lg leading-snug group-hover:text-[#1877F2] transition-colors">Facebook</p>
+                <p className="text-xs text-ink/45">{settings.social.facebookName}</p>
               </div>
             </a>
             <a
               href={settings.social.instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-5 bg-white border border-brand-slate/10 rounded-2xl px-6 py-5 shadow-sm hover:shadow-md hover:border-brand-red/30 transition-all min-h-[72px]"
+              className="group flex items-center gap-5 bg-surface border border-ink/10 rounded-2xl px-6 py-5 shadow-sm hover:shadow-md hover:border-accent/30 transition-all min-h-[72px]"
             >
-              <Instagram className="w-8 h-8 flex-shrink-0 text-brand-red" aria-hidden="true" />
+              <Instagram className="w-8 h-8 flex-shrink-0 text-accent" aria-hidden="true" />
               <div>
-                <p className="font-fraunces font-bold text-brand-slate text-lg leading-snug group-hover:text-brand-red transition-colors">Instagram</p>
-                <p className="text-xs text-brand-slate/45">{settings.social.instagramHandle}</p>
+                <p className="font-fraunces font-bold text-ink text-lg leading-snug group-hover:text-accent transition-colors">Instagram</p>
+                <p className="text-xs text-ink/45">{settings.social.instagramHandle}</p>
               </div>
             </a>
             <a
               href={`mailto:${settings.contactEmail}`}
-              className="group flex items-center gap-5 bg-white border border-brand-slate/10 rounded-2xl px-6 py-5 shadow-sm hover:shadow-md hover:border-brand-mustard/40 transition-all min-h-[72px]"
+              className="group flex items-center gap-5 bg-surface border border-ink/10 rounded-2xl px-6 py-5 shadow-sm hover:shadow-md hover:border-brand-mustard/40 transition-all min-h-[72px]"
             >
               <Mail className="w-8 h-8 flex-shrink-0 text-brand-mustard" aria-hidden="true" />
               <div>
-                <p className="font-fraunces font-bold text-brand-slate text-lg leading-snug group-hover:text-brand-mustard transition-colors">Email Us</p>
-                <p className="text-xs text-brand-slate/45">{settings.contactEmail}</p>
+                <p className="font-fraunces font-bold text-ink text-lg leading-snug group-hover:text-brand-mustard transition-colors">Email Us</p>
+                <p className="text-xs text-ink/45">{settings.contactEmail}</p>
               </div>
             </a>
           </div>
         </FadeIn>
       </section>
 
-      <section className="bg-brand-slate text-brand-cream py-12 px-6">
+      <section className="bg-band text-brand-cream py-12 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <FadeIn>
             <h2 className="text-3xl md:text-4xl font-fraunces font-bold mb-4">{c.subscribe.heading}</h2>
@@ -259,9 +259,9 @@ export default async function Home() {
         </FadeIn>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {c.priorities.items.map((item, idx) => (
-            <FadeIn key={idx} delay={idx * 0.1} className="bg-white p-6 rounded-2xl shadow-sm border border-brand-slate/5 hover:shadow-md transition-shadow">
+            <FadeIn key={idx} delay={idx * 0.1} className="bg-surface p-6 rounded-2xl shadow-sm border border-ink/5 hover:shadow-md transition-shadow">
               <h3 className="text-xl font-fraunces font-bold mb-3">{item.title}</h3>
-              <p className="text-brand-slate/80 leading-relaxed">{item.description}</p>
+              <p className="text-ink/80 leading-relaxed">{item.description}</p>
             </FadeIn>
           ))}
         </div>
@@ -269,14 +269,14 @@ export default async function Home() {
 
       <ImpactMeter />
 
-      <section className="bg-brand-slate text-brand-cream py-14 px-6 text-center">
+      <section className="bg-band text-brand-cream py-14 px-6 text-center">
         <FadeIn className="max-w-3xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-fraunces font-bold mb-6">{c.closingCta.heading}</h2>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/donate" className="bg-brand-mustard text-brand-slate px-10 py-4 rounded-full font-bold text-lg hover:bg-opacity-90 transition-opacity">
+            <Link href="/donate" className="bg-brand-mustard text-on-gold px-10 py-4 rounded-full font-bold text-lg hover:bg-opacity-90 transition-opacity">
               {c.closingCta.primaryButton}
             </Link>
-            <Link href="/volunteer" className="border-2 border-brand-cream text-brand-cream px-10 py-4 rounded-full font-bold text-lg hover:bg-brand-cream hover:text-brand-slate transition-colors">
+            <Link href="/volunteer" className="border-2 border-brand-cream text-brand-cream px-10 py-4 rounded-full font-bold text-lg hover:bg-canvas hover:text-on-gold transition-colors">
               {c.closingCta.secondaryButton}
             </Link>
           </div>

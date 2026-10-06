@@ -30,7 +30,7 @@ export function Footer({ settings }: { settings: Settings }) {
   const socialLinks = socialLinksFrom(settings);
 
   return (
-    <footer className="bg-brand-slate text-brand-cream py-12 px-6">
+    <footer className="bg-band text-brand-cream py-12 px-6">
       <div className="max-w-7xl mx-auto flex flex-col items-center gap-8 text-center">
 
         {/* Candidate name */}
@@ -54,7 +54,7 @@ export function Footer({ settings }: { settings: Settings }) {
               href={href}
               aria-label={label}
               {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-              className="flex items-center justify-center w-11 h-11 rounded-full hover:text-brand-red transition-colors"
+              className="flex items-center justify-center w-11 h-11 rounded-full hover:text-accent transition-colors"
             >
               <Icon className="w-5 h-5" />
             </a>
@@ -70,7 +70,7 @@ export function Footer({ settings }: { settings: Settings }) {
             <Link
               key={href}
               href={href}
-              className="flex items-center justify-center min-h-[44px] md:min-h-0 text-brand-cream/70 hover:text-brand-red transition-colors"
+              className="flex items-center justify-center min-h-[44px] md:min-h-0 text-brand-cream/70 hover:text-accent transition-colors"
             >
               {label}
             </Link>

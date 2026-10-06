@@ -18,7 +18,7 @@ export function VotingBanner({
   if (!enabled || pathname === '/resources' || pathname.startsWith('/studio')) return null
 
   return (
-    <div className="bg-brand-mustard text-brand-slate px-4 py-2.5 text-center text-sm leading-snug">
+    <div className="bg-brand-mustard text-on-gold px-4 py-2.5 text-center text-sm leading-snug">
       <span className="font-medium">{text}</span>{' '}
       <Link
         href="/resources"

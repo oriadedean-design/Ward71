@@ -21,11 +21,11 @@ export default async function CommunityPage() {
 
   return (
     <>
-      <section className="bg-brand-cream py-12 px-6">
+      <section className="bg-canvas py-12 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <FadeIn>
-            <h1 className="text-4xl md:text-6xl font-fraunces font-bold mb-4 text-brand-slate">{c.hero.heading}</h1>
-            <p className="text-lg md:text-xl text-brand-slate/80 leading-relaxed font-medium">
+            <h1 className="text-4xl md:text-6xl font-fraunces font-bold mb-4 text-ink">{c.hero.heading}</h1>
+            <p className="text-lg md:text-xl text-ink/80 leading-relaxed font-medium">
               {c.hero.intro}
             </p>
           </FadeIn>
@@ -35,9 +35,9 @@ export default async function CommunityPage() {
       <section className="py-12 px-6 max-w-7xl mx-auto">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {c.concerns.map((item, idx) => (
-            <FadeIn key={idx} delay={idx * 0.1} className="bg-white p-6 rounded-2xl shadow-sm border border-brand-slate/10 hover:shadow-md transition-shadow">
-              <h3 className="text-xl font-fraunces font-bold mb-3 text-brand-red">{item.title}</h3>
-              <p className="text-brand-slate/80 leading-relaxed font-medium">{item.description}</p>
+            <FadeIn key={idx} delay={idx * 0.1} className="bg-surface p-6 rounded-2xl shadow-sm border border-ink/10 hover:shadow-md transition-shadow">
+              <h3 className="text-xl font-fraunces font-bold mb-3 text-accent">{item.title}</h3>
+              <p className="text-ink/80 leading-relaxed font-medium">{item.description}</p>
             </FadeIn>
           ))}
         </div>
@@ -45,8 +45,8 @@ export default async function CommunityPage() {
         {gallery.length > 0 && (
         <div className="mt-12 mb-8">
           <FadeIn>
-            <h2 className="text-3xl font-fraunces font-bold mb-3 text-brand-slate text-center">{c.gallerySection.heading}</h2>
-            <p className="text-lg text-brand-slate/80 text-center mb-8 max-w-2xl mx-auto font-medium">
+            <h2 className="text-3xl font-fraunces font-bold mb-3 text-ink text-center">{c.gallerySection.heading}</h2>
+            <p className="text-lg text-ink/80 text-center mb-8 max-w-2xl mx-auto font-medium">
               {c.gallerySection.intro}
             </p>
           </FadeIn>
@@ -69,13 +69,13 @@ export default async function CommunityPage() {
         )}
 
         <FadeIn className="my-10 text-center max-w-4xl mx-auto">
-          <blockquote className="text-2xl md:text-4xl font-fraunces font-bold text-brand-slate leading-tight">
+          <blockquote className="text-2xl md:text-4xl font-fraunces font-bold text-ink leading-tight">
             &ldquo;{c.quote}&rdquo;
           </blockquote>
         </FadeIn>
       </section>
 
-      <section className="bg-brand-slate text-brand-cream py-14 px-6 text-center">
+      <section className="bg-band text-brand-cream py-14 px-6 text-center">
         <FadeIn className="max-w-2xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-fraunces font-bold mb-8">{c.inquiry.heading}</h2>
           <InquiryForm />

@@ -11,11 +11,11 @@ export function Endorsements({ endorsements }: { endorsements: Endorsement[] }) 
       <FadeIn>
         <h2
           id="endorsements-heading"
-          className="text-3xl md:text-4xl font-fraunces font-bold text-brand-slate mb-2 text-center"
+          className="text-3xl md:text-4xl font-fraunces font-bold text-ink mb-2 text-center"
         >
           Endorsements
         </h2>
-        <p className="text-brand-slate/60 font-medium text-center mb-8">
+        <p className="text-ink/60 font-medium text-center mb-8">
           Organizations and people supporting Lorna Antwi in Ward 7.
         </p>
       </FadeIn>
@@ -30,7 +30,7 @@ export function Endorsements({ endorsements }: { endorsements: Endorsement[] }) 
         {endorsements.map((e) => (
           <li key={e.name}>
             <FadeIn className="h-full">
-              <article className="h-full bg-white rounded-2xl border border-brand-slate/10 shadow-sm p-6 md:p-8 flex flex-col">
+              <article className="h-full bg-surface rounded-2xl border border-ink/10 shadow-sm p-6 md:p-8 flex flex-col">
                 <div className="flex items-center gap-4 mb-4">
                   {e.logoUrl && (
                     <Image
@@ -43,22 +43,22 @@ export function Endorsements({ endorsements }: { endorsements: Endorsement[] }) 
                   )}
                   <div>
                     {e.category && (
-                      <p className="text-[10px] font-bold uppercase tracking-widest text-brand-slate/45 mb-1">
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-ink/45 mb-1">
                         {e.category}
                       </p>
                     )}
-                    <h3 className="font-fraunces font-bold text-2xl text-brand-slate leading-tight">
+                    <h3 className="font-fraunces font-bold text-2xl text-ink leading-tight">
                       {e.name}
                     </h3>
                   </div>
                 </div>
-                <p className="text-brand-slate/80 leading-relaxed font-medium">{e.description}</p>
+                <p className="text-ink/80 leading-relaxed font-medium">{e.description}</p>
                 {e.sourceUrl && (
                   <a
                     href={e.sourceUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-4 text-sm font-bold text-brand-red underline underline-offset-2 hover:opacity-80 self-start"
+                    className="mt-4 text-sm font-bold text-accent underline underline-offset-2 hover:opacity-80 self-start"
                   >
                     Read the announcement from {e.name}
                   </a>

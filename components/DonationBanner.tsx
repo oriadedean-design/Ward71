@@ -11,7 +11,7 @@ export function DonationBanner({ heading, subheading }: { heading: string; subhe
   if (HIDE_ON.includes(pathname) || pathname.startsWith('/studio')) return null
 
   return (
-    <section className="bg-brand-slate text-brand-cream py-7 px-6">
+    <section className="bg-band text-brand-cream py-7 px-6">
       <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-8">
 
         {/* Label */}
@@ -30,14 +30,14 @@ export function DonationBanner({ heading, subheading }: { heading: string; subhe
             <Link
               key={a}
               href={`/donate?amount=${a}`}
-              className="min-w-[68px] text-center bg-white/8 hover:bg-brand-mustard hover:text-brand-slate text-brand-cream border border-white/15 px-4 py-2.5 rounded-full font-bold text-sm transition-all duration-150"
+              className="min-w-[68px] text-center bg-white/8 hover:bg-brand-mustard hover:text-on-gold text-brand-cream border border-white/15 px-4 py-2.5 rounded-full font-bold text-sm transition-all duration-150"
             >
               ${a}
             </Link>
           ))}
           <Link
             href="/donate"
-            className="flex items-center gap-1.5 bg-brand-red text-white px-5 py-2.5 rounded-full font-bold text-sm hover:bg-opacity-90 transition-opacity"
+            className="flex items-center gap-1.5 bg-cta text-white px-5 py-2.5 rounded-full font-bold text-sm hover:bg-opacity-90 transition-opacity"
           >
             Other →
           </Link>

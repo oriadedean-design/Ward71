@@ -6,10 +6,10 @@ import { wardStats } from '@/lib/wardStats'
 type Accent = 'red' | 'mustard' | 'forest'
 
 function barClass(a: Accent) {
-  return a === 'red' ? 'bg-brand-red' : a === 'mustard' ? 'bg-brand-mustard' : 'bg-brand-forest'
+  return a === 'red' ? 'bg-cta' : a === 'mustard' ? 'bg-brand-mustard' : 'bg-trust-fill'
 }
 function textClass(a: Accent) {
-  return a === 'red' ? 'text-brand-red' : a === 'mustard' ? 'text-brand-mustard' : 'text-brand-forest'
+  return a === 'red' ? 'text-accent' : a === 'mustard' ? 'text-brand-mustard' : 'text-trust'
 }
 
 function SectionHeading({ title, accent }: { title: string; accent: Accent }) {
@@ -23,14 +23,14 @@ function SectionHeading({ title, accent }: { title: string; accent: Accent }) {
 
 function StatCard({ label, value, note }: { label: string; value: string; note?: string }) {
   return (
-    <div className="bg-white rounded-2xl border border-brand-slate/5 shadow-sm p-5 flex flex-col gap-1.5">
-      <p className="text-[10px] font-bold uppercase tracking-widest text-brand-slate/40 leading-tight">
+    <div className="bg-surface rounded-2xl border border-ink/5 shadow-sm p-5 flex flex-col gap-1.5">
+      <p className="text-[10px] font-bold uppercase tracking-widest text-ink/40 leading-tight">
         {label}
       </p>
-      <p className="text-2xl md:text-3xl font-fraunces font-bold text-brand-slate leading-none">
+      <p className="text-2xl md:text-3xl font-fraunces font-bold text-ink leading-none">
         {value}
       </p>
-      {note && <p className="text-xs text-brand-slate/45 leading-snug">{note}</p>}
+      {note && <p className="text-xs text-ink/45 leading-snug">{note}</p>}
     </div>
   )
 }
@@ -52,10 +52,10 @@ function DataBar({
   return (
     <div>
       <div className="flex items-baseline justify-between mb-1.5">
-        <span className="text-sm font-medium text-brand-slate/75">{label}</span>
-        <span className="text-sm font-bold text-brand-slate ml-4 flex-shrink-0">{pct}</span>
+        <span className="text-sm font-medium text-ink/75">{label}</span>
+        <span className="text-sm font-bold text-ink ml-4 flex-shrink-0">{pct}</span>
       </div>
-      <div className="h-2 bg-brand-slate/8 rounded-full overflow-hidden">
+      <div className="h-2 bg-ink/8 rounded-full overflow-hidden">
         <div className={`h-full rounded-full ${barClass(accent)}`} style={{ width: `${width}%` }} />
       </div>
     </div>
@@ -68,24 +68,24 @@ function TenureSplit() {
   const rentalNum = parseFloat(rentalShare.value)
   const ownerNum  = parseFloat(ownerShare.value)
   return (
-    <div className="rounded-2xl overflow-hidden border border-brand-slate/5 shadow-sm mb-5">
+    <div className="rounded-2xl overflow-hidden border border-ink/5 shadow-sm mb-5">
       <div className="flex" style={{ height: '56px' }}>
         <div
-          className="flex items-center justify-center gap-2 bg-brand-red text-white font-bold text-sm"
+          className="flex items-center justify-center gap-2 bg-cta text-white font-bold text-sm"
           style={{ width: `${rentalNum}%` }}
         >
           <span className="text-lg font-fraunces leading-none">{rentalShare.value}</span>
           <span className="text-xs opacity-80 hidden sm:block">Renters</span>
         </div>
         <div
-          className="flex items-center justify-center gap-2 bg-brand-mustard text-brand-slate font-bold text-sm"
+          className="flex items-center justify-center gap-2 bg-brand-mustard text-on-gold font-bold text-sm"
           style={{ width: `${ownerNum}%` }}
         >
           <span className="text-lg font-fraunces leading-none">{ownerShare.value}</span>
           <span className="text-xs opacity-70 hidden sm:block">Owners</span>
         </div>
       </div>
-      <div className="flex bg-white border-t border-brand-slate/5 text-xs text-brand-slate/40">
+      <div className="flex bg-surface border-t border-ink/5 text-xs text-ink/40">
         <div className="flex-1 px-4 py-2">Rental housing</div>
         <div className="flex-1 px-4 py-2 text-right">Owned housing</div>
       </div>
@@ -107,15 +107,15 @@ export function WardStats() {
   return (
     <section className="px-6 pb-10 md:pb-16 max-w-7xl mx-auto">
       {/* Divider */}
-      <div className="border-t border-brand-slate/10 mb-10 md:mb-14" />
+      <div className="border-t border-ink/10 mb-10 md:mb-14" />
 
       <FadeIn>
         <h2 className="text-3xl md:text-4xl font-fraunces font-bold mb-2">
           Ward 7 by the Numbers
         </h2>
-        <p className="text-brand-slate/55 text-base max-w-2xl leading-relaxed mb-10">
+        <p className="text-ink/55 text-base max-w-2xl leading-relaxed mb-10">
           Verified 2021 Census data for Humber River-Black Creek. Update figures in{' '}
-          <code className="text-xs bg-brand-slate/5 px-1.5 py-0.5 rounded font-mono">
+          <code className="text-xs bg-ink/5 px-1.5 py-0.5 rounded font-mono">
             lib/wardStats.ts
           </code>{' '}
           and all cards refresh automatically.
@@ -158,8 +158,8 @@ export function WardStats() {
             <StatCard label="English at Home"               value={immigrationLanguage.englishAtHome.value}      note={immigrationLanguage.englishAtHome.note} />
             <StatCard label="Non-Official Language at Home" value={immigrationLanguage.nonOfficialAtHome.value}  note={immigrationLanguage.nonOfficialAtHome.note} />
           </div>
-          <div className="bg-white rounded-2xl border border-brand-slate/5 shadow-sm p-5">
-            <p className="text-[10px] font-bold uppercase tracking-widest text-brand-slate/40 mb-4">
+          <div className="bg-surface rounded-2xl border border-ink/5 shadow-sm p-5">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-ink/40 mb-4">
               Top Birthplaces — Immigrant Population
             </p>
             <div className="flex flex-col gap-4">
@@ -179,8 +179,8 @@ export function WardStats() {
             <StatCard label="No High School Credential"  value={labourEducation.noHighSchool.value}            note={labourEducation.noHighSchool.note} />
             <StatCard label="Post-Secondary Completion"  value={labourEducation.postSecondaryCompletion.value} note={labourEducation.postSecondaryCompletion.note} />
           </div>
-          <div className="bg-white rounded-2xl border border-brand-slate/5 shadow-sm p-5">
-            <p className="text-[10px] font-bold uppercase tracking-widest text-brand-slate/40 mb-4">
+          <div className="bg-surface rounded-2xl border border-ink/5 shadow-sm p-5">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-ink/40 mb-4">
               Top Employment Sectors
             </p>
             <div className="flex flex-col gap-4">
@@ -195,7 +195,7 @@ export function WardStats() {
 
       {/* Source */}
       <FadeIn delay={0.3}>
-        <p className="text-xs text-brand-slate/35 text-right mt-10">
+        <p className="text-xs text-ink/35 text-right mt-10">
           Source: {wardStats.source}
         </p>
       </FadeIn>

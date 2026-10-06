@@ -47,13 +47,13 @@ export function SubscribeForm() {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email address"
           aria-label="Email address"
-          className="flex-1 px-6 py-4 rounded-full bg-white text-brand-slate font-medium text-lg border-2 border-brand-slate/20 focus:border-brand-mustard focus:outline-none focus:ring-0"
+          className="flex-1 px-6 py-4 rounded-full bg-surface text-ink font-medium text-lg border-2 border-ink/20 focus:border-brand-mustard focus:outline-none focus:ring-0"
           required
         />
         <button
           type="submit"
           disabled={status === 'submitting'}
-          className="bg-brand-mustard text-brand-slate px-8 py-4 rounded-full font-bold hover:bg-opacity-90 transition-opacity disabled:opacity-60"
+          className="bg-brand-mustard text-on-gold px-8 py-4 rounded-full font-bold hover:bg-opacity-90 transition-opacity disabled:opacity-60"
         >
           {status === 'submitting' ? 'Joining…' : 'Join Us'}
         </button>

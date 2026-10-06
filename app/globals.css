@@ -1,23 +1,126 @@
 @import "tailwindcss";
 
+/*
+ * Colour system
+ * ─────────────
+ * Light mode is the campaign's warm brand palette and must not change.
+ * Dark mode is a deep-navy counterpart drawn from the print materials,
+ * applied automatically when the visitor's device is in dark mode
+ * (prefers-color-scheme; Tailwind's `dark:` variant uses the same media query).
+ *
+ * Components use the semantic tokens below (bg-canvas, text-ink, bg-cta…),
+ * never raw hex. Each token is defined once for light (in @theme) and once
+ * for dark (in the media query further down).
+ *
+ * Hierarchy (both modes):
+ *   1. Primary action (Donate)        cta / accent   red
+ *   2. Secondary action (Volunteer)   secondary      slate → gold in dark
+ *   3. Highlight, badges, progress    brand-mustard  gold
+ *   4. Trust, supporting              trust          forest → sage in dark
+ *   5. Body text and surfaces         ink on canvas / surface
+ */
 @theme {
+  /* Brand palette (constants; also used on always-dark bands and gold buttons) */
   --color-brand-cream: #FDFBF7;
   --color-brand-slate: #1e293b;
   --color-brand-red: #E05A47;
   --color-brand-mustard: #E8B130;
   --color-brand-forest: #1F4E3C;
-  
+
+  /* Semantic tokens: light values (identical to the original brand usage) */
+  --color-canvas: #FDFBF7;        /* page background */
+  --color-surface: #FFFFFF;       /* cards, inputs, raised panels */
+  --color-ink: #1e293b;           /* body text; low-opacity for borders */
+  --color-heading: #1e293b;       /* headings */
+  --color-band: #1e293b;          /* full-width dark bands, footer */
+  --color-accent: #E05A47;        /* red text, links, borders */
+  --color-cta: #E05A47;           /* red button fill (white text) */
+  --color-on-gold: #1e293b;       /* text on gold / cream buttons */
+  --color-secondary: #1e293b;     /* secondary action (Volunteer) */
+  --color-trust: #1F4E3C;         /* forest text, icons, borders */
+  --color-trust-fill: #1F4E3C;    /* forest card / fill (light text on top) */
+  --color-progress: #1F4E3C;      /* donation progress bar fill */
+
   --font-fraunces: var(--font-fraunces), serif;
   --font-jakarta: var(--font-jakarta), sans-serif;
 }
 
+:root {
+  /* Ward map (light values match the original map) */
+  --map-tile: #F0ECE4;
+  --map-idle: #DDD8CE;
+  --map-gap: #FDFBF7;
+  --map-label: #1e293b;
+  --map-on-gold: #1e293b;
+  --map-border: #C4BFB6;
+  --map-red: #E05A47;
+  --map-red-hover: #EA7D6E;
+  --map-gold: #E8B130;
+  --map-gold-hover: #EDCA6A;
+  --map-forest: #1F4E3C;
+  --map-forest-hover: #2D6E55;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+
+    --color-canvas: #15264A;      /* deep navy */
+    --color-surface: #1F3056;     /* lighter navy for cards and panels */
+    --color-ink: #F4EFE6;         /* warm off-white; borders become low-opacity white */
+    --color-heading: #FFFFFF;
+    --color-band: #0E1B36;        /* deeper navy so bands still read as bands */
+    --color-accent: #F07A67;      /* red brightened for text on navy: 5.5:1 */
+    --color-cta: #C93D1F;         /* red deepened so white button text passes: 5.0:1 */
+    --color-on-gold: #15264A;     /* navy on gold: 7.6:1 */
+    --color-secondary: #E8B130;   /* secondary action turns gold */
+    --color-trust: #9CC9AE;       /* sage: 8.1:1 on navy */
+    --color-trust-fill: #2E6B52;  /* green fill that keeps cream text at 6.1:1 */
+    --color-progress: #E8B130;    /* progress bar fill: gold */
+
+    --map-tile: #1A2E52;
+    --map-idle: #2A3D66;
+    --map-gap: #15264A;
+    --map-label: #F4EFE6;
+    --map-on-gold: #15264A;
+    --map-border: #3A4D75;
+    --map-red: #C93D1F;
+    --map-red-hover: #6E3B4A;
+    --map-gold: #E8B130;
+    --map-gold-hover: #6B6450;
+    --map-forest: #2E6B52;
+    --map-forest-hover: #2C5560;
+  }
+
+  /* Headings in pure white. */
+  :is(h1, h2, h3, h4, h5, h6).text-ink {
+    color: var(--color-heading);
+  }
+
+  /* Faint helper text (30–50% opacity) can't reach 4.5:1 on navy, so in dark
+     mode it's raised to 62% (about 6:1). Light mode is unchanged. */
+  .text-ink\/30, .text-ink\/35, .text-ink\/40, .text-ink\/45, .text-ink\/50,
+  .placeholder\:text-ink\/30::placeholder {
+    color: color-mix(in oklab, var(--color-ink) 62%, transparent);
+  }
+  .text-brand-cream\/40, .placeholder\:text-brand-cream\/30::placeholder {
+    color: color-mix(in oklab, var(--color-brand-cream) 55%, transparent);
+  }
+}
+
+/* Ward map parts that use fixed SVG attributes in light mode. */
+.map-tile { fill: var(--map-tile); }
+.map-gap { stroke: var(--map-gap); }
+.map-roadlabel { fill: var(--map-label); }
+.map-border { stroke: var(--map-border); }
+
 @layer base {
   body {
-    background-color: var(--color-brand-cream);
-    color: var(--color-brand-slate);
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
     font-family: var(--font-jakarta);
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-fraunces);
   }

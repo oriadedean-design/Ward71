@@ -61,20 +61,20 @@ export function InquiryForm() {
       <div className="grid md:grid-cols-2 gap-5">
         <div className="flex flex-col">
           <label className="mb-2 font-medium" htmlFor="name">Name</label>
-          <input id="name" name="name" type="text" className="px-5 py-4 rounded-xl text-brand-slate focus:outline-none focus:ring-2 focus:ring-brand-mustard" required />
+          <input id="name" name="name" type="text" className="px-5 py-4 rounded-xl text-ink focus:outline-none focus:ring-2 focus:ring-brand-mustard" required />
         </div>
         <div className="flex flex-col">
           <label className="mb-2 font-medium" htmlFor="email">Email</label>
-          <input id="email" name="email" type="email" className="px-5 py-4 rounded-xl text-brand-slate focus:outline-none focus:ring-2 focus:ring-brand-mustard" required />
+          <input id="email" name="email" type="email" className="px-5 py-4 rounded-xl text-ink focus:outline-none focus:ring-2 focus:ring-brand-mustard" required />
         </div>
       </div>
       <div className="flex flex-col">
         <label className="mb-2 font-medium" htmlFor="postal">Postal Code</label>
-        <input id="postal" name="postal" type="text" className="px-5 py-4 rounded-xl text-brand-slate focus:outline-none focus:ring-2 focus:ring-brand-mustard" maxLength={7} />
+        <input id="postal" name="postal" type="text" className="px-5 py-4 rounded-xl text-ink focus:outline-none focus:ring-2 focus:ring-brand-mustard" maxLength={7} />
       </div>
       <div className="flex flex-col">
         <label className="mb-2 font-medium" htmlFor="category">Category</label>
-        <select id="category" name="category" defaultValue="Housing" className="px-5 py-4 rounded-xl text-brand-slate bg-white focus:outline-none focus:ring-2 focus:ring-brand-mustard">
+        <select id="category" name="category" defaultValue="Housing" className="px-5 py-4 rounded-xl text-ink bg-surface focus:outline-none focus:ring-2 focus:ring-brand-mustard">
           {CATEGORIES.map((c) => (
             <option key={c} value={c}>{c}</option>
           ))}
@@ -82,10 +82,10 @@ export function InquiryForm() {
       </div>
       <div className="flex flex-col">
         <label className="mb-2 font-medium" htmlFor="message">Message</label>
-        <textarea id="message" name="message" rows={4} className="px-5 py-4 rounded-xl text-brand-slate focus:outline-none focus:ring-2 focus:ring-brand-mustard" required></textarea>
+        <textarea id="message" name="message" rows={4} className="px-5 py-4 rounded-xl text-ink focus:outline-none focus:ring-2 focus:ring-brand-mustard" required></textarea>
       </div>
       {error && <p className="text-brand-mustard font-medium">{error}</p>}
-      <button type="submit" disabled={status === 'submitting'} className="bg-brand-red text-white py-4 rounded-xl font-bold text-lg hover:bg-opacity-90 transition-opacity mt-2 disabled:opacity-60">
+      <button type="submit" disabled={status === 'submitting'} className="bg-cta text-white py-4 rounded-xl font-bold text-lg hover:bg-opacity-90 transition-opacity mt-2 disabled:opacity-60">
         {status === 'submitting' ? 'Sending…' : 'Send Message'}
       </button>
     </form>

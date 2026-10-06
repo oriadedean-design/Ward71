@@ -28,32 +28,32 @@ export default async function HowToHelpPage() {
       <section className="px-6 py-12 max-w-7xl mx-auto">
         <div className="text-center max-w-4xl mx-auto mb-8">
           <FadeIn>
-            <h1 className="text-4xl md:text-6xl font-fraunces font-bold mb-4 text-brand-slate">{c.hero.heading}</h1>
+            <h1 className="text-4xl md:text-6xl font-fraunces font-bold mb-4 text-ink">{c.hero.heading}</h1>
           </FadeIn>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-6 mb-12">
-          <FadeIn delay={0.1} className="bg-brand-red text-white p-8 rounded-3xl shadow-xl flex flex-col h-full">
+          <FadeIn delay={0.1} className="bg-cta text-white p-8 rounded-3xl shadow-xl flex flex-col h-full">
             <h2 className="text-2xl font-fraunces font-bold mb-4">{c.donateCard.heading}</h2>
             <p className="text-lg opacity-90 mb-8 flex-1 font-medium leading-relaxed">
               {c.donateCard.body}
             </p>
-            <Link href="/donate" className="bg-white text-brand-red px-8 py-4 rounded-full font-bold text-center hover:bg-opacity-90 transition-opacity">
+            <Link href="/donate" className="bg-surface text-accent px-8 py-4 rounded-full font-bold text-center hover:bg-opacity-90 transition-opacity">
               {c.donateCard.buttonLabel}
             </Link>
           </FadeIn>
 
-          <FadeIn delay={0.2} className="bg-brand-mustard text-brand-slate p-8 rounded-3xl shadow-xl flex flex-col h-full">
+          <FadeIn delay={0.2} className="bg-brand-mustard text-on-gold p-8 rounded-3xl shadow-xl flex flex-col h-full">
             <h2 className="text-2xl font-fraunces font-bold mb-4">{c.volunteerCard.heading}</h2>
             <p className="text-lg opacity-90 mb-8 flex-1 font-medium leading-relaxed">
               {c.volunteerCard.body}
             </p>
-            <Link href="/volunteer" className="bg-brand-slate text-brand-cream px-8 py-4 rounded-full font-bold text-center hover:bg-opacity-90 transition-opacity">
+            <Link href="/volunteer" className="bg-band text-brand-cream px-8 py-4 rounded-full font-bold text-center hover:bg-opacity-90 transition-opacity">
               {c.volunteerCard.buttonLabel}
             </Link>
           </FadeIn>
 
-          <FadeIn delay={0.3} className="bg-brand-forest text-brand-cream p-8 rounded-3xl shadow-xl flex flex-col h-full">
+          <FadeIn delay={0.3} className="bg-trust-fill text-brand-cream p-8 rounded-3xl shadow-xl flex flex-col h-full">
             <h2 className="text-2xl font-fraunces font-bold mb-4">{c.shareCard.heading}</h2>
             <p className="text-lg opacity-90 mb-8 flex-1 font-medium leading-relaxed">
               {c.shareCard.body}
@@ -62,28 +62,28 @@ export default async function HowToHelpPage() {
               <a
                 href="https://www.facebook.com/sharer/sharer.php?u=https://www.lornaantwi.com"
                 target="_blank" rel="noopener noreferrer"
-                className="flex justify-center items-center gap-2 bg-brand-cream text-brand-forest py-3 rounded-xl font-bold hover:bg-opacity-90 transition-opacity"
+                className="flex justify-center items-center gap-2 bg-canvas text-trust py-3 rounded-xl font-bold hover:bg-opacity-90 transition-opacity"
               >
                 <Facebook className="w-5 h-5" /> Facebook
               </a>
               <a
                 href="https://www.instagram.com/lornaantwi_/"
                 target="_blank" rel="noopener noreferrer"
-                className="flex justify-center items-center gap-2 bg-brand-cream text-brand-forest py-3 rounded-xl font-bold hover:bg-opacity-90 transition-opacity"
+                className="flex justify-center items-center gap-2 bg-canvas text-trust py-3 rounded-xl font-bold hover:bg-opacity-90 transition-opacity"
               >
                 <Instagram className="w-5 h-5" /> Instagram
               </a>
               <a
                 href="https://twitter.com/intent/tweet?url=https://www.lornaantwi.com&text=Vote+Lorna+Antwi+for+Toronto+City+Council+Ward+7"
                 target="_blank" rel="noopener noreferrer"
-                className="flex justify-center items-center gap-2 bg-brand-cream text-brand-forest py-3 rounded-xl font-bold hover:bg-opacity-90 transition-opacity"
+                className="flex justify-center items-center gap-2 bg-canvas text-trust py-3 rounded-xl font-bold hover:bg-opacity-90 transition-opacity"
               >
                 <Twitter className="w-5 h-5" /> X
               </a>
               <a
                 href="https://www.linkedin.com/sharing/share-offsite/?url=https://www.lornaantwi.com"
                 target="_blank" rel="noopener noreferrer"
-                className="flex justify-center items-center gap-2 bg-brand-cream text-brand-forest py-3 rounded-xl font-bold hover:bg-opacity-90 transition-opacity"
+                className="flex justify-center items-center gap-2 bg-canvas text-trust py-3 rounded-xl font-bold hover:bg-opacity-90 transition-opacity"
               >
                 <Linkedin className="w-5 h-5" /> LinkedIn
               </a>
@@ -93,17 +93,17 @@ export default async function HowToHelpPage() {
 
         <div className="max-w-4xl mx-auto flex flex-col md:flex-row gap-10 items-start">
           <FadeIn className="md:w-1/2">
-            <h2 className="text-3xl font-fraunces font-bold mb-4 text-brand-slate">{c.whyGrassroots.heading}</h2>
-            <div className="prose prose-lg prose-p:leading-relaxed font-medium text-brand-slate/80">
+            <h2 className="text-3xl font-fraunces font-bold mb-4 text-ink">{c.whyGrassroots.heading}</h2>
+            <div className="prose prose-lg prose-p:leading-relaxed font-medium text-ink/80">
               {paragraphs(c.whyGrassroots.body).map((para) => (
                 <p key={para}>{para}</p>
               ))}
             </div>
           </FadeIn>
 
-          <FadeIn delay={0.2} className="md:w-1/2 bg-white p-8 rounded-3xl shadow-sm border border-brand-slate/10">
-            <h2 className="text-xl font-fraunces font-bold mb-4 text-brand-red">{c.contributionUses.heading}</h2>
-            <ul className="space-y-3 text-base font-medium text-brand-slate/80">
+          <FadeIn delay={0.2} className="md:w-1/2 bg-surface p-8 rounded-3xl shadow-sm border border-ink/10">
+            <h2 className="text-xl font-fraunces font-bold mb-4 text-accent">{c.contributionUses.heading}</h2>
+            <ul className="space-y-3 text-base font-medium text-ink/80">
               {c.contributionUses.items.map((item, idx) => (
                 <li key={idx} className="flex items-start gap-3">
                   <span className="text-brand-mustard font-bold text-xl leading-none">&bull;</span>
@@ -116,25 +116,25 @@ export default async function HowToHelpPage() {
 
         {/* ── How do contributions work? ── */}
         <div className="max-w-4xl mx-auto mt-12">
-          <FadeIn className="bg-white p-8 rounded-3xl shadow-sm border border-brand-slate/10">
-            <h2 className="text-2xl md:text-3xl font-fraunces font-bold mb-4 text-brand-slate">
+          <FadeIn className="bg-surface p-8 rounded-3xl shadow-sm border border-ink/10">
+            <h2 className="text-2xl md:text-3xl font-fraunces font-bold mb-4 text-ink">
               {c.contributions.heading}
             </h2>
-            <p className="text-base md:text-lg font-medium text-brand-slate/80 leading-relaxed mb-5">
+            <p className="text-base md:text-lg font-medium text-ink/80 leading-relaxed mb-5">
               {c.contributions.intro}
             </p>
-            <ul className="space-y-3 text-base font-medium text-brand-slate/80 leading-relaxed">
+            <ul className="space-y-3 text-base font-medium text-ink/80 leading-relaxed">
               {c.contributions.points.map((point) => (
                 <li key={point.title} className="flex items-start gap-3">
                   <span className="text-brand-mustard font-bold text-xl leading-none">&bull;</span>
                   <span>
-                    <strong className="text-brand-slate">{point.title}</strong>{' '}
+                    <strong className="text-ink">{point.title}</strong>{' '}
                     <Linkified text={point.body ?? ''} />
                   </span>
                 </li>
               ))}
             </ul>
-            <p className="text-base font-medium text-brand-slate/70 leading-relaxed mt-5">
+            <p className="text-base font-medium text-ink/70 leading-relaxed mt-5">
               {c.contributions.closing}
             </p>
           </FadeIn>

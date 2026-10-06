@@ -17,11 +17,11 @@ const LINKS = [
 export default function NotFound() {
   return (
     <section className="px-6 py-24 max-w-2xl mx-auto min-h-[60vh] flex flex-col justify-center text-center">
-      <p className="text-sm font-bold uppercase tracking-widest text-brand-slate/40 mb-3">404</p>
-      <h1 className="text-4xl md:text-5xl font-fraunces font-bold text-brand-slate mb-4">
+      <p className="text-sm font-bold uppercase tracking-widest text-ink/40 mb-3">404</p>
+      <h1 className="text-4xl md:text-5xl font-fraunces font-bold text-ink mb-4">
         We couldn&apos;t find that page.
       </h1>
-      <p className="text-lg text-brand-slate/70 font-medium leading-relaxed mb-10">
+      <p className="text-lg text-ink/70 font-medium leading-relaxed mb-10">
         The link may be old or mistyped. Here are the places most people are looking for:
       </p>
       <div className="flex flex-wrap justify-center gap-3">
@@ -29,7 +29,7 @@ export default function NotFound() {
           <Link
             key={href}
             href={href}
-            className="min-h-[44px] flex items-center px-5 rounded-full border-2 border-brand-slate/15 bg-white font-bold text-brand-slate hover:border-brand-red hover:text-brand-red transition-colors"
+            className="min-h-[44px] flex items-center px-5 rounded-full border-2 border-ink/15 bg-surface font-bold text-ink hover:border-accent hover:text-accent transition-colors"
           >
             {label}
           </Link>

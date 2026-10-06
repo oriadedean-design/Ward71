@@ -46,8 +46,8 @@ export default async function AboutPage() {
       <section className="px-6 py-12 max-w-7xl mx-auto">
         <div className="text-center max-w-4xl mx-auto mb-10">
           <FadeIn>
-            <h1 className="text-4xl md:text-6xl font-fraunces font-bold mb-4 text-brand-slate">{c.hero.heading}</h1>
-            <p className="text-xl md:text-3xl font-fraunces text-brand-red italic">{c.hero.tagline}</p>
+            <h1 className="text-4xl md:text-6xl font-fraunces font-bold mb-4 text-ink">{c.hero.heading}</h1>
+            <p className="text-xl md:text-3xl font-fraunces text-accent italic">{c.hero.tagline}</p>
           </FadeIn>
         </div>
 
@@ -63,7 +63,7 @@ export default async function AboutPage() {
             </div>
           </FadeIn>
 
-          <div className="lg:w-2/3 prose prose-lg prose-slate max-w-none prose-p:leading-relaxed prose-p:mb-6 font-medium text-brand-slate/90">
+          <div className="lg:w-2/3 prose prose-lg prose-slate max-w-none prose-p:leading-relaxed prose-p:mb-6 font-medium text-ink/90">
             <FadeIn>
               {paragraphs(c.story.body).map((para) => (
                 <p key={para}>{para}</p>
@@ -71,13 +71,13 @@ export default async function AboutPage() {
             </FadeIn>
 
             <FadeIn className="my-10">
-              <blockquote className="text-2xl md:text-3xl font-fraunces font-bold text-brand-red leading-tight border-none p-0">
+              <blockquote className="text-2xl md:text-3xl font-fraunces font-bold text-accent leading-tight border-none p-0">
                 &ldquo;{c.story.quote}&rdquo;
               </blockquote>
             </FadeIn>
 
             <FadeIn>
-              <h2 className="text-3xl font-fraunces font-bold mb-4 text-brand-slate">{c.whyRunning.heading}</h2>
+              <h2 className="text-3xl font-fraunces font-bold mb-4 text-ink">{c.whyRunning.heading}</h2>
               {paragraphs(c.whyRunning.body).map((para) => (
                 <p key={para}>{para}</p>
               ))}
@@ -87,7 +87,7 @@ export default async function AboutPage() {
               <blockquote className="text-2xl md:text-4xl font-fraunces font-bold text-brand-mustard leading-tight mb-8">
                 &ldquo;{c.closing.quote}&rdquo;
               </blockquote>
-              <Link href="/volunteer" className="bg-brand-slate text-brand-cream px-10 py-4 rounded-full font-bold text-lg inline-block hover:bg-opacity-90 transition-opacity no-underline">
+              <Link href="/volunteer" className="bg-secondary text-brand-cream dark:text-on-gold px-10 py-4 rounded-full font-bold text-lg inline-block hover:bg-opacity-90 transition-opacity no-underline">
                 {c.closing.buttonLabel}
               </Link>
             </FadeIn>
