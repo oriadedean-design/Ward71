@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { writeClient } from '@/sanity/client';
 import { sendTeamEmail } from '@/lib/email';
+import { inboxId } from '@/lib/inbox';
 
 const CATEGORIES = [
   'Housing',
@@ -28,6 +29,7 @@ export async function POST(req: Request) {
     }
 
     await writeClient.create({
+      _id: inboxId(),
       _type: 'inquiry',
       name: name.trim(),
       email: email.trim(),

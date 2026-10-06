@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { sendTeamEmail } from '@/lib/email';
 import { writeClient } from '@/sanity/client';
+import { inboxId } from '@/lib/inbox';
 
 export async function POST(req: Request) {
   try {
@@ -13,6 +14,7 @@ export async function POST(req: Request) {
     // Keep a list in Sanity (Inbox → Email Subscribers); the email still goes out if this fails.
     try {
       await writeClient.create({
+        _id: inboxId(),
         _type: 'emailSubscriber',
         email: email.trim(),
         status: 'Active',

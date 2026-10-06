@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { writeClient } from '@/sanity/client';
+import { inboxId } from '@/lib/inbox';
 import { sendTeamEmail } from '@/lib/email';
 import { CONTRIBUTION_LIMITS } from '@/lib/compliance';
 
@@ -43,7 +44,7 @@ export async function POST(req: Request) {
       // One record per PaymentIntent. Stripe retries webhooks, so a repeat
       // delivery finds the existing record and does nothing (no duplicate
       // record or email). The progress bar is updated by hand in Sanity.
-      const recordId = `donation-${intent.id}`;
+      const recordId = inboxId(`donation-${intent.id}`);
       if (await writeClient.getDocument(recordId)) {
         return NextResponse.json({ received: true, duplicate: true });
       }
@@ -109,7 +110,7 @@ export async function POST(req: Request) {
       const charge = event.data.object as Stripe.Charge;
       const intentId =
         typeof charge.payment_intent === 'string' ? charge.payment_intent : charge.payment_intent?.id;
-      const recordId = intentId ? `donation-${intentId}` : null;
+      const recordId = intentId ? inboxId(`donation-${intentId}`) : null;
       if (recordId && (await writeClient.getDocument(recordId))) {
         const fullyRefunded = charge.amount_refunded >= charge.amount;
         await writeClient

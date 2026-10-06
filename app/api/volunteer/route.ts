@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { sendTeamEmail } from '@/lib/email'
 import { writeClient } from '@/sanity/client'
+import { inboxId } from '@/lib/inbox'
 
 export async function POST(req: Request) {
   try {
@@ -14,6 +15,7 @@ export async function POST(req: Request) {
     // main notification, so only a failed email returns an error.
     try {
       await writeClient.create({
+        _id: inboxId(),
         _type: 'volunteerSubmission',
         name,
         email,
