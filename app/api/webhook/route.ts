@@ -35,10 +35,22 @@ export async function POST(req: Request) {
     if (event.type === 'payment_intent.succeeded') {
       const intent = event.data.object as Stripe.PaymentIntent;
       const m = intent.metadata;
-      const amountCad = Number(m.amount_cad);
+      // Stripe's own total is authoritative; metadata is the fallback.
+      const amountCad = intent.amount_received
+        ? intent.amount_received / 100
+        : Number(m.amount_cad);
+
+      // One record per PaymentIntent. Stripe retries webhooks, so a repeat
+      // delivery finds the existing record and does nothing. The progress bar
+      // sums these records, so no separate counter needs updating.
+      const recordId = `donation-${intent.id}`;
+      if (await writeClient.getDocument(recordId)) {
+        return NextResponse.json({ received: true, duplicate: true });
+      }
 
       // 1. Create donation record in Sanity
-      await writeClient.create({
+      await writeClient.createIfNotExists({
+        _id: recordId,
         _type: 'donationRecord',
         donorName: m.donor_name,
         donorEmail: m.donor_email,
@@ -60,19 +72,7 @@ export async function POST(req: Request) {
         status: 'completed',
       });
 
-      // 2. Increment the primary donation milestone
-      const milestone = await writeClient.fetch(
-        `*[_type == "donationMilestone"] | order(order asc) [0]`
-      );
-      if (milestone?._id) {
-        await writeClient
-          .patch(milestone._id)
-          .inc({ currentAmount: amountCad, donorCount: 1 })
-          .commit();
-      }
-
-      // 3. Notify the team. Caught so Stripe doesn't retry the webhook and
-      //    create a duplicate donation record.
+      // 2. Notify the team. Caught so a failed email doesn't make Stripe retry.
       try {
         const disclosed = amountCad > CONTRIBUTION_LIMITS.publicDisclosureThreshold;
         const receipt = amountCad > CONTRIBUTION_LIMITS.receiptThreshold;
@@ -100,6 +100,26 @@ export async function POST(req: Request) {
         });
       } catch (emailError) {
         console.error('Donation notification email failed:', emailError);
+      }
+    }
+
+    // Refunds: reduce the recorded amount, and mark the record refunded when the
+    // whole payment is returned. The progress bar only counts completed records.
+    if (event.type === 'charge.refunded') {
+      const charge = event.data.object as Stripe.Charge;
+      const intentId =
+        typeof charge.payment_intent === 'string' ? charge.payment_intent : charge.payment_intent?.id;
+      const recordId = intentId ? `donation-${intentId}` : null;
+      if (recordId && (await writeClient.getDocument(recordId))) {
+        const fullyRefunded = charge.amount_refunded >= charge.amount;
+        await writeClient
+          .patch(recordId)
+          .set(
+            fullyRefunded
+              ? { status: 'refunded' }
+              : { amount: (charge.amount - charge.amount_refunded) / 100 }
+          )
+          .commit();
       }
     }
 

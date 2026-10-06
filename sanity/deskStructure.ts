@@ -52,7 +52,10 @@ export const structure: StructureResolver = (S) =>
       S.divider(),
 
       S.documentTypeListItem('endorsement').title('Endorsements').icon(ThumbsUpIcon),
-      S.documentTypeListItem('donationMilestone').title('Donation Goal').icon(TargetIcon),
+      S.listItem()
+        .title('Donation Goal')
+        .icon(TargetIcon)
+        .child(S.document().schemaType('donationMilestone').documentId('donationGoal').title('Donation Goal')),
 
       S.divider(),
 

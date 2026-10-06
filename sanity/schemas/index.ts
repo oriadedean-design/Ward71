@@ -11,9 +11,13 @@ import endorsement from './endorsement';
 import emailSubscriber from './emailSubscriber';
 import { pageSchemas } from './pages';
 
-// Singleton documents: one per page plus site settings. Their document id is
-// the same as their type, and the Studio only ever shows that one document.
-export const SINGLETON_TYPES = new Set([siteSettings.name, ...pageSchemas.map((s) => s.name)]);
+// Singleton documents: one per page, site settings and the donation goal. The
+// Studio only ever shows that one document for each.
+export const SINGLETON_TYPES = new Set([
+  siteSettings.name,
+  donationMilestone.name,
+  ...pageSchemas.map((s) => s.name),
+]);
 
 export const schemaTypes = [
   siteSettings,

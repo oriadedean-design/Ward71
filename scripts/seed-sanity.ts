@@ -1,7 +1,8 @@
 /**
  * Copies the site's current content into Sanity so editors start from what's
- * live. Creates one document per page plus Site Settings, and carries over the
- * candidate photo and community gallery from the older Site Settings document.
+ * live. Creates one document per page, Site Settings and the Donation Goal, and
+ * carries over the candidate photo and community gallery from the older Site
+ * Settings document.
  *
  * Run from the project root (you must be logged in: `npx sanity login`):
  *   npx sanity exec scripts/seed-sanity.ts --with-user-token
@@ -13,6 +14,7 @@
 import { randomUUID } from 'node:crypto';
 import { getCliClient } from 'sanity/cli';
 import { PAGE_DEFAULTS, type PageId, type SanityImage } from '../lib/content/defaults';
+import { DONATION_GOAL_ID, donationGoalDefaults } from '../lib/content/donationGoal';
 
 const client = getCliClient({ apiVersion: '2024-01-01' });
 const replace = process.env.SEED_REPLACE === '1';
@@ -57,6 +59,11 @@ async function main() {
     else tx.createIfNotExists(doc);
     console.log(`${replace ? 'Replacing' : 'Creating (if missing)'}: ${id}`);
   }
+  const goalDoc = { _id: DONATION_GOAL_ID, _type: 'donationMilestone', ...donationGoalDefaults };
+  if (replace) tx.createOrReplace(goalDoc);
+  else tx.createIfNotExists(goalDoc);
+  console.log(`${replace ? 'Replacing' : 'Creating (if missing)'}: ${DONATION_GOAL_ID}`);
+
   await tx.commit();
 
   console.log(
