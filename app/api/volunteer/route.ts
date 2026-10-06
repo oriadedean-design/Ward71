@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { sendTeamEmail } from '@/lib/email'
 import { writeClient } from '@/sanity/client'
 import { inboxId } from '@/lib/inbox'
+import { addContactToSegment } from '@/lib/resendContacts'
 
 export async function POST(req: Request) {
   try {
@@ -29,6 +30,8 @@ export async function POST(req: Request) {
     } catch (saveError) {
       console.error('Failed to save volunteer to Sanity:', saveError)
     }
+
+    await addContactToSegment('volunteers', email, name)
 
     await sendTeamEmail({
       subject: `New volunteer: ${name} (${role})`,

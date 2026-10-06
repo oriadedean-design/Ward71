@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { writeClient } from '@/sanity/client';
 import { inboxId } from '@/lib/inbox';
+import { addContactToSegment } from '@/lib/resendContacts';
 import { sendTeamEmail } from '@/lib/email';
 import { CONTRIBUTION_LIMITS } from '@/lib/compliance';
 
@@ -73,7 +74,10 @@ export async function POST(req: Request) {
         status: 'completed',
       });
 
-      // 2. Notify the team. Caught so a failed email doesn't make Stripe retry.
+      // 2. Add to the Resend "Donors" segment (never throws).
+      await addContactToSegment('donors', m.donor_email, m.donor_name);
+
+      // 3. Notify the team. Caught so a failed email doesn't make Stripe retry.
       try {
         const disclosed = amountCad > CONTRIBUTION_LIMITS.publicDisclosureThreshold;
         const receipt = amountCad > CONTRIBUTION_LIMITS.receiptThreshold;
