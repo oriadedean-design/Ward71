@@ -5,8 +5,8 @@ import { getDonationProgress } from '@/lib/donations';
 const formatCad = (n: number) =>
   n.toLocaleString('en-CA', { maximumFractionDigits: n % 1 === 0 ? 0 : 2 });
 
-// Goal and text: Sanity Studio → Donation Goal. The raised amount updates live
-// as Stripe donations come in.
+// Goal, amount raised and text: Sanity Studio → Donation Goal (updated by hand).
+// Published changes appear live via <SanityLive />.
 export async function ImpactMeter() {
   const { raised, target, donors, percentage, showDonorCount, text } = await getDonationProgress();
 

@@ -1,8 +1,7 @@
 import { section, str, txt } from './fields';
 
-// The donation progress bar. Shown in the Studio as a single document
-// (id "donationGoal"). The online total is calculated from Donation Records,
-// which the Stripe webhook creates automatically.
+// The donation progress bar, updated by hand. Shown in the Studio as a single
+// document (id "donationGoal"). Changes appear on the site as soon as they're published.
 export default {
   name: 'donationMilestone',
   title: 'Donation Goal',
@@ -15,18 +14,20 @@ export default {
       validation: (Rule: any) => Rule.required().min(1),
     },
     {
-      name: 'offlineAmount',
-      title: 'Raised outside the website (CAD)',
+      name: 'raisedAmount',
+      title: 'Amount raised so far (CAD)',
       type: 'number',
-      description:
-        'Cheques, e-transfers and cash. Added to the online donations, which are counted automatically.',
+      description: 'Update this by hand, e.g. from the Stripe dashboard plus any cheques or e-transfers.',
       initialValue: 0,
+      validation: (Rule: any) => Rule.min(0),
     },
     {
-      name: 'offlineDonorCount',
-      title: 'Donors outside the website',
+      name: 'donorCount',
+      title: 'Number of donors',
       type: 'number',
+      description: 'Only shown if "Show number of donors" is on.',
       initialValue: 0,
+      validation: (Rule: any) => Rule.min(0),
     },
     { name: 'showDonorCount', title: 'Show number of donors', type: 'boolean', initialValue: false },
     section('text', 'Progress bar text', [
@@ -36,11 +37,6 @@ export default {
       txt('body', 'Text under the bar', 2),
       str('buttonLabel', 'Button label'),
     ]),
-    // Legacy fields from the original counter-based setup; no longer used.
-    { name: 'label', title: 'Label', type: 'string', hidden: true },
-    { name: 'currentAmount', title: 'Current Amount (CAD)', type: 'number', hidden: true },
-    { name: 'donorCount', title: 'Donor Count', type: 'number', hidden: true },
-    { name: 'order', title: 'Order', type: 'number', hidden: true },
   ],
   preview: { prepare: () => ({ title: 'Donation Goal' }) },
 };

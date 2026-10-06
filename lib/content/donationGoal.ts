@@ -5,8 +5,8 @@ export const DONATION_GOAL_ID = 'donationGoal';
 
 export const donationGoalDefaults = {
   targetAmount: 60000,
-  offlineAmount: 0,
-  offlineDonorCount: 0,
+  raisedAmount: 0,
+  donorCount: 0,
   showDonorCount: false,
   text: {
     headingPrefix: 'Help us reach our',

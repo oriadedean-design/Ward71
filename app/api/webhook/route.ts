@@ -41,8 +41,8 @@ export async function POST(req: Request) {
         : Number(m.amount_cad);
 
       // One record per PaymentIntent. Stripe retries webhooks, so a repeat
-      // delivery finds the existing record and does nothing. The progress bar
-      // sums these records, so no separate counter needs updating.
+      // delivery finds the existing record and does nothing (no duplicate
+      // record or email). The progress bar is updated by hand in Sanity.
       const recordId = `donation-${intent.id}`;
       if (await writeClient.getDocument(recordId)) {
         return NextResponse.json({ received: true, duplicate: true });
@@ -104,7 +104,7 @@ export async function POST(req: Request) {
     }
 
     // Refunds: reduce the recorded amount, and mark the record refunded when the
-    // whole payment is returned. The progress bar only counts completed records.
+    // whole payment is returned.
     if (event.type === 'charge.refunded') {
       const charge = event.data.object as Stripe.Charge;
       const intentId =
