@@ -6,6 +6,7 @@ import { Menu, X } from 'lucide-react'
 
 const links = [
   { href: '/about', label: 'About Me' },
+  { href: '/platform', label: 'Platform' },
   { href: '/our-ward', label: 'Our Ward' },
   { href: '/community', label: 'Community' },
   { href: '/resources', label: 'How to Vote' },
@@ -24,7 +25,7 @@ export function Header() {
           Lorna Antwi
         </Link>
 
-        <nav className="hidden md:flex gap-6 items-center text-sm font-medium">
+        <nav className="hidden lg:flex gap-6 items-center text-sm font-medium">
           {links.map(({ href, label }) => (
             <Link key={href} href={href} className="hover:text-accent transition-colors">
               {label}
@@ -40,7 +41,7 @@ export function Header() {
             Donate
           </Link>
           <button
-            className="md:hidden p-2 text-ink"
+            className="lg:hidden p-2 text-ink"
             onClick={() => setOpen(!open)}
             aria-label={open ? 'Close menu' : 'Open menu'}
           >
@@ -50,7 +51,7 @@ export function Header() {
       </div>
 
       {/* ── Mobile action bar — sits inside the sticky header, hidden on desktop ── */}
-      <div className="md:hidden border-t border-ink/10 bg-canvas px-4 py-2 flex gap-2">
+      <div className="lg:hidden border-t border-ink/10 bg-canvas px-4 py-2 flex gap-2">
         <Link
           href="/volunteer"
           className="flex-1 flex items-center justify-center min-h-[44px] rounded-full font-bold text-sm bg-secondary text-brand-cream dark:bg-transparent dark:border-2 dark:border-brand-mustard dark:text-brand-mustard hover:bg-opacity-90 transition-opacity"
@@ -68,7 +69,7 @@ export function Header() {
       {/* ── Mobile nav drawer ── */}
       {open && (
         <nav
-          className="md:hidden border-t border-ink/10 bg-canvas px-6 py-4 flex flex-col gap-1 text-sm font-medium"
+          className="lg:hidden border-t border-ink/10 bg-canvas px-6 py-4 flex flex-col gap-1 text-sm font-medium"
           aria-label="Mobile navigation"
         >
           {links.map(({ href, label }) => (

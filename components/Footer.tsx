@@ -5,6 +5,7 @@ import type { getSiteSettings } from '@/lib/content';
 const footerLinks = [
   { href: '/',            label: 'Home' },
   { href: '/about',       label: 'About' },
+  { href: '/platform',    label: 'Platform' },
   { href: '/our-ward',    label: 'Our Ward' },
   { href: '/community',   label: 'Community' },
   { href: '/resources',   label: 'How to Vote' },

@@ -15,6 +15,7 @@ import {
 // Listed in the order they appear in the site navigation.
 const PAGES: Array<[id: string, title: string]> = [
   ['homePage', 'Home'],
+  ['platformPage', 'Platform'],
   ['aboutPage', 'About'],
   ['ourWardPage', 'Our Ward'],
   ['communityPage', 'Community'],

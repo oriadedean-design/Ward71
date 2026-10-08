@@ -47,11 +47,22 @@ export const homePage = singleton('homePage', 'Home', [
     str('electionHours', 'Election Day hours'),
     str('linkText', 'Link to voting guide'),
   ]),
-  section('priorities', "What I'll Fight For", [
+  section('priorities', "What I'll Fight For (the platform)", [
     str('heading', 'Heading'),
-    cardList('items', 'Priorities'),
+    cardList('items', 'Priorities', 'This list is also the Platform page (lornaantwi.com/platform).'),
+    str('linkText', 'Link to the Platform page'),
   ]),
   section('closingCta', 'Closing call to action', [
+    str('heading', 'Heading'),
+    str('primaryButton', 'Donate button label'),
+    str('secondaryButton', 'Volunteer button label'),
+  ]),
+]);
+
+export const platformPage = singleton('platformPage', 'Platform', [
+  section('hero', 'Heading', [str('heading', 'Heading'), txt('intro', 'Intro text', 4)],
+    'The platform priorities themselves are edited in Pages → Home → What I\'ll Fight For, so both pages always match.'),
+  section('closing', 'Closing call to action', [
     str('heading', 'Heading'),
     str('primaryButton', 'Donate button label'),
     str('secondaryButton', 'Volunteer button label'),
@@ -272,6 +283,7 @@ export const thankYouPage = singleton('thankYouPage', 'Thank You (after donating
 
 export const pageSchemas = [
   homePage,
+  platformPage,
   aboutPage,
   ourWardPage,
   communityPage,

@@ -6,6 +6,7 @@ import { FadeIn } from '@/components/FadeIn';
 import { ImpactMeter } from '@/components/ImpactMeter';
 import { SubscribeForm } from '@/components/SubscribeForm';
 import { Endorsements } from '@/components/Endorsements';
+import { PlatformGrid } from '@/components/PlatformGrid';
 import { getEndorsements } from '@/lib/endorsements';
 import { FALLBACK_CANDIDATE_PHOTO, getPageContent, getSiteSettings } from '@/lib/content';
 
@@ -253,17 +254,15 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="py-12 px-6 max-w-7xl mx-auto">
+      <section id="platform" className="py-12 px-6 max-w-7xl mx-auto scroll-mt-24">
         <FadeIn>
           <h2 className="text-3xl md:text-4xl font-fraunces font-bold mb-8 text-center">{c.priorities.heading}</h2>
         </FadeIn>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {c.priorities.items.map((item, idx) => (
-            <FadeIn key={idx} delay={idx * 0.1} className="bg-surface p-6 rounded-2xl shadow-sm border border-ink/5 hover:shadow-md transition-shadow">
-              <h3 className="text-xl font-fraunces font-bold mb-3">{item.title}</h3>
-              <p className="text-ink/80 leading-relaxed">{item.description}</p>
-            </FadeIn>
-          ))}
+        <PlatformGrid items={c.priorities.items} />
+        <div className="mt-8 text-center">
+          <Link href="/platform" className="font-bold text-accent underline underline-offset-2 hover:opacity-80">
+            {c.priorities.linkText}
+          </Link>
         </div>
       </section>
 

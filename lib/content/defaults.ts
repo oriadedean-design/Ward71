@@ -82,6 +82,7 @@ export const homePageDefaults = {
   },
   priorities: {
     heading: "What I'll Fight For in Ward 7",
+    linkText: "See Lorna's full platform →",
     items: [
       { title: 'Affordable Housing and Tenant Protections', description: 'Fighting for rent control, stronger eviction prevention, faster construction, and reducing the 10-year wait for subsidized housing. Supporting first-time homebuyers facing affordability barriers.' },
       { title: 'Community Safety and Mental Health', description: 'Investing in prevention, youth outreach, after-school programs, and mental health supports that address root causes.' },
@@ -96,6 +97,21 @@ export const homePageDefaults = {
   },
   closingCta: {
     heading: 'Join us. This campaign is built by neighbours.',
+    primaryButton: 'Donate',
+    secondaryButton: 'Volunteer',
+  },
+};
+
+// The platform items themselves live on the Home page (priorities.items) so
+// the home section and the Platform page always show the same list.
+export const platformPageDefaults = {
+  hero: {
+    heading: "Lorna's Platform for Ward 7",
+    intro:
+      'These are the priorities Lorna Antwi will bring to City Hall for Humber River-Black Creek. They come from years of working alongside residents across the ward, and from what neighbours keep raising at their doors.',
+  },
+  closing: {
+    heading: 'Help make it happen.',
     primaryButton: 'Donate',
     secondaryButton: 'Volunteer',
   },
@@ -360,6 +376,7 @@ export const thankYouPageDefaults = {
 export const PAGE_DEFAULTS = {
   siteSettings: siteSettingsDefaults,
   homePage: homePageDefaults,
+  platformPage: platformPageDefaults,
   aboutPage: aboutPageDefaults,
   ourWardPage: ourWardPageDefaults,
   communityPage: communityPageDefaults,
