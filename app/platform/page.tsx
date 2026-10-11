@@ -9,7 +9,7 @@ import { listPolicyAreas, platformCardLinks } from '@/lib/policies';
 export const metadata: Metadata = {
   title: "Lorna Antwi's Platform for Ward 7",
   description:
-    "Lorna Antwi's platform for Toronto City Council, Ward 7 Humber River-Black Creek: affordable housing, community safety, youth opportunity, food security, and more.",
+    "Lorna Antwi's platform for Ward 7 Humber River-Black Creek: affordable housing, community safety, youth opportunity, food security and more.",
   alternates: { canonical: 'https://www.lornaantwi.com/platform' },
   openGraph: {
     title: "Lorna Antwi's Platform for Ward 7 | Lorna Antwi for Toronto City Council",

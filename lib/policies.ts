@@ -103,9 +103,7 @@ function summarize(slug: string, area: PolicyElement): PolicyAreaSummary {
     slug,
     heading,
     description,
-    searchDescription: titles.length
-      ? `Lorna Antwi's ${heading.toLowerCase()} plan for Ward 7 Humber River-Black Creek: ${titles.join('; ')}.`
-      : description,
+    searchDescription: searchDescription(heading, titles, description),
     policies: policies.map((p) => ({ id: p.attrs.id, title: textOf(firstChild(p, 'title')) })),
   };
 }
@@ -129,4 +127,17 @@ export function platformCardLinks(cardTitles: string[]) {
     if (area) links[title] = { href: `/platform/${area.slug}`, label: `Read the full ${area.heading.toLowerCase()} plan →` };
   }
   return links;
+}
+
+// Search engines show about 160 characters. Name as many policies as fit.
+function searchDescription(heading: string, titles: string[], fallback: string) {
+  const lead = `Lorna Antwi's ${heading.toLowerCase()} plan for Ward 7 Humber River-Black Creek`;
+  let text = `${lead}.`;
+  for (let i = 0; i < titles.length; i++) {
+    const next = `${lead}: ${titles.slice(0, i + 1).join('; ')}${i + 1 < titles.length ? ' and more' : ''}.`;
+    if (next.length > 160) break;
+    text = next;
+  }
+  if (titles.length) return text;
+  return fallback.length <= 160 ? fallback : `${fallback.slice(0, 157).replace(/\s+\S*$/, '')}…`;
 }

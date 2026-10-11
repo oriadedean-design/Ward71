@@ -25,13 +25,13 @@ export async function generateMetadata({ params }: { params: Promise<{ area: str
   const summary = findArea((await params).area);
   if (!summary) return {};
   const url = `${BASE}/platform/${summary.slug}`;
-  const title = `Lorna Antwi's ${summary.heading} Plan for Ward 7 Humber River-Black Creek`;
+  const title = `${summary.heading} Plan for Ward 7`;
   return {
     title,
     description: summary.searchDescription,
     alternates: { canonical: url },
     openGraph: {
-      title: `${title} | Lorna Antwi for Toronto City Council`,
+      title: `Lorna Antwi's ${summary.heading} Plan for Ward 7 Humber River-Black Creek`,
       description: summary.searchDescription,
       url,
       type: 'article',

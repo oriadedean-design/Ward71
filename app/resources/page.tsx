@@ -6,9 +6,9 @@ import { Linkified } from '@/components/Linkified';
 import { getPageContent, paragraphs } from '@/lib/content';
 
 export const metadata: Metadata = {
-  title: 'How to Vote in Ward 7 Humber River-Black Creek, 2026',
+  title: 'How to Vote in Ward 7 Humber River-Black Creek',
   description:
-    'Advance voting in Ward 7 runs October 6 to 11, 2026, and Election Day is Monday, October 26. Find Ward 7 advance polling locations, your Election Day polling place, what ID to bring, and how to register.',
+    'Election Day in Ward 7 is Monday, October 26, 2026. Find your polling place, advance voting dates and locations, what ID to bring and how to register.',
   alternates: { canonical: 'https://www.lornaantwi.com/resources' },
   openGraph: {
     title: 'How to Vote in Ward 7 Humber River-Black Creek, 2026 | Lorna Antwi for Toronto City Council',

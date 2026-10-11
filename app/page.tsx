@@ -13,7 +13,7 @@ import { FALLBACK_CANDIDATE_PHOTO, getPageContent, getSiteSettings } from '@/lib
 
 export const metadata: Metadata = {
   title: 'Lorna Antwi for Toronto City Council | Ward 7',
-  description: 'Vote Lorna Antwi for Toronto City Council, Humber River-Black Creek (Ward 7). Affordable housing, community safety, youth opportunity, and real change for our neighbourhood.',
+  description: 'Vote Lorna Antwi for Toronto City Council in Ward 7, Humber River-Black Creek. Affordable housing, community safety, youth opportunity and real change.',
   alternates: { canonical: 'https://www.lornaantwi.com' },
   openGraph: {
     title: 'Lorna Antwi for Toronto City Council | Ward 7',

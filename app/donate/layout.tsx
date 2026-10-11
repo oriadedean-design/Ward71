@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import { ReactNode } from 'react'
 
 export const metadata: Metadata = {
-  title: 'Donate',
+  title: 'Donate to the Ward 7 Campaign',
   description: 'Support Lorna Antwi\'s grassroots campaign for Toronto City Council Ward 7. No corporate money — just neighbours helping neighbours build a stronger community.',
   openGraph: {
     title: 'Donate | Lorna Antwi for Toronto City Council',

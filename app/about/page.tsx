@@ -8,7 +8,7 @@ import { Endorsements } from '@/components/Endorsements';
 import { getEndorsements } from '@/lib/endorsements';
 
 export const metadata: Metadata = {
-  title: 'About Lorna Antwi',
+  title: 'About Lorna, Ward 7 Council Candidate',
   description: 'Rooted in service. Built for our community. Read about Lorna Antwi\'s story and why she is running for Toronto City Council in Humber River-Black Creek (Ward 7).',
   openGraph: {
     title: 'About Lorna Antwi | Toronto City Council Ward 7',

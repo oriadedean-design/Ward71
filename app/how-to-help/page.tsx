@@ -7,7 +7,7 @@ import { Linkified } from '@/components/Linkified';
 import { getPageContent, paragraphs } from '@/lib/content';
 
 export const metadata: Metadata = {
-  title: 'How to Help',
+  title: 'How to Help the Ward 7 Campaign',
   description: 'Three ways to make a difference for Ward 7: Donate, Volunteer, and Spread the Word. Power a grassroots movement behind Lorna Antwi for Toronto City Council.',
   openGraph: {
     title: 'How to Help | Lorna Antwi for Toronto City Council',

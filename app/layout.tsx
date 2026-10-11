@@ -27,9 +27,9 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://www.lornaantwi.com'),
   title: {
     default: 'Lorna Antwi for Toronto City Council | Ward 7',
-    template: '%s | Lorna Antwi for Toronto City Council',
+    template: '%s | Lorna Antwi',
   },
-  description: 'Vote Lorna Antwi for Toronto City Council, Humber River-Black Creek (Ward 7). Affordable housing, community safety, youth opportunity, and real change for our neighbourhood.',
+  description: 'Vote Lorna Antwi for Toronto City Council in Ward 7, Humber River-Black Creek. Affordable housing, community safety, youth opportunity and real change.',
   keywords: [
     'Lorna Antwi', 'Toronto City Council', 'Ward 7', 'Humber River Black Creek',
     'Toronto election 2026', 'municipal election Toronto', 'affordable housing Toronto',

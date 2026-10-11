@@ -4,9 +4,9 @@ import { WardStats } from '@/components/WardStats'
 import { getPageContent } from '@/lib/content'
 
 export const metadata: Metadata = {
-  title: 'Ward 7: Humber River-Black Creek Neighbourhoods',
+  title: 'Ward 7 Humber River-Black Creek Neighbourhoods',
   description:
-    'What ward am I in? Ward 7 covers Humber River-Black Creek in northwest North York, from Steeles to the 401 and the Humber River to Keele: Jane and Finch, Black Creek, Downsview, Humbermede, Humber Summit and more.',
+    'What ward am I in? Ward 7 Humber River-Black Creek runs from Steeles to the 401, Humber River to Keele: Jane and Finch, Black Creek, Downsview and more.',
   alternates: { canonical: 'https://www.lornaantwi.com/our-ward' },
   openGraph: {
     title: 'Ward 7: Humber River-Black Creek Neighbourhoods | Lorna Antwi',

@@ -5,7 +5,7 @@ import { getCommunityContent } from '@/lib/content';
 import { urlFor } from '@/sanity/image';
 
 export const metadata: Metadata = {
-  title: 'Community',
+  title: 'Community Voices from Ward 7',
   description: 'What Lorna Antwi is hearing in Humber River-Black Creek. Residents are speaking up about housing, safety, food security, youth opportunity, and more.',
   openGraph: {
     title: 'Community Voices | Lorna Antwi for Toronto City Council',
