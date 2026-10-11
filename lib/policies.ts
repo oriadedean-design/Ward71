@@ -65,3 +65,68 @@ export function textOf(n: PolicyNode | undefined): string {
   if (!isElement(n)) return n.text.replace(/\s+/g, ' ');
   return n.children.map(textOf).join('').replace(/\s+/g, ' ').trim();
 }
+
+export interface PolicyAreaSummary {
+  slug: string; // file name, and the page address: /platform/<slug>
+  heading: string; // e.g. "Housing"
+  description: string; // Lorna's commitment, in full (llms.txt)
+  searchDescription: string; // short version for Google results and link previews
+  policies: Array<{ id: string; title: string }>;
+}
+
+/** Every policy export, for page routes, links, the sitemap and llms.txt. */
+export function listPolicyAreas(): PolicyAreaSummary[] {
+  let files: string[] = [];
+  try {
+    files = fs.readdirSync(POLICY_DIR).filter((f) => f.endsWith('.xml')).sort();
+  } catch {
+    return [];
+  }
+  return files.flatMap((file) => {
+    const slug = file.replace(/\.xml$/, '');
+    const area = getPolicyArea(slug);
+    return area ? [summarize(slug, area)] : [];
+  });
+}
+
+function summarize(slug: string, area: PolicyElement): PolicyAreaSummary {
+  const policies = childElements(area, 'policy');
+  // The area's name comes from its policies' type ("Housing"), else the file name.
+  const heading =
+    textOf(firstChild(policies[0] ?? area, 'policy_type')) ||
+    slug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+  const intro = firstChild(area, 'introduction');
+  const commitment = intro && firstChild(intro, 'commitment');
+  const description = textOf(commitment && firstChild(commitment, 'paragraph')) || textOf(intro);
+  const titles = policies.map((p) => textOf(firstChild(p, 'title')));
+  return {
+    slug,
+    heading,
+    description,
+    searchDescription: titles.length
+      ? `Lorna Antwi's ${heading.toLowerCase()} plan for Ward 7 Humber River-Black Creek: ${titles.join('; ')}.`
+      : description,
+    policies: policies.map((p) => ({ id: p.attrs.id, title: textOf(firstChild(p, 'title')) })),
+  };
+}
+
+/**
+ * Which platform card an area belongs to: the first card whose title contains
+ * the area's name (the "Housing" export goes with "Affordable Housing and
+ * Tenant Protections").
+ */
+export function matchCardToArea(cardTitle: string, areas: PolicyAreaSummary[]) {
+  const title = cardTitle.toLowerCase();
+  return areas.find((a) => title.includes(a.heading.toLowerCase()));
+}
+
+/** Card title → link to its full plan, for PlatformGrid. */
+export function platformCardLinks(cardTitles: string[]) {
+  const areas = listPolicyAreas();
+  const links: Record<string, { href: string; label: string }> = {};
+  for (const title of cardTitles) {
+    const area = matchCardToArea(title, areas);
+    if (area) links[title] = { href: `/platform/${area.slug}`, label: `Read the full ${area.heading.toLowerCase()} plan →` };
+  }
+  return links;
+}

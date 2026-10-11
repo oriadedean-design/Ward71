@@ -80,6 +80,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               {
                 "@context": "https://schema.org",
                 "@type": "Person",
+                "@id": "https://www.lornaantwi.com/#lorna",
                 "name": "Lorna Antwi",
                 "jobTitle": "Candidate for Toronto City Council",
                 "description": "Running for Toronto City Council in Humber River-Black Creek (Ward 7) in the 2026 municipal election.",

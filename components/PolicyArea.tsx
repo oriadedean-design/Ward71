@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import Link from 'next/link';
 import { ChevronDown } from 'lucide-react';
 import { FadeIn } from '@/components/FadeIn';
 import { OpenPolicyFromHash } from '@/components/OpenPolicyFromHash';
@@ -7,6 +8,7 @@ import {
   firstChild,
   isElement,
   textOf,
+  type PolicyAreaSummary,
   type PolicyElement,
   type PolicyNode,
 } from '@/lib/policies';
@@ -199,7 +201,15 @@ function Policy({ node }: { node: PolicyElement }) {
   );
 }
 
-export function PolicyArea({ area, heading }: { area: PolicyElement; heading: string }) {
+export function PolicyArea({
+  area,
+  summary,
+  heading,
+}: {
+  area: PolicyElement;
+  summary: PolicyAreaSummary;
+  heading: string;
+}) {
   const intro = firstChild(area, 'introduction');
   const commitment = intro && firstChild(intro, 'commitment');
   const policies = childElements(area, 'policy');
@@ -208,10 +218,17 @@ export function PolicyArea({ area, heading }: { area: PolicyElement; heading: st
     <div lang={area.attrs.lang}>
       <OpenPolicyFromHash ids={policies.map((p) => p.attrs.id).filter(Boolean)} />
 
-      <FadeIn className="text-center mb-10">
-        <p className="text-xs font-bold uppercase tracking-widest text-accent mb-2">Policy</p>
-        <h2 className="text-3xl md:text-5xl font-fraunces font-bold text-ink">{heading}</h2>
-      </FadeIn>
+      <div className="text-center mb-10">
+        <nav aria-label="Breadcrumb" className="text-sm text-ink/60 mb-3">
+          <Link href="/platform" className="hover:text-accent underline-offset-2 hover:underline">Lorna&apos;s Platform</Link>
+          <span aria-hidden="true" className="mx-2">›</span>
+          <span aria-current="page">{summary.heading}</span>
+        </nav>
+        <h1 className="text-4xl md:text-6xl font-fraunces font-bold text-ink">{heading}</h1>
+        <p className="mt-3 text-ink/70 font-medium">
+          By Lorna Antwi, candidate for Toronto City Council, Ward 7 Humber River-Black Creek
+        </p>
+      </div>
 
       {intro && (
         <FadeIn className="max-w-3xl mx-auto mb-10">

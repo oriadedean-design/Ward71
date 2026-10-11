@@ -7,6 +7,7 @@ import { ImpactMeter } from '@/components/ImpactMeter';
 import { SubscribeForm } from '@/components/SubscribeForm';
 import { Endorsements } from '@/components/Endorsements';
 import { PlatformGrid } from '@/components/PlatformGrid';
+import { platformCardLinks } from '@/lib/policies';
 import { getEndorsements } from '@/lib/endorsements';
 import { FALLBACK_CANDIDATE_PHOTO, getPageContent, getSiteSettings } from '@/lib/content';
 
@@ -258,7 +259,7 @@ export default async function Home() {
         <FadeIn>
           <h2 className="text-3xl md:text-4xl font-fraunces font-bold mb-8 text-center">{c.priorities.heading}</h2>
         </FadeIn>
-        <PlatformGrid items={c.priorities.items} />
+        <PlatformGrid items={c.priorities.items} links={platformCardLinks(c.priorities.items.map((i) => i.title))} />
         <div className="mt-8 text-center">
           <Link href="/platform" className="font-bold text-accent underline underline-offset-2 hover:opacity-80">
             {c.priorities.linkText}
