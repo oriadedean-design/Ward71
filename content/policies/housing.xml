@@ -1,0 +1,213 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<housing version="1.0" lang="en-CA">
+  <!--Developer implementation notes: Keep the Housing introduction (research and Ward 7 commitment) always visible. Render each policy as an independent clickable disclosure, closed by default, with its title visible as the toggle and its stable id usable for direct linking. Multiple policies may remain open simultaneously. Inside an open policy, Stakeholders and Proposed Action are visible without further clicks. Outcomes are bold parent-bullet accordions with indented child-bullet lists; initially collapsed. Sources, Evidence & Case Studies and Tools: Established Policy and Regulation are two independent, initially collapsed disclosures under every policy. Proposed Action is displayed immediately, not hidden in a disclosure. Thought Experiments are standalone <thoughtExperiment> sections at policy level, NEVER part of sourcesEvidenceCaseStudies; no such section is present in this Housing export. Provide accessible mouse, touch and keyboard interaction, visible expanded/collapsed state and appropriate controls. Use the label attributes as visible section headings. Implementation notes are not public-facing text.-->
+  <introduction>
+    <heading>Why Approvals Are Not Becoming Homes</heading>
+    <point><strong>Approvals aren't becoming homes.</strong> By June 2026, Toronto had reached 73.7% of its annual first-planning-approval target, but only 21.5% of its housing-start target. <link href="https://www.toronto.ca/wp-content/uploads/2026/07/9962-city-planning-municipal-housing-target-dashboard-Q2-26.pdf">City of Toronto</link></point>
+    <point><strong>Private financing is a barrier.</strong> CMHC explains: “Lenders typically require a pre-sale threshold of 70% prior to releasing funds.” Without sufficient presales, condominium projects struggle to secure construction financing. <link href="https://www.cmhc-schl.gc.ca/observer/2025/condominium-apartment-market-risks-toronto-vancouver">CMHC</link></point>
+    <point><strong>The City must take greater responsibility.</strong> Instead of relying on private developers to finance and carry the risks of housing development, Toronto should use its public land, <link href="https://www.infrastructureontario.ca/en/what-we-do/infrastructure-lending/loan-program---eligible-borrowers/municipalities/">municipal financing opportunities</link> and ability to sustain longer returns to build affordable and RGI housing.</point>
+    <commitment>
+      <heading>Lorna's Commitment to Ward 7</heading>
+      <paragraph>Lorna will aggressively pursue new housing development throughout Ward 7, working with private developers, nonprofits and public agencies to create more affordable, rent-geared-to-income, family-sized and market-rent housing, while protecting and improving the community facilities and services residents depend on.</paragraph>
+    </commitment>
+  </introduction>
+  <policy id="fast-track-housing-development-on-public-land" interaction="disclosure" defaultExpanded="false">
+    <policy_type>Housing</policy_type>
+    <title>Fast-Track Housing Development on Public Land</title>
+    <intersections>
+      <theme>Public Assets &amp; Accountability</theme>
+      <theme>Affordability</theme>
+      <theme>City Services &amp; Workforce</theme>
+    </intersections>
+    <stakeholders>
+      <paragraph>Toronto residents; tenants; households awaiting rent-geared-to-income (RGI) housing; community-service users; municipal employees and unions; local businesses; taxpayers.</paragraph>
+    </stakeholders>
+    <outcomes layout="nested-bullet-list" interaction="accordion" defaultExpanded="false">
+      <category name="Housing" parentBullet="true" labelStyle="bold" collapsible="true">
+        <items layout="bullet-list" level="2">
+          <item>More affordable and RGI housing.</item>
+          <item>Reduced housing waitlists.</item>
+          <item>Fewer missed development opportunities.</item>
+        </items>
+      </category>
+      <category name="Economic Sustainability" parentBullet="true" labelStyle="bold" collapsible="true">
+        <items layout="bullet-list" level="2">
+          <item>Greater long-term returns on public assets.</item>
+          <item>Local jobs and economic opportunities.</item>
+          <item>Reduced future replacement costs.</item>
+        </items>
+      </category>
+      <category name="Community Benefits" parentBullet="true" labelStyle="bold" collapsible="true">
+        <items layout="bullet-list" level="2">
+          <item>Preserved and improved public services.</item>
+          <item>Community participation in decisions.</item>
+        </items>
+      </category>
+      <category name="Accountability &amp; Transparency" parentBullet="true" labelStyle="bold" collapsible="true">
+        <items layout="bullet-list" level="2">
+          <item>Published financial comparisons.</item>
+          <item>Disclosure of conflicts of interest.</item>
+          <item>Recorded Council votes and justifications.</item>
+          <item>Reduced opportunities for preferential dealings.</item>
+        </items>
+      </category>
+    </outcomes>
+    <proposedAction>
+      <paragraph>Toronto already has Toronto Builds and expedited approvals. I will seek Council approval to require housing referrals at three triggers, with coordinated financing, approvals and construction delivery for viable projects.</paragraph>
+      <paragraph>
+        <strong>Triggered on:</strong>
+      </paragraph>
+      <list>
+        <item>Property sale: A City-owned property is being considered for sale.</item>
+        <item>Facility replacement: A municipal facility is scheduled for major reconstruction or replacement.</item>
+        <item>Annual property review: A new mandatory ward-by-ward review of existing City records identifies underused land or buildings with housing potential.</item>
+      </list>
+      <paragraph>
+        <strong>Fast-tracking development:</strong>
+      </paragraph>
+      <list>
+        <item>Start earlier: Refer sites to Toronto Builds before disposal or major facility replacement decisions.</item>
+        <item>Work simultaneously: Coordinate design, financing and departmental reviews wherever lawful.</item>
+        <item>Eliminate duplication: Reuse existing City records, studies and approvals work.</item>
+        <item>Accelerate approvals: Apply the existing Toronto Builds expedited process to eligible proposals.</item>
+        <item>Move to construction: Assign a responsible project lead to resolve delays and advance viable, funded projects.</item>
+      </list>
+      <paragraph>Proposals would consider public ownership, deeply affordable and RGI housing, rent-to-own, recreation, childcare and revenue-producing commercial space.</paragraph>
+      <paragraph>Accountability: Publish costs, financial comparisons, progress and reasons development cannot proceed. Where public ownership offers greater long-term value, any proposed sale must undergo public consultation and a documented Council decision.</paragraph>
+      <paragraph>Duration: Continue mandatory referrals and annual reviews until the RGI housing waitlist backlog is eliminated.</paragraph>
+    </proposedAction>
+    <sourcesEvidenceCaseStudies label="Sources, Evidence &amp; Case Studies" interaction="disclosure" defaultExpanded="false">
+      <paragraph>Existing foundation: <link href="https://secure.toronto.ca/council/agenda-item.do?item=2025.PH21.4">Toronto Builds - PH21.4</link> directs City-owned land to be considered for housing. <link href="https://secure.toronto.ca/council/agenda-item.do?item=2025.EX25.1">Housing Development Governance - EX25.1</link> establishes City housing delivery oversight and expedited approvals. The proposed changes would make referrals mandatory at defined triggers, extend reviews to underused properties across wards and coordinate work to reduce delays.</paragraph>
+    </sourcesEvidenceCaseStudies>
+    <tools label="Tools: Established Policy and Regulation" interaction="disclosure" defaultExpanded="false">
+      <paragraph>EXPAND <link href="https://secure.toronto.ca/council/agenda-item.do?item=2025.PH21.4">Toronto Builds - PH21.4</link>: require referrals when property-sale, facility-replacement or annual-review triggers occur.</paragraph>
+      <paragraph>EXPAND <link href="https://secure.toronto.ca/council/agenda-item.do?item=2025.EX25.1">Housing Development Governance - EX25.1</link>: apply existing expedited project-delivery and approval arrangements to eligible referred sites.</paragraph>
+      <paragraph>MODIFY <link href="https://www.toronto.ca/legdocs/municode/1184_213.pdf">Municipal Code Chapter 213</link>: integrate housing-value review into applicable property-disposal procedures.</paragraph>
+      <paragraph>USE <link href="https://www.infrastructureontario.ca/en/what-we-do/infrastructure-lending/loan-program---eligible-borrowers/municipalities/">Infrastructure Ontario Municipal Loan Program</link>: assess eligible developments for municipal capital financing.</paragraph>
+    </tools>
+  </policy>
+  <policy id="resolve-development-conflicts-without-losing-community-benefits" interaction="disclosure" defaultExpanded="false">
+    <policy_type>Housing</policy_type>
+    <title>Resolve Development Conflicts Without Losing Community Benefits</title>
+    <intersections>
+      <theme>Housing</theme>
+      <theme>Public Assets &amp; Accountability</theme>
+      <theme>Youth &amp; Community Facilities</theme>
+      <theme>Local Economy &amp; Jobs</theme>
+    </intersections>
+    <stakeholders>
+      <paragraph>Residents; community organizations; local businesses; developers; municipal employees; taxpayers.</paragraph>
+    </stakeholders>
+    <outcomes layout="nested-bullet-list" interaction="accordion" defaultExpanded="false">
+      <category name="Housing &amp; Local Economy" parentBullet="true" labelStyle="bold" collapsible="true">
+        <items layout="bullet-list" level="2">
+          <item>Fewer stalled developments.</item>
+          <item>More housing and customers for local businesses.</item>
+        </items>
+      </category>
+      <category name="Community Benefits" parentBullet="true" labelStyle="bold" collapsible="true">
+        <items layout="bullet-list" level="2">
+          <item>Protected public facilities and services.</item>
+          <item>Safer roads and appropriate infrastructure.</item>
+        </items>
+      </category>
+      <category name="Accountability &amp; Transparency" parentBullet="true" labelStyle="bold" collapsible="true">
+        <items layout="bullet-list" level="2">
+          <item>Documented responses to community concerns.</item>
+          <item>Publicly justified land exchanges.</item>
+        </items>
+      </category>
+    </outcomes>
+    <proposedAction>
+      <paragraph>When communities oppose development over legitimate concerns, I will seek solutions that protect community interests without sacrificing housing and economic opportunities.</paragraph>
+      <paragraph>The City would:</paragraph>
+      <list>
+        <item><strong>Resolve:</strong> Identify specific concerns and explore changes to the original proposal.</item>
+        <item><strong>Relocate:</strong> If those changes cannot resolve the conflict, examine voluntary land exchanges offering comparable development value in a more suitable location.</item>
+        <item><strong>Preserve:</strong> Prioritize keeping housing, investment and community services within the ward.</item>
+        <item><strong>Expedite:</strong> Continue existing planning work during negotiations to avoid unnecessary delays.</item>
+      </list>
+      <paragraph>Land exchanges would require developer agreement, independent valuation and appropriate City approval.</paragraph>
+    </proposedAction>
+    <sourcesEvidenceCaseStudies label="Sources, Evidence &amp; Case Studies" interaction="disclosure" defaultExpanded="false">
+      <paragraph><link href="https://secure.toronto.ca/council/agenda-item.do?item=2026.EY32.5">3100 Weston Road:</link> A proposed 125-home development faces concerns involving traffic, infrastructure, environmental protection and longstanding community uses. Council opposed the current application while directing staff to continue negotiations.</paragraph>
+      <paragraph><link href="https://secure.toronto.ca/council/agenda-item.do?item=2018.GM28.28">Galleria Mall:</link> Toronto approved a land exchange in 2018 to accommodate redevelopment, an expanded park and a replacement community centre.</paragraph>
+    </sourcesEvidenceCaseStudies>
+    <tools label="Tools: Established Policy and Regulation" interaction="disclosure" defaultExpanded="false">
+      <paragraph>USE <link href="https://www.toronto.ca/legdocs/municode/1184_213.pdf">Municipal Code Chapter 213 - Real Property</link>: Existing municipal property transaction procedures.</paragraph>
+      <paragraph>USE <link href="https://secure.toronto.ca/council/agenda-item.do?item=2018.GM28.28">Galleria Land Exchange - GM28.28</link>: Established precedent for negotiated exchanges.</paragraph>
+      <paragraph>USE <link href="https://secure.toronto.ca/council/agenda-item.do?item=2026.EY32.5">3100 Weston Road Council Direction - EY32.5</link>: Existing directions to negotiate, review traffic impacts and pursue acquisition of specified lands.</paragraph>
+    </tools>
+    <ward7Actions>
+      <paragraph>Start with 3100 Weston Road. Request an assessment of whether the development can proceed with appropriate protections or whether a negotiated land exchange could preserve community space while retaining the proposed housing investment in Ward 7.</paragraph>
+    </ward7Actions>
+    <participation>
+      <paragraph>Residents, community organizations and businesses would identify concerns and review proposed solutions before land-exchange decisions.</paragraph>
+    </participation>
+  </policy>
+  <policy id="build-three-new-mixed-use-housing-developments-in-ward-7" interaction="disclosure" defaultExpanded="false">
+    <policy_type>Housing</policy_type>
+    <title>Build Three New Mixed-Use Housing Developments in Ward 7</title>
+    <intersections>
+      <theme>Housing</theme>
+      <theme>Public Assets &amp; Accountability</theme>
+      <theme>Youth &amp; Community Facilities</theme>
+    </intersections>
+    <stakeholders>
+      <paragraph>Ward 7 residents; households needing affordable and RGI housing; recreation users; City staff; TDSB; local businesses; taxpayers.</paragraph>
+    </stakeholders>
+    <outcomes layout="nested-bullet-list" interaction="accordion" defaultExpanded="false">
+      <category name="Housing" parentBullet="true" labelStyle="bold" collapsible="true">
+        <items layout="bullet-list" level="2">
+          <item>Three Ward 7 sites assessed for housing development.</item>
+          <item>More affordable and RGI homes if viable projects are approved and funded.</item>
+        </items>
+      </category>
+      <category name="Community Benefits" parentBullet="true" labelStyle="bold" collapsible="true">
+        <items layout="bullet-list" level="2">
+          <item>Improved recreation facilities alongside housing.</item>
+          <item>Continued community recreation access during reconstruction.</item>
+        </items>
+      </category>
+      <category name="Economic Sustainability" parentBullet="true" labelStyle="bold" collapsible="true">
+        <items layout="bullet-list" level="2">
+          <item>Better use of existing public land.</item>
+          <item>Opportunities for nearby businesses and local employment.</item>
+        </items>
+      </category>
+      <category name="Accountability &amp; Transparency" parentBullet="true" labelStyle="bold" collapsible="true">
+        <items layout="bullet-list" level="2">
+          <item>Resident input into the services provided.</item>
+          <item>Publicly documented feasibility, costs and decisions.</item>
+        </items>
+      </category>
+    </outcomes>
+    <proposedAction>
+      <paragraph>Seek preliminary mixed-use redevelopment assessments for three Ward 7 recreation properties:</paragraph>
+      <list>
+        <item>Driftwood Community Recreation Centre.</item>
+        <item>Oakdale Community Centre.</item>
+        <item>Habitant Arena, 3383 Weston Road.</item>
+      </list>
+      <paragraph>Explore affordable and rent-geared-to-income housing alongside replacement or improved recreation facilities, childcare and other services identified by residents. Proposals must account for site feasibility, financing, existing community access and required approvals.</paragraph>
+      <paragraph>Negotiate temporary recreation access at nearby TDSB schools outside instructional hours where feasible. Any City-funded school upgrades would remain with the schools. Arrange alternative recreation services before closures.</paragraph>
+      <paragraph>Use the proposed citywide Toronto Builds referral and fast-track policy to move suitable sites through design, financing and approvals toward construction.</paragraph>
+    </proposedAction>
+    <sourcesEvidenceCaseStudies label="Sources, Evidence &amp; Case Studies" interaction="disclosure" defaultExpanded="false">
+      <paragraph>Single-building development: <link href="https://www.toronto.ca/news/city-of-toronto-celebrates-the-opening-of-east-bayfront-community-recreation-centre-to-support-growing-neighbourhood/">East Bayfront Community Recreation Centre</link> integrates recreation space into a residential building.</paragraph>
+      <paragraph>Coordinated civic site: <link href="https://www.toronto.ca/wp-content/uploads/2025/04/9778-2025-04-17-Parkdale-Hub-West-Block-RFP-For-Release.pdf">Parkdale Hub</link> plans housing alongside library, recreation and community services.</paragraph>
+      <paragraph>Large development site: <link href="https://www.toronto.ca/news/city-of-toronto-and-createto-break-ground-on-new-mixed-use-transit-oriented-housing-project-with-520-affordable-rental-homes/">50 Wilson Heights Boulevard</link> includes 1,484 planned homes, including 520 affordable rentals, with childcare, community space, retail and a park.</paragraph>
+      <paragraph>These examples illustrate possibilities at different site sizes, not restrictions on future proposals.</paragraph>
+    </sourcesEvidenceCaseStudies>
+    <tools label="Tools: Established Policy and Regulation" interaction="disclosure" defaultExpanded="false">
+      <paragraph>USE <link href="https://secure.toronto.ca/council/agenda-item.do?item=2025.PH21.4">Toronto Builds - PH21.4</link>: City-owned land housing development framework.</paragraph>
+      <paragraph>USE <link href="https://secure.toronto.ca/council/agenda-item.do?item=2025.EX25.1">Housing Development Governance - EX25.1</link>: existing City housing development delivery and approval processes.</paragraph>
+      <paragraph>USE <link href="https://www.toronto.ca/city-government/planning-development/application-forms-fees/">City Planning Development Applications</link>: statutory approval procedures.</paragraph>
+      <paragraph>USE <link href="https://www.infrastructureontario.ca/en/what-we-do/infrastructure-lending/loan-program---eligible-borrowers/municipalities/">Infrastructure Ontario Municipal Loan Program</link>: financing for eligible municipal capital projects.</paragraph>
+      <paragraph>USE <link href="https://www.tdsb.on.ca/Community/Community-Use-of-Schools">TDSB Community Use of Schools</link>: framework for negotiating access to school facilities.</paragraph>
+    </tools>
+    <participation>
+      <paragraph>Neighbourhood-specific surveys would identify priorities for housing, childcare, accessibility, youth and seniors' services, recreation and commercial space. Residents would be consulted on redevelopment proposals and arrangements to maintain recreation access.</paragraph>
+    </participation>
+  </policy>
+</housing>

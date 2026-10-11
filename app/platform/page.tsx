@@ -2,7 +2,9 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { FadeIn } from '@/components/FadeIn';
 import { PlatformGrid } from '@/components/PlatformGrid';
+import { PolicyArea } from '@/components/PolicyArea';
 import { getPageContent } from '@/lib/content';
+import { getPolicyArea } from '@/lib/policies';
 
 export const metadata: Metadata = {
   title: "Lorna Antwi's Platform for Ward 7",
@@ -19,6 +21,7 @@ export const metadata: Metadata = {
 
 export default async function PlatformPage() {
   const [page, home] = await Promise.all([getPageContent('platformPage'), getPageContent('homePage')]);
+  const housing = getPolicyArea('housing');
 
   return (
     <>
@@ -34,6 +37,12 @@ export default async function PlatformPage() {
       <section className="pb-14 px-6 max-w-7xl mx-auto">
         <PlatformGrid items={home.priorities.items} />
       </section>
+
+      {housing && (
+        <section id="housing" className="scroll-mt-28 border-t border-ink/10 py-14 px-6">
+          <PolicyArea area={housing} heading="Housing" />
+        </section>
+      )}
 
       <section className="bg-band text-brand-cream py-14 px-6 text-center">
         <FadeIn className="max-w-3xl mx-auto">

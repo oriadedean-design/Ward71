@@ -32,6 +32,10 @@ const nextConfig: NextConfig = {
     ],
   },
   output: 'standalone',
+  // Policy exports are read from disk when the Platform page renders.
+  outputFileTracingIncludes: {
+    '/platform': ['./content/policies/**/*'],
+  },
   // Easy-to-remember addresses for the content editor (Sanity Studio).
   async redirects() {
     return [
