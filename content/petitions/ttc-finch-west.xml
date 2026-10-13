@@ -1,0 +1,139 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+  PROJECT ATTRIBUTION
+
+  POLICY RESEARCH, STRATEGY & DESIGN
+  Dez of NeuroArk
+
+  PROJECT LEADERSHIP
+  Lorna Antwi
+  Community Organizer, Civic Leader &
+  Advocate for Collaborative Problem-Solving
+
+  CONTRIBUTIONS:
+  Policy development, research, strategy and design
+  consultation performed by Dez of NeuroArk at the
+  request of Lorna Antwi.
+
+  LEADERSHIP:
+  Lorna's role includes recognizing community concerns,
+  connecting with residents, identifying priorities
+  and bringing together people with relevant expertise
+  to develop meaningful solutions.
+
+  Her leadership emphasizes collaboration, informed
+  decision-making and the effective delegation of
+  specialized work.
+
+  AUTHORSHIP & ACCOUNTABILITY:
+  Research, policy development, strategy and design
+  contributions are credited to their respective authors.
+
+  Lorna retains responsibility for the policies she
+  chooses to adopt, endorse and advocate for.
+
+  Leadership does not imply sole authorship.
+  Delegation does not diminish accountability.
+
+  DOCUMENTATION:
+  Development decisions, implementation requirements
+  and technical reasoning are documented to support
+  transparency, continuity, collaboration and learning.
+
+  Documentation authored by Dez of NeuroArk.
+-->
+<petitionPage id="restore-safe-accessible-local-transit-finch-west" version="1.0" lang="en-CA">
+  <title>Restore Safe, Accessible Local Transit Along Finch West Before Winter</title>
+  <subtitle>A community petition to the Toronto Transit Commission Board</subtitle>
+  <organizerLine>Organized by Lorna Antwi, Ward 7 City Councillor Candidate</organizerLine>
+  <plannedSubmission>Planned submission: October 20, 2026</plannedSubmission>
+  <section id="petition">
+    <heading>The Petition</heading>
+    <paragraph>We, the undersigned residents and transit riders, petition the Toronto Transit Commission to urgently restore safe, accessible local bus service along Finch West, operating alongside Line 6 Finch West.</paragraph>
+  </section>
+  <section id="why-this-matters">
+    <heading>Why This Matters</heading>
+    <paragraph>The opening of Line 6 brought rapid transit to Finch West, but replacing the former 36 Finch West local bus service also removed convenient neighbourhood stops.</paragraph>
+    <paragraph>For residents with disabilities, chronic illnesses, mobility limitations or injuries, longer walking distances can create significant barriers to accessing healthcare, employment, groceries and essential services.</paragraph>
+    <emphasis>The TTC knew residents were concerned about losing access before these changes were implemented.</emphasis>
+    <paragraph>During the TTC's 2022 public consultation, 81% of the 100 people who answered a question about proposed Emery Village service changes identified destinations they expected to lose access to between LRT stops.</paragraph>
+    <paragraph>The TTC's own service standards recognize the importance of walking distances. However, the corridor-specific calculations have not been independently verified to establish whether disability-related walking speeds, winter conditions and individual safety impacts were adequately assessed.</paragraph>
+    <paragraph>The replacement of local buses also removes access to the TTC's nighttime Request Stop protections for passengers travelling on the LRT. While the 336 overnight bus remains operational, it does not replace neighbourhood bus service throughout the day.</paragraph>
+    <paragraph>With winter approaching, snow, ice and unsafe pedestrian connections will make these barriers even more difficult for residents to navigate.</paragraph>
+  </section>
+  <section id="requests">
+    <heading>What We Are Requesting</heading>
+    <paragraph>We petition the TTC to:</paragraph>
+    <list kind="numbered">
+      <item>
+        <lead>Urgently restore accessible local transit coverage</lead>
+        <text>through the former 36 Finch West local bus service, or an equivalent arrangement that effectively addresses neighbourhood accessibility barriers, alongside Line 6.</text>
+      </item>
+      <item>
+        <lead>Provide service throughout the day</lead>
+        <text>including early mornings, midday and evenings, with convenient local stops and nighttime Request Stop protections where bus service operates.</text>
+      </item>
+      <item>
+        <lead>Conduct and publish a disability-focused accessibility assessment</lead>
+        <text>examining walking distances, travel times, transfers, pedestrian safety, winter conditions and impacts on residents with different mobility limitations. Publish the original corridor-specific calculations and assumptions supporting the service changes.</text>
+      </item>
+      <item>
+        <lead>Provide a documented accommodation decision</lead>
+        <text>including consideration of effective alternatives and interim measures while permanent restoration is assessed. If accommodation is refused on grounds of undue hardship, provide the objective evidence, financial figures and legal grounds supporting that decision.</text>
+      </item>
+    </list>
+  </section>
+  <section id="urgent-action">
+    <heading>Urgent Action Before Winter</heading>
+    <paragraph>The TTC's Annual Public Forum on Accessible Transit takes place on November 10, 2026.</paragraph>
+    <paragraph>The next scheduled TTC Board meeting is December 15, 2026.</paragraph>
+    <emphasis>We request immediate referral to TTC staff for an urgent accessibility assessment, with findings and recommendations presented to the Board at its December 15 meeting.</emphasis>
+    <paragraph>We request that a TTC Board member raise this petition at the November 10 Annual Public Forum on Accessible Transit, allowing these concerns to be addressed publicly before winter.</paragraph>
+    <paragraph>We further request that the TTC expedite every stage of the process, including assessment, recommendations, decisions and implementation. Decisions should be made at the earliest opportunity, without waiting until December 15 where existing authority permits earlier action.</paragraph>
+    <paragraph>Effective interim accommodations should be implemented without delay while permanent restoration is assessed.</paragraph>
+    <emphasis>Residents should not have to wait until another winter has passed to have these accessibility concerns meaningfully addressed.</emphasis>
+  </section>
+  <section id="support">
+    <heading>Support This Petition</heading>
+    <paragraph>Add your support to the request for urgent restoration of accessible local transit along Finch West.</paragraph>
+    <paragraph>You do not need to have a disability or disclose personal medical information to support this petition.</paragraph>
+    <emphasis>Every signature strengthens our request for action before winter.</emphasis>
+    <supporterCounter countSource="petition-supporters" publicDisplay="count-only">
+      <label>People who have signed this petition</label>
+    </supporterCounter>
+    <signatureForm>
+      <field name="fullName" label="Full name" type="text" required="true" visibility="private"/>
+      <field name="email" label="Email address (optional)" type="email" required="false" visibility="private"/>
+      <field name="comment" label="How have the Finch West transit changes affected you? (optional)" type="textarea" required="false" visibility="private"/>
+      <consents>
+        <checkbox name="anonymousQuote" label="I consent to my comment being quoted anonymously in support of this petition." required="false" defaultChecked="false"/>
+        <checkbox name="petitionUpdates" label="Send me updates about this petition." required="false" defaultChecked="false"/>
+        <checkbox name="communityProjects" label="Keep me informed about future community projects." required="false" defaultChecked="false"/>
+        <checkbox name="campaignUpdates" label="Send me updates about Lorna Antwi's campaign." required="false" defaultChecked="false"/>
+      </consents>
+      <paragraph>Your email is optional and does not affect your petition signature. You can unsubscribe from email updates at any time.</paragraph>
+      <submitButton>Sign the Petition</submitButton>
+    </signatureForm>
+  </section>
+  <section id="supporting-evidence">
+    <heading>Supporting Evidence</heading>
+    <list kind="links">
+      <item>
+        <link href="https://cdn.ttc.ca/-/media/Project/TTC/DevProto/Documents/Home/About-the-TTC/5_year_plan_10_year_outlook/TTC-2023-ASP-Round-1-Public-Consultation-Summary.pdf?hash=1FFDF115C13993F51E9C625FA2CA3E3F&amp;rev=2d9c598f77164945b16b95f99fab78b4">TTC 2023 Annual Service Plan: Public Consultation Summary</link>
+      </item>
+      <item>
+        <link href="https://cdn.ttc.ca/-/media/Project/TTC/DevProto/Documents/Home/About-the-TTC/Projects-Landing-Page/Transit-Planning/Service-Standards_May-2024.pdf?rev=6c96a85cc0a64147ad424f949dabce64">TTC Service Standards, May 2024</link>
+      </item>
+      <item>
+        <link href="https://www.ontario.ca/laws/regulation/r11191">Ontario Regulation 191/11, Section 41: Accessibility Requirements</link>
+      </item>
+      <item>
+        <link href="https://www.ohrc.on.ca/en/policy-ableism-and-discrimination-based-disability/9-undue-hardship">Ontario Human Rights Commission: Disability Accommodation and Undue Hardship</link>
+      </item>
+      <item>
+        <link href="https://www.ttc.ca/riding-the-ttc/safety-and-security/travelling-safely">TTC Request Stop Program</link>
+      </item>
+    </list>
+    <sourceNote>Submitted under Section 18 of the <link href="https://www.ttc.ca/about-the-ttc/the-board/By-law-to-Govern-Board-Proceedings">TTC By-law to Govern Board Proceedings</link>.</sourceNote>
+  </section>
+</petitionPage>

@@ -3,6 +3,7 @@ import { structureTool } from 'sanity/structure'
 import { media } from 'sanity-plugin-media'
 import { schemaTypes, SINGLETON_TYPES } from './sanity/schemas'
 import { structure } from './sanity/deskStructure'
+import { petitionTool } from './sanity/tools/petitionExport'
 
 const SINGLETON_ACTIONS = new Set(['publish', 'discardChanges', 'restore'])
 
@@ -13,6 +14,8 @@ export default defineConfig({
   dataset: 'production',
   basePath: '/studio',
   plugins: [structureTool({ structure }), media()],
+  // Petition count and CSV downloads (top menu → Petition).
+  tools: (prev) => [...prev, petitionTool],
   schema: {
     types: schemaTypes,
     // Pages and Site Settings can't be created from the "+" menu.

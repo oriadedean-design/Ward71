@@ -6,6 +6,7 @@ import {
   DocumentsIcon,
   EnvelopeIcon,
   HelpCircleIcon,
+  EditIcon,
   InboxIcon,
   TargetIcon,
   ThumbsUpIcon,
@@ -71,6 +72,7 @@ export const structure: StructureResolver = (S) =>
               S.documentTypeListItem('volunteerSubmission').title('Volunteer Submissions').icon(UsersIcon),
               S.documentTypeListItem('emailSubscriber').title('Email Subscribers').icon(EnvelopeIcon),
               S.documentTypeListItem('donationRecord').title('Donation Records').icon(BillIcon),
+              S.documentTypeListItem('petitionSignature').title('Petition Signatures').icon(EditIcon),
             ])
         ),
     ]);

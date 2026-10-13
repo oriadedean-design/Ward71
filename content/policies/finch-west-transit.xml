@@ -1,0 +1,187 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+  PROJECT ATTRIBUTION
+
+  POLICY RESEARCH, STRATEGY & DESIGN
+  Dez of NeuroArk
+
+  PROJECT LEADERSHIP
+  Lorna Antwi
+  Community Organizer, Civic Leader &
+  Advocate for Collaborative Problem-Solving
+
+  CONTRIBUTIONS:
+  Policy development, research, strategy and design
+  consultation performed by Dez of NeuroArk at the
+  request of Lorna Antwi.
+
+  LEADERSHIP:
+  Lorna's role includes recognizing community concerns,
+  connecting with residents, identifying priorities
+  and bringing together people with relevant expertise
+  to develop meaningful solutions.
+
+  Her leadership emphasizes collaboration, informed
+  decision-making and the effective delegation of
+  specialized work.
+
+  AUTHORSHIP & ACCOUNTABILITY:
+  Research, policy development, strategy and design
+  contributions are credited to their respective authors.
+
+  Lorna retains responsibility for the policies she
+  chooses to adopt, endorse and advocate for.
+
+  Leadership does not imply sole authorship.
+  Delegation does not diminish accountability.
+
+  DOCUMENTATION:
+  Development decisions, implementation requirements
+  and technical reasoning are documented to support
+  transparency, continuity, collaboration and learning.
+
+  Documentation authored by Dez of NeuroArk.
+-->
+<transit version="1.0" lang="en-CA">
+  <title>Restore Safe, Accessible Local Transit Along Finch West</title>
+  <intersections>
+    <theme>Disability &amp; Accessibility</theme>
+    <theme>Public Safety</theme>
+    <theme>Public Assets &amp; Accountability</theme>
+  </intersections>
+  <stakeholders>
+    <paragraph>TTC riders; people with disabilities, injuries, chronic illnesses or limited mobility; seniors; Toronto Community Housing residents; shift workers; students; local businesses; residents of Wards 1, 6 and 7.</paragraph>
+  </stakeholders>
+  <outcomes layout="nested-bullet-list" interaction="accordion" defaultExpanded="false">
+    <category name="Accessibility &amp; Independence" parentBullet="true" labelStyle="bold" collapsible="true">
+      <items layout="bullet-list" level="2">
+        <item>Restore convenient local transit access throughout the day.</item>
+        <item>Reduce unnecessary walking distances and transfers.</item>
+        <item>Preserve independent access to healthcare, employment, shopping and community services.</item>
+        <item>Account for different mobility limitations, walking speeds, rest requirements and winter conditions.</item>
+        <item>Reduce unnecessary dependence on Wheel-Trans.</item>
+      </items>
+    </category>
+    <category name="Public Safety" parentBullet="true" labelStyle="bold" collapsible="true">
+      <items layout="bullet-list" level="2">
+        <item>Restore access to nighttime Request Stop protections where local bus service is reinstated.</item>
+        <item>Reduce unsafe walks and transfers after dark.</item>
+        <item>Identify unsafe pedestrian connections, inadequate lighting and weather exposure.</item>
+      </items>
+    </category>
+    <category name="Transit Reliability" parentBullet="true" labelStyle="bold" collapsible="true">
+      <items layout="bullet-list" level="2">
+        <item>Reduce missed connections and unnecessary travel time.</item>
+        <item>Improve connections between neighbourhoods, workplaces, medical facilities and the LRT.</item>
+        <item>Measure complete journeys, not just vehicle travel speeds.</item>
+      </items>
+    </category>
+    <category name="Accountability &amp; Transparency" parentBullet="true" labelStyle="bold" collapsible="true">
+      <items layout="bullet-list" level="2">
+        <item>Publish the calculations and assumptions used to justify removing local service.</item>
+        <item>Compare projected benefits against residents' actual experiences.</item>
+        <item>Identify who gained and who lost access.</item>
+        <item>Require documented TTC decisions addressing accessibility and safety concerns.</item>
+      </items>
+    </category>
+  </outcomes>
+  <proposedAction>
+    <paragraph>By October 20, 2026, I will submit a community petition requesting that the TTC assess disability-related barriers and provide effective accommodation through restoration of the former 36 Finch West local bus service, or equivalent neighbourhood coverage, alongside Line 6.</paragraph>
+    <paragraph>Service must operate throughout the day, including midday, evenings and early mornings, restoring convenient local stops and nighttime Request Stop protections.</paragraph>
+    <paragraph>We request urgent restoration before winter. If the TTC proposes an alternative accommodation, we request a written explanation of how it addresses the identified barriers. Should the TTC refuse accommodation on grounds of undue hardship, we request a written decision identifying the specific evidence, financial figures and legal grounds supporting that refusal.</paragraph>
+  </proposedAction>
+  <evidence interaction="disclosure" defaultExpanded="false">
+    <group title="Public Consultation &amp; Decision-Making">
+      <item><strong>2022:</strong> <link href="https://cdn.ttc.ca/-/media/Project/TTC/DevProto/Documents/Home/About-the-TTC/5_year_plan_10_year_outlook/TTC-2023-ASP-Round-1-Public-Consultation-Summary.pdf?hash=1FFDF115C13993F51E9C625FA2CA3E3F&amp;rev=2d9c598f77164945b16b95f99fab78b4">Of the 100 people who answered the TTC consultation question, 81% identified destinations they expected to lose access to between LRT stops previously served by the 36 Finch West bus</link>. The question concerned proposed Emery Village changes involving replacement of the 36D/F branches.</item>
+      <item><strong>2022:</strong> <link href="https://cdn.ttc.ca/-/media/Project/TTC/DevProto/Documents/Home/About-the-TTC/5_year_plan_10_year_outlook/TTC-2023-ASP-Round-1-Public-Consultation-Summary.pdf?hash=1FFDF115C13993F51E9C625FA2CA3E3F&amp;rev=2d9c598f77164945b16b95f99fab78b4">Respondents requested full-day and overnight alternatives, rather than service limited to conventional working hours</link>.</item>
+      <item><strong>November 2023:</strong> <link href="https://transittoronto.ca/archives/reports/ttc-2024-annual-service-plan-2023-11-22.pdf">TTC planners acknowledged that removing local stops would require longer walks while describing network-wide walking-time impacts as minimal</link>.</item>
+      <item><strong>November 22, 2023:</strong> <link href="https://www.ttc.ca/All-public-meetings/board/2023/Board-Meeting-Nov-22">The TTC Board approved the 2024 Annual Service Plan, including bus route removals and replacements</link>.</item>
+      <item><strong>December 2025:</strong> <link href="https://www.ttc.ca/news/2025/December/Three-days-until-Line-6-Finch-West-opens-TTC-announces-operating-hours-beginning-December-7">The 36C Finch West service was eliminated following the opening of Line 6</link>.</item>
+    </group>
+    <group title="Walking Distances &amp; Accessibility">
+      <item><link href="https://cdn.ttc.ca/-/media/Project/TTC/DevProto/Documents/Home/About-the-TTC/Projects-Landing-Page/Transit-Planning/Service-Standards_May-2024.pdf?rev=6c96a85cc0a64147ad424f949dabce64">TTC Service Standards: 400 metres in 5 minutes for regular service; 1,250 metres in 15 minutes overnight</link>.</item>
+      <item><link href="https://www.ttc.ca/accessibility/TTC-public-forum-on-accessible-transit/2020-Virtual-Public-Forum-on-Accessible-Transit/Customer-Comments-and-Staff-Responses">TTC accessibility guidance states that walking distances are calculated using 1 metre per second to accommodate slower pedestrians</link>.</item>
+      <item><link href="https://www.toronto.ca/wp-content/uploads/2017/11/9873-Chapter-9.pdf">Toronto's Complete Streets Guidelines warn that typical walking-speed assumptions can exclude one-third of older pedestrians and 90% of pedestrians using mobility aids</link>.</item>
+      <item><strong>City guideline recommendation:</strong> Walking speeds for certain pedestrian crossings <link href="https://www.toronto.ca/wp-content/uploads/2017/11/9873-Chapter-9.pdf">"should be in the range of 0.8m/s to 1.0m/s"</link>.</item>
+      <paragraph><strong>Comparison of TTC stated walking times against slower walking speeds:</strong></paragraph>
+      <paragraph><strong>The overnight distance takes approximately 11 minutes longer at 0.8 m/s than the TTC's stated 15 minutes.</strong></paragraph>
+      <paragraph>These calculations exclude additional delays from rest breaks, pain, inaccessible crossings, snow and ice.</paragraph>
+      <paragraph>The TTC's coverage standards are network-wide planning targets. The published standards do not establish which walking speeds were applied to individual journeys in the Finch West restructuring.</paragraph>
+    </group>
+    <table rows="1">
+      <header>
+        <cell>Distance</cell>
+        <cell>TTC stated time</cell>
+        <cell>At 1 m/s</cell>
+        <cell>At 0.8 m/s</cell>
+      </header>
+      <row>
+        <cell>400 metres</cell>
+        <cell>5 min</cell>
+        <cell>6 min 40 sec</cell>
+        <cell>8 min 20 sec</cell>
+      </row>
+      <row>
+        <cell>1,250 metres</cell>
+        <cell>15 min</cell>
+        <cell>20 min 50 sec</cell>
+        <cell>26 min 3 sec</cell>
+      </row>
+    </table>
+    <group title="Travel-Time Modelling">
+      <item><link href="https://cdn.ttc.ca/-/media/Project/TTC/DevProto/Documents/Home/About-the-TTC/Projects-Landing-Page/Transit-Planning/Service-Standards_May-2024.pdf?rev=6c96a85cc0a64147ad424f949dabce64">The TTC's service-planning methodology compares projected travel-time improvements against disadvantages across affected passenger groups</link>.</item>
+      <item>A network-wide improvement does not establish that individual riders, particularly those with disabilities, retained safe and practical access.</item>
+      <item>The route-specific calculations have not been obtained to establish whether disability-related walking speeds, winter conditions and individual safety impacts were separately assessed.</item>
+    </group>
+    <group title="Nighttime Safety">
+      <item><link href="https://www.ttc.ca/riding-the-ttc/safety-and-security/travelling-safely">The TTC's Request Stop Program allows passengers travelling alone on buses between 9 p.m. and 5 a.m. to request safe drop-offs between regular stops</link>.</item>
+      <item><link href="https://www.ttc.ca/riding-the-ttc/safety-and-security/travelling-safely">This protection is available on buses, not LRT vehicles</link>.</item>
+      <item><link href="https://www.ttc.ca/riding-the-ttc/Line-6-Finch-West">The 336 Finch West overnight bus remains operational, but the LRT replaced local bus service during regular operating hours</link>.</item>
+      <item>Residents using the LRT after 9 p.m. cannot request the same between-stop drop-off that the former local bus provided.</item>
+    </group>
+    <group title="Winter Conditions &amp; Sidewalk Accessibility">
+      <item><strong>Winter 2025-26:</strong> <link href="https://www.torontotoday.ca/local/environment-climate/toronto-pearson-airport-snowiest-winter-record-12030156">Toronto Pearson recorded 160.2 cm of snowfall between December and February, its highest recorded winter total</link>.</item>
+      <item><strong>January 28, 2026:</strong> <link href="https://toronto.citynews.ca/2026/01/28/snow-removal-update-city-of-toronto-says-theres-a-gap-in-performance-around-clearing-sidewalks/">Toronto's City Manager acknowledged failures in sidewalk snow clearing following widespread complaints</link>.</item>
+      <item><strong>2025-26:</strong> <link href="https://www.toronto.ca/legdocs/mmis/2026/ie/bgrd/backgroundfile-286716.pdf">Toronto recorded 14,403 sidewalk snow-clearing requests and 3,020 icy-sidewalk requests</link>.</item>
+      <item><link href="https://www.toronto.ca/wp-content/uploads/2017/11/9873-Chapter-9.pdf">Toronto's Complete Streets Guidelines identify snow removal, safe pedestrian connections and accessible transit stops as street-design considerations</link>.</item>
+    </group>
+    <group title="Disability &amp; Independent Living">
+      <item><link href="https://torontohousing.ca/sites/default/files/2024-06/item_8_-_2024-39_-_2023_tenant_survey_key_findings_w_attach.pdf">54% of Toronto Community Housing households report having at least one member with a disability</link>.</item>
+      <item><link href="https://cdn.ttc.ca/-/media/Project/TTC/DevProto/Documents/Home/About-the-TTC/Projects-Landing-Page/Transit-Planning/Service-Standards_May-2024.pdf?rev=6c96a85cc0a64147ad424f949dabce64">TTC Community Bus standards recognize slower walking speeds and establish a 175-metre access-distance target for eligible community-bus service</link>.</item>
+      <item>Wheel-Trans eligibility and advance scheduling mean it cannot simply replace the flexibility of conventional local transit for every disabled rider.</item>
+    </group>
+    <group title="Existing Accessibility Requirements">
+      <item><link href="https://www.ontario.ca/laws/regulation/r11191">Ontario Regulation 191/11, Section 41, requires transit providers to manage, evaluate and act on accessibility feedback and hold at least one annual public meeting involving people with disabilities</link>.</item>
+      <item><link href="https://www.ttc.ca/accessibility/TTC-public-forum-on-accessible-transit">The TTC's 2025 Annual Public Forum on Accessible Transit occurred October 20, before Line 6 opened</link>.</item>
+      <item><link href="https://www.ttc.ca/wheel-trans/newsletter/Summer-2026">The next accessibility forum is scheduled for November 10, 2026</link>.</item>
+      <item><link href="https://www.ttc.ca/public-meetings/board">The TTC's next scheduled Board meeting is December 15, 2026</link>.</item>
+    </group>
+  </evidence>
+  <tools label="Tools: Established Policy and Regulation" interaction="disclosure" defaultExpanded="false">
+    <paragraph>USE - <link href="https://cdn.ttc.ca/-/media/Project/TTC/DevProto/Documents/Home/About-the-TTC/Projects-Landing-Page/Transit-Planning/Service-Standards_May-2024.pdf?rev=6c96a85cc0a64147ad424f949dabce64">TTC Service Standards, Sections 2.3, 2.4 and 5.1</link>: Request urgent consideration of all-day local bus restoration using existing service-review procedures, walking-distance standards and accessibility considerations.</paragraph>
+    <paragraph>USE - <link href="https://www.ontario.ca/laws/regulation/r11191">Accessibility for Ontarians with Disabilities Act, Ontario Regulation 191/11, Section 41</link>: Submit documented accessibility barriers through the TTC's required feedback process and request consideration before the November 10 accessibility forum.</paragraph>
+    <paragraph>SUPPORT WITH - <link href="https://www.ohrc.on.ca/en/policy-ableism-and-discrimination-based-disability/9-undue-hardship">Ontario Human Rights Commission Policy on Disability Accommodation and Undue Hardship</link>: Present the restoration request as a disability accommodation issue. If accommodation is refused on undue-hardship grounds, request a written explanation supported by objective evidence concerning costs, available outside funding, and health and safety.</paragraph>
+    <paragraph>SUPPORT WITH - <link href="https://www.toronto.ca/wp-content/uploads/2017/11/9873-Chapter-9.pdf">City of Toronto Complete Streets Guidelines, Chapter 9</link>: Demonstrate the need to consider slower walking speeds, safe pedestrian access and winter maintenance when assessing transit accessibility.</paragraph>
+    <paragraph>USE - <link href="https://www.ttc.ca/about-the-ttc/the-board/By-law-to-Govern-Board-Proceedings">TTC Board Procedures By-law, Section 18 - Public Petitions</link>: Submit the October 20 community petition requesting immediate consideration of restoration before winter, to a Board member under Section 18 if the issue is not on the agenda. Request a documented response and ask the member to introduce the petition for Board consideration if the issue remains unresolved.</paragraph>
+  </tools>
+  <commitment>
+    <heading>Lorna's Commitment to Ward 7</heading>
+    <paragraph>There's no time to waste. Winter is coming, and the annual TTC disability consultation meeting is November 10th.</paragraph>
+    <paragraph>I intend to present this petition to the TTC Board on October 20th, allowing enough time for word to spread and for the first meeting of the newly appointed TTC Board, on December 15th, to explicitly address the request.</paragraph>
+    <paragraph>Were I in office, I'd have more power to address this. But the first Council meeting after the election doesn't happen until after November 10th, and there's no time to waste.</paragraph>
+    <paragraph>We're stronger together, and I don't have to be in office for us to deliver on this promise: that I will make an effort to achieve meaningful, measurable change.</paragraph>
+  </commitment>
+  <whatYouCanDo>
+    <section>
+      <heading>Support the Petition: Restore Safe Local Transit Along Finch West Before Winter</heading>
+      <paragraph>Support the community petition requesting urgent restoration of accessible local bus service throughout the day.</paragraph>
+      <paragraph><strong>Petition submission date: October 20, 2026.</strong></paragraph>
+      <paragraph>Residents can support the petition without disclosing a disability or providing personal medical information.</paragraph>
+    </section>
+  </whatYouCanDo>
+  <trustDisclosure>
+    <paragraph>The Finch West LRT provides rapid transit service, and the 336 overnight bus remains operational. This proposal addresses local access lost through the replacement of former bus routes.</paragraph>
+    <paragraph>The TTC's original corridor-specific calculations and restoration costs have not yet been independently verified. Permanent restoration may require TTC Board approval and additional operating funding.</paragraph>
+    <paragraph>Close</paragraph>
+  </trustDisclosure>
+</transit>

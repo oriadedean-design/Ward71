@@ -10,7 +10,7 @@ export function GET() {
   const plans = listPolicyAreas()
     .map((a) =>
       [
-        `- [${a.heading} plan](${BASE}/platform/${a.slug}): ${a.description}`,
+        `- [${a.title ?? `${a.heading} plan`}](${BASE}/platform/${a.slug}): ${a.description}`,
         ...a.policies.map((p) => `  - [${p.title}](${BASE}/platform/${a.slug}#${p.id})`),
       ].join('\n')
     )
@@ -22,6 +22,7 @@ export function GET() {
 
 ## Platform
 
+- [Petition: Restore Safe, Accessible Local Transit Along Finch West Before Winter](${BASE}/TTCpetition): a community petition to the TTC Board, organized by Lorna Antwi, asking for the 36 Finch West local bus service (or equivalent) to be restored alongside Line 6. Signing closes October 20, 2026.
 - [Lorna's Platform for Ward 7](${BASE}/platform): all of Lorna's priorities for City Hall, in brief.
 ${plans}
 

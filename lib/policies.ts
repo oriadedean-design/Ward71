@@ -1,95 +1,53 @@
-import fs from 'node:fs';
-import path from 'node:path';
-import { XMLParser } from 'fast-xml-parser';
+import {
+  childElements,
+  firstChild,
+  isElement,
+  listXmlExports,
+  readXmlExport,
+  textOf,
+  type XmlElement,
+  type XmlNode,
+} from './xmlContent';
 
-// Policy exports live in content/policies as XML, exactly as the policy team
-// exports them (one file per policy area, e.g. housing.xml). The XML comment
-// at the top of each export holds developer notes and is never shown.
+// Policy plans live in content/policies as XML, exactly as the policy team
+// exports them: one file per plan, shown at /platform/<file name>. A plan is
+// either an area with several <policy> sections (housing.xml) or a single
+// policy at the top level (finch-west-transit.xml).
 
-export type PolicyNode =
-  | { text: string }
-  | { tag: string; attrs: Record<string, string>; children: PolicyNode[] };
+export type PolicyNode = XmlNode;
+export type PolicyElement = XmlElement;
+export { childElements, firstChild, isElement, textOf };
 
-export type PolicyElement = Extract<PolicyNode, { tag: string }>;
+const FOLDER = 'policies';
 
-const POLICY_DIR = path.join(process.cwd(), 'content', 'policies');
-
-const parser = new XMLParser({
-  preserveOrder: true, // keeps <strong> and <link> in place inside sentences
-  ignoreAttributes: false,
-  attributeNamePrefix: '',
-  trimValues: false,
-  parseTagValue: false,
-  parseAttributeValue: false,
-});
-
-type RawNode = Record<string, unknown>;
-
-function toNodes(raw: RawNode[]): PolicyNode[] {
-  return raw.flatMap((entry): PolicyNode[] => {
-    const tag = Object.keys(entry).find((k) => k !== ':@');
-    if (!tag || tag === '?xml') return [];
-    if (tag === '#text') return [{ text: String(entry[tag]) }];
-    return [
-      {
-        tag,
-        attrs: (entry[':@'] as Record<string, string>) ?? {},
-        children: toNodes((entry[tag] as RawNode[]) ?? []),
-      },
-    ];
-  });
-}
+export const getPolicyExport = (name: string) => readXmlExport(FOLDER, name);
 
 /** Reads a policy export (e.g. "housing") and returns its root element. */
-export function getPolicyArea(name: string): PolicyElement | null {
-  try {
-    const xml = fs.readFileSync(path.join(POLICY_DIR, `${name}.xml`), 'utf8');
-    const root = toNodes(parser.parse(xml) as RawNode[]).find((n): n is PolicyElement => 'tag' in n);
-    return root ?? null;
-  } catch (error) {
-    console.error(`Could not read policy export "${name}":`, error);
-    return null;
-  }
-}
+export const getPolicyArea = (name: string) => getPolicyExport(name)?.root ?? null;
 
-export const isElement = (n: PolicyNode): n is PolicyElement => 'tag' in n;
-
-export const childElements = (n: PolicyElement, tag?: string) =>
-  n.children.filter(isElement).filter((c) => !tag || c.tag === tag);
-
-export const firstChild = (n: PolicyElement, tag: string) => childElements(n, tag)[0];
-
-/** All text inside a node, with whitespace collapsed. */
-export function textOf(n: PolicyNode | undefined): string {
-  if (!n) return '';
-  if (!isElement(n)) return n.text.replace(/\s+/g, ' ');
-  return n.children.map(textOf).join('').replace(/\s+/g, ' ').trim();
-}
+/** True when the whole file is one policy rather than a set of them. */
+export const isSinglePolicy = (area: XmlElement) =>
+  childElements(area, 'policy').length === 0 && !!firstChild(area, 'title');
 
 export interface PolicyAreaSummary {
   slug: string; // file name, and the page address: /platform/<slug>
   heading: string; // e.g. "Housing"
   description: string; // Lorna's commitment, in full (llms.txt)
   searchDescription: string; // short version for Google results and link previews
+  title?: string; // single-policy plans: the policy's own title
   policies: Array<{ id: string; title: string }>;
 }
 
 /** Every policy export, for page routes, links, the sitemap and llms.txt. */
 export function listPolicyAreas(): PolicyAreaSummary[] {
-  let files: string[] = [];
-  try {
-    files = fs.readdirSync(POLICY_DIR).filter((f) => f.endsWith('.xml')).sort();
-  } catch {
-    return [];
-  }
-  return files.flatMap((file) => {
-    const slug = file.replace(/\.xml$/, '');
+  return listXmlExports(FOLDER).flatMap((slug) => {
     const area = getPolicyArea(slug);
     return area ? [summarize(slug, area)] : [];
   });
 }
 
 function summarize(slug: string, area: PolicyElement): PolicyAreaSummary {
+  if (isSinglePolicy(area)) return summarizeSingle(slug, area);
   const policies = childElements(area, 'policy');
   // The area's name comes from its policies' type ("Housing"), else the file name.
   const heading =
@@ -105,6 +63,20 @@ function summarize(slug: string, area: PolicyElement): PolicyAreaSummary {
     description,
     searchDescription: searchDescription(heading, titles, description),
     policies: policies.map((p) => ({ id: p.attrs.id, title: textOf(firstChild(p, 'title')) })),
+  };
+}
+
+function summarizeSingle(slug: string, area: PolicyElement): PolicyAreaSummary {
+  const heading = slug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+  const title = textOf(firstChild(area, 'title'));
+  const description = textOf(firstChild(firstChild(area, 'proposedAction') ?? area, 'paragraph')) || title;
+  return {
+    slug,
+    heading,
+    title,
+    description,
+    searchDescription: shorten(`${title}: Lorna Antwi's plan for Ward 7 Humber River-Black Creek. ${description}`),
+    policies: [],
   };
 }
 
@@ -138,6 +110,7 @@ function searchDescription(heading: string, titles: string[], fallback: string) 
     if (next.length > 160) break;
     text = next;
   }
-  if (titles.length) return text;
-  return fallback.length <= 160 ? fallback : `${fallback.slice(0, 157).replace(/\s+\S*$/, '')}…`;
+  return titles.length ? text : shorten(fallback);
 }
+
+const shorten = (text: string) => (text.length <= 160 ? text : `${text.slice(0, 157).replace(/\s+\S*$/, '')}…`);

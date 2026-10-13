@@ -9,6 +9,7 @@ import donationRecord from './donationRecord';
 import inquiry from './inquiry';
 import endorsement from './endorsement';
 import emailSubscriber from './emailSubscriber';
+import petitionSignature from './petitionSignature';
 import { pageSchemas } from './pages';
 
 // Singleton documents: one per page, site settings and the donation goal. The
@@ -28,6 +29,7 @@ export const schemaTypes = [
   volunteerSubmission,
   emailSubscriber,
   donationRecord,
+  petitionSignature,
   // Not currently shown on the site; kept so existing documents stay valid.
   page,
   person,

@@ -9,6 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: base,                      lastModified: now, changeFrequency: 'weekly',  priority: 1.0 },
     { url: `${base}/about`,           lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${base}/platform`,        lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${base}/TTCpetition`,     lastModified: now, changeFrequency: 'daily',   priority: 1.0 },
     // One page per full policy plan (content/policies/*.xml)
     ...listPolicyAreas().map((a) => ({
       url: `${base}/platform/${a.slug}`,

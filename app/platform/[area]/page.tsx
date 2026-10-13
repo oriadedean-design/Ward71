@@ -3,7 +3,13 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { FadeIn } from '@/components/FadeIn';
 import { PolicyArea } from '@/components/PolicyArea';
-import { getPolicyArea, listPolicyAreas } from '@/lib/policies';
+import { PetitionWidget } from '@/components/petition/PetitionWidget';
+import { PETITION_PATH } from '@/lib/petition';
+import { getPolicyExport, listPolicyAreas } from '@/lib/policies';
+
+// Plans that have a petition attached show it under the heading and in
+// "What You Can Do".
+const PETITION_PLANS = new Set(['finch-west-transit']);
 
 // One page per policy export: content/policies/housing.xml → /platform/housing.
 
@@ -19,7 +25,8 @@ function findArea(slug: string) {
   return listPolicyAreas().find((a) => a.slug === slug);
 }
 
-const pageHeading = (heading: string) => `Lorna's ${heading} Plan for Ward 7`;
+const pageHeading = (summary: { heading: string; title?: string }) =>
+  summary.title ?? `Lorna's ${summary.heading} Plan for Ward 7`;
 
 export async function generateMetadata({ params }: { params: Promise<{ area: string }> }): Promise<Metadata> {
   const summary = findArea((await params).area);
@@ -42,11 +49,12 @@ export async function generateMetadata({ params }: { params: Promise<{ area: str
 export default async function PolicyAreaPage({ params }: { params: Promise<{ area: string }> }) {
   const slug = (await params).area;
   const summary = findArea(slug);
-  const area = getPolicyArea(slug);
-  if (!summary || !area) notFound();
+  const file = getPolicyExport(slug);
+  if (!summary || !file) notFound();
 
   const url = `${BASE}/platform/${summary.slug}`;
-  const heading = pageHeading(summary.heading);
+  const heading = pageHeading(summary);
+  const hasPetition = PETITION_PLANS.has(slug);
 
   return (
     <>
@@ -58,6 +66,7 @@ export default async function PolicyAreaPage({ params }: { params: Promise<{ are
               '@context': 'https://schema.org',
               '@type': 'Article',
               headline: heading,
+              ...(summary.title ? { alternativeHeadline: `Lorna Antwi's ${summary.heading} Plan for Ward 7` } : {}),
               description: summary.searchDescription,
               url,
               inLanguage: 'en-CA',
@@ -84,7 +93,27 @@ export default async function PolicyAreaPage({ params }: { params: Promise<{ are
       />
 
       <section className="py-12 px-6">
-        <PolicyArea area={area} summary={summary} heading={heading} />
+        <PolicyArea
+          area={file.root}
+          summary={summary}
+          heading={heading}
+          attribution={file.attribution}
+          slots={
+            hasPetition
+              ? {
+                  afterHeading: <PetitionWidget />,
+                  whatYouCanDo: (
+                    <Link
+                      href={PETITION_PATH}
+                      className="inline-flex items-center justify-center min-h-[52px] rounded-full bg-cta text-white font-bold text-lg px-8 hover:opacity-90 transition-opacity"
+                    >
+                      Sign the petition →
+                    </Link>
+                  ),
+                }
+              : {}
+          }
+        />
       </section>
 
       <section className="bg-band text-brand-cream py-14 px-6 text-center">

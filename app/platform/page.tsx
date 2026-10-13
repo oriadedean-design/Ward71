@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { FadeIn } from '@/components/FadeIn';
 import { PlatformGrid } from '@/components/PlatformGrid';
 import { RedirectOldPolicyLinks } from '@/components/RedirectOldPolicyLinks';
+import { PetitionWidget } from '@/components/petition/PetitionWidget';
 import { getPageContent } from '@/lib/content';
 import { listPolicyAreas, platformCardLinks } from '@/lib/policies';
 
@@ -23,9 +24,10 @@ export default async function PlatformPage() {
   const [page, home] = await Promise.all([getPageContent('platformPage'), getPageContent('homePage')]);
   const items = home.priorities.items;
   const links = platformCardLinks(items.map((i) => i.title));
+  const areas = listPolicyAreas();
   // Policies used to sit on this page (/platform#<policy id>); send those links on.
   const moved = Object.fromEntries(
-    listPolicyAreas().flatMap((a) => [[a.slug, `/platform/${a.slug}`], ...a.policies.map((p) => [p.id, `/platform/${a.slug}#${p.id}`])])
+    areas.flatMap((a) => [[a.slug, `/platform/${a.slug}`], ...a.policies.map((p) => [p.id, `/platform/${a.slug}#${p.id}`])])
   );
 
   return (
@@ -39,9 +41,31 @@ export default async function PlatformPage() {
         </div>
       </section>
 
+      <section className="pb-12 px-6 max-w-4xl mx-auto">
+        <PetitionWidget planLink />
+      </section>
+
       <section className="pb-14 px-6 max-w-7xl mx-auto">
         <RedirectOldPolicyLinks moved={moved} />
         <PlatformGrid items={items} links={links} />
+
+        {areas.length > 0 && (
+          <div className="mt-12 text-center">
+            <h2 className="text-2xl md:text-3xl font-fraunces font-bold text-ink mb-5">Read the full plans</h2>
+            <ul className="flex flex-wrap justify-center gap-3">
+              {areas.map((a) => (
+                <li key={a.slug}>
+                  <Link
+                    href={`/platform/${a.slug}`}
+                    className="inline-flex items-center min-h-[48px] rounded-full border-2 border-ink/15 bg-surface px-6 font-bold text-ink hover:border-accent hover:text-accent transition-colors"
+                  >
+                    {a.title ?? `${a.heading} plan`} →
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </section>
 
       <section className="bg-band text-brand-cream py-14 px-6 text-center">
