@@ -4,15 +4,24 @@ import { PETITION_CLOSES_AT, PETITION_PATH, countSignatures, getPetition, isPeti
 
 // A compact petition card with the live count, for the platform pages.
 
-export async function PetitionWidget({ planLink = false }: { planLink?: boolean }) {
+export async function PetitionWidget({
+  planLink = false,
+  hideWhenClosed = false,
+  className = '',
+}: {
+  planLink?: boolean;
+  /** For the copies on general pages: they disappear once signing closes. */
+  hideWhenClosed?: boolean;
+  className?: string;
+}) {
   const petition = getPetition();
-  if (!petition) return null;
+  if (!petition || (hideWhenClosed && isPetitionClosed())) return null;
   const count = await countSignatures(petition.id);
   const closed = isPetitionClosed();
   const deadline = PETITION_CLOSES_AT.toLocaleDateString('en-CA', { timeZone: 'America/Toronto', month: 'long', day: 'numeric' });
 
   return (
-    <aside aria-label="Petition" className="rounded-2xl border-2 border-brand-mustard bg-surface shadow-md p-6 md:p-8">
+    <aside aria-label="Petition" className={`rounded-2xl border-2 border-brand-mustard bg-surface shadow-md p-6 md:p-8 ${className}`}>
       <p className="text-xs font-bold uppercase tracking-widest text-accent mb-2">
         {closed ? 'Petition closed' : `Petition · Sign by ${deadline}`}
       </p>
@@ -35,5 +44,15 @@ export async function PetitionWidget({ planLink = false }: { planLink?: boolean 
         </div>
       </div>
     </aside>
+  );
+}
+
+/** The widget as its own page section, for the site's most-visited pages. */
+export async function PetitionSection({ className = 'py-10' }: { className?: string }) {
+  if (isPetitionClosed()) return null;
+  return (
+    <section className={`px-6 max-w-4xl mx-auto ${className}`}>
+      <PetitionWidget planLink />
+    </section>
   );
 }

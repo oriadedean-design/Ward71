@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { PetitionSection } from '@/components/petition/PetitionWidget';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Facebook, Instagram, Mail } from 'lucide-react';
@@ -100,6 +101,9 @@ export default async function Home() {
           </div>
         </FadeIn>
       </section>
+
+      {/* ── Petition (closes Oct 20) ── */}
+      <PetitionSection className="pb-10" />
 
       {/* ── How to vote callout ── */}
       <section className="px-6 pb-10 max-w-7xl mx-auto">

@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { PetitionSection } from '@/components/petition/PetitionWidget';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { FadeIn } from '@/components/FadeIn';
@@ -205,6 +206,8 @@ export default async function ResourcesPage() {
           </div>
         </FadeIn>
       </section>
+
+      <PetitionSection className="pb-10" />
 
       {/* ── Helpful Q&A ── */}
       <section className="py-4 px-6 pb-14 max-w-2xl mx-auto">

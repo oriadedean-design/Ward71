@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import { PetitionSection } from '@/components/petition/PetitionWidget';
 import { OurWardMap } from './OurWardMap'
 import { WardStats } from '@/components/WardStats'
 import { getPageContent } from '@/lib/content'
@@ -21,6 +22,7 @@ export default async function OurWardPage() {
   return (
     <>
       <OurWardMap content={content} />
+      <PetitionSection />
       <WardStats />
     </>
   )

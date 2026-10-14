@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { PetitionSection } from '@/components/petition/PetitionWidget';
 import { FadeIn } from '@/components/FadeIn';
 import { InquiryForm } from '@/components/InquiryForm';
 import { getCommunityContent } from '@/lib/content';
@@ -31,6 +32,8 @@ export default async function CommunityPage() {
           </FadeIn>
         </div>
       </section>
+
+      <PetitionSection className="pb-4" />
 
       <section className="py-12 px-6 max-w-7xl mx-auto">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">

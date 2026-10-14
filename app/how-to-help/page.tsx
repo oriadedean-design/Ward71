@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { PetitionSection } from '@/components/petition/PetitionWidget';
 import Link from 'next/link';
 import { Facebook, Instagram, Twitter, Linkedin, Link as LinkIcon } from 'lucide-react';
 import { FadeIn } from '@/components/FadeIn';
@@ -112,6 +113,10 @@ export default async function HowToHelpPage() {
               ))}
             </ul>
           </FadeIn>
+        </div>
+
+        <div className="-mx-6 my-12">
+          <PetitionSection className="py-0" />
         </div>
 
         {/* ── How do contributions work? ── */}

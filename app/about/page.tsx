@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { PetitionSection } from '@/components/petition/PetitionWidget';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FadeIn } from '@/components/FadeIn';
@@ -52,7 +53,9 @@ export default async function AboutPage() {
         </div>
 
         <div className="flex flex-col lg:flex-row gap-10 items-start">
-          <FadeIn className="lg:w-1/3 sticky top-32">
+          {/* The photo comes first on phones. Its column needs an explicit width:
+              in a stacked layout it would otherwise shrink to nothing. */}
+          <FadeIn className="w-full max-w-sm mx-auto lg:max-w-none lg:mx-0 lg:w-1/3 lg:sticky lg:top-32">
             <div className="relative w-full aspect-[3/4] rounded-2xl overflow-hidden shadow-xl">
               <Image
                 src={photoUrl ?? `${FALLBACK_CANDIDATE_PHOTO}?w=600&h=800&fit=crop`}
@@ -63,7 +66,7 @@ export default async function AboutPage() {
             </div>
           </FadeIn>
 
-          <div className="lg:w-2/3 prose prose-lg prose-slate max-w-none prose-p:leading-relaxed prose-p:mb-6 font-medium text-ink/90">
+          <div className="lg:w-2/3 prose prose-lg prose-slate max-w-none prose-p:leading-relaxed prose-p:mb-6 [&_p]:mb-6 [&_p]:leading-relaxed text-lg font-medium text-ink/90">
             <FadeIn>
               {paragraphs(c.story.body).map((para) => (
                 <p key={para}>{para}</p>
@@ -94,6 +97,8 @@ export default async function AboutPage() {
           </div>
         </div>
       </section>
+
+      <PetitionSection />
 
       <Endorsements endorsements={endorsements} />
     </>
