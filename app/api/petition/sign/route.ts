@@ -26,8 +26,11 @@ const EMAIL_CONSENTS = new Set(['petitionUpdates', 'communityProjects', 'campaig
 
 const error = (message: string, status = 400) => NextResponse.json({ error: message }, { status });
 
-// A fault in the bot check itself must not stop real people signing; the
-// rate limit, duplicate check and hidden field still apply.
+// BotID wrongly flags some real people (in-app browsers such as Instagram's,
+// privacy browsers, older phones), so a failed check never blocks a signature.
+// It's saved and marked for review in the Studio instead. A fault in the
+// check itself counts as a pass. The rate limit, duplicate check and hidden
+// field still apply.
 async function isBot(): Promise<boolean> {
   try {
     return (await checkBotId()).isBot;
@@ -45,7 +48,7 @@ export async function POST(req: Request) {
   try {
     if (isPetitionClosed()) return error('This petition has closed. Thank you for your support.', 410);
 
-    if (await isBot()) return error('We could not verify your browser. Please try again.', 403);
+    const browserCheckFailed = await isBot();
 
     const raw = await req.text();
     if (raw.length > MAX_BODY) return error('Your submission is too long.', 413);
@@ -99,6 +102,7 @@ export async function POST(req: Request) {
       status: 'Counted',
       nameKey: key,
       networkHash: network,
+      browserCheck: browserCheckFailed ? 'Failed' : 'Passed',
     });
 
     // The campaign's mailing list is only for people who asked to join it.

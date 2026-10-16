@@ -18,10 +18,11 @@ interface Signature {
   signedAt?: string;
   status?: string;
   networkHash?: string;
+  browserCheck?: string;
 }
 
 const QUERY = `*[_type == "petitionSignature"] | order(signedAt asc){
-  fullName, email, comment, anonymousQuote, petitionUpdates, communityProjects, campaignUpdates, signedAt, status, networkHash
+  fullName, email, comment, anonymousQuote, petitionUpdates, communityProjects, campaignUpdates, signedAt, status, networkHash, browserCheck
 }`;
 
 const toronto = (iso?: string) =>
@@ -80,7 +81,7 @@ function PetitionExport() {
   // Everything, for the campaign team only.
   const downloadFull = () =>
     download(`Petition signatures FULL PRIVATE ${today()}.csv`, [
-      ['Full name', 'Signed (Toronto time)', 'Status', 'Email', 'Comment', 'OK to quote anonymously', 'Petition updates', 'Community projects', 'Campaign updates', 'Connection fingerprint'],
+      ['Full name', 'Signed (Toronto time)', 'Status', 'Email', 'Comment', 'OK to quote anonymously', 'Petition updates', 'Community projects', 'Campaign updates', 'Connection fingerprint', 'Automatic bot check'],
       ...(signatures ?? []).map((s) => [
         s.fullName,
         toronto(s.signedAt),
@@ -92,6 +93,7 @@ function PetitionExport() {
         yesNo(s.communityProjects),
         yesNo(s.campaignUpdates),
         s.networkHash,
+        s.browserCheck,
       ]),
     ]);
 

@@ -33,16 +33,23 @@ export default {
       readOnly: true,
       description: 'A one-way code for the signer’s internet connection (not their address). Many signatures with the same code can point to fake signing.',
     },
+    {
+      name: 'browserCheck',
+      title: 'Automatic bot check',
+      type: 'string',
+      readOnly: true,
+      description: '"Failed" can be a bot, but it also happens to real people on some phones and in-app browsers, so it is still counted. Look at the name and connection fingerprint before removing it.',
+    },
   ],
   orderings: [
     { title: 'Newest first', name: 'signedAtDesc', by: [{ field: 'signedAt', direction: 'desc' }] },
     { title: 'Name A–Z', name: 'nameAsc', by: [{ field: 'fullName', direction: 'asc' }] },
   ],
   preview: {
-    select: { title: 'fullName', status: 'status', signedAt: 'signedAt' },
-    prepare: ({ title, status, signedAt }: { title?: string; status?: string; signedAt?: string }) => ({
+    select: { title: 'fullName', status: 'status', signedAt: 'signedAt', browserCheck: 'browserCheck' },
+    prepare: ({ title, status, signedAt, browserCheck }: { title?: string; status?: string; signedAt?: string; browserCheck?: string }) => ({
       title: title || '(no name)',
-      subtitle: [status === 'Removed' ? 'REMOVED' : null, signedAt ? new Date(signedAt).toLocaleString('en-CA', { timeZone: 'America/Toronto' }) : null]
+      subtitle: [status === 'Removed' ? 'REMOVED' : null, browserCheck === 'Failed' ? 'Check: bot?' : null, signedAt ? new Date(signedAt).toLocaleString('en-CA', { timeZone: 'America/Toronto' }) : null]
         .filter(Boolean)
         .join(' · '),
     }),
