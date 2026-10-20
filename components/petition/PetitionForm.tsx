@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { COUNT_EVENT } from './PetitionCounter';
+import { SharePetition } from './SharePetition';
 
 // The signature form, built from the fields and consent boxes in the petition
 // export. Only the name is required.
@@ -135,55 +136,13 @@ export function PetitionForm({ spec, shareUrl, shareText }: { spec: Spec; shareU
 }
 
 function ThankYou({ already, shareUrl, shareText }: { already: boolean; shareUrl: string; shareText: string }) {
-  const [copied, setCopied] = useState(false);
-  const url = encodeURIComponent(shareUrl);
-  const text = encodeURIComponent(shareText);
-  const links = [
-    { label: 'WhatsApp', href: `https://wa.me/?text=${text}%20${url}` },
-    { label: 'Facebook', href: `https://www.facebook.com/sharer/sharer.php?u=${url}` },
-    { label: 'X', href: `https://x.com/intent/post?text=${text}&url=${url}` },
-    { label: 'Email', href: `mailto:?subject=${encodeURIComponent('Please sign: Restore local transit on Finch West')}&body=${text}%0A%0A${url}` },
-  ];
-
-  async function share() {
-    if (navigator.share) {
-      try {
-        await navigator.share({ title: shareText, url: shareUrl });
-      } catch {
-        // Closing the share sheet isn't an error.
-      }
-      return;
-    }
-    await navigator.clipboard.writeText(shareUrl);
-    setCopied(true);
-  }
-
   return (
     <div className="text-center space-y-5 py-4" role="status">
       <p className="text-3xl font-fraunces font-bold text-ink">{already ? 'You’ve already signed. Thank you!' : 'Thank you for signing!'}</p>
       <p className="text-ink/80">
-        The petition goes to the TTC on October 20. Every signature counts, so please ask friends, family and neighbours to sign too.
+        The petition goes to the TTC on October 23. Every signature counts, so please ask friends, family and neighbours to sign too.
       </p>
-      <button
-        type="button"
-        onClick={share}
-        className="w-full min-h-[52px] rounded-full bg-brand-mustard text-on-gold font-bold text-lg px-8 py-3 hover:opacity-90 transition-opacity"
-      >
-        {copied ? 'Link copied!' : 'Share the petition'}
-      </button>
-      <div className="flex flex-wrap justify-center gap-2">
-        {links.map((l) => (
-          <a
-            key={l.label}
-            href={l.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="min-h-[44px] inline-flex items-center rounded-full border border-ink/20 px-4 font-semibold text-ink hover:border-accent hover:text-accent"
-          >
-            {l.label}
-          </a>
-        ))}
-      </div>
+      <SharePetition shareUrl={shareUrl} shareText={shareText} />
     </div>
   );
 }

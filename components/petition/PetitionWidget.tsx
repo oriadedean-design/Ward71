@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { PetitionCounter } from './PetitionCounter';
+import { SharePetition } from './SharePetition';
 import { PETITION_CLOSES_AT, PETITION_PATH, countSignatures, getPetition, isPetitionClosed } from '@/lib/petition';
 
 // A compact petition card with the live count, for the platform pages.
@@ -43,6 +44,7 @@ export async function PetitionWidget({
           )}
         </div>
       </div>
+      {!closed && <SharePetition className="mt-6 pt-6 border-t border-ink/10" />}
     </aside>
   );
 }
