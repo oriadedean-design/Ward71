@@ -14,7 +14,7 @@ export default {
       name: 'category',
       title: 'Category',
       type: 'string',
-      options: { list: ['Union', 'Community organization', 'Local leader', 'Other'] },
+      options: { list: ['Union', 'Elected official', 'Community organization', 'Local leader', 'Other'] },
     },
     {
       name: 'description',

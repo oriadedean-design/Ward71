@@ -237,16 +237,16 @@ export default async function ResourcesPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
-                href="/volunteer"
+                href="/donate"
                 className="flex items-center justify-center min-h-[48px] bg-cta text-white px-6 rounded-full font-bold text-center hover:bg-opacity-90 transition-opacity"
               >
-                Volunteer
+                Donate
               </Link>
               <Link
-                href="/donate"
-                className="flex items-center justify-center min-h-[48px] bg-brand-mustard text-on-gold px-6 rounded-full font-bold text-center hover:bg-opacity-90 transition-opacity"
+                href="/volunteer"
+                className="flex items-center justify-center min-h-[48px] bg-secondary text-white dark:text-on-gold px-6 rounded-full font-bold text-center hover:bg-opacity-90 transition-opacity"
               >
-                Donate
+                Volunteer
               </Link>
               <Link
                 href="/how-to-help"

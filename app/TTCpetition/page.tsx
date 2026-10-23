@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { PetitionCounter } from '@/components/petition/PetitionCounter';
 import { PetitionForm } from '@/components/petition/PetitionForm';
 import { SharePetition } from '@/components/petition/SharePetition';
-import { Blocks, Credits } from '@/components/xml/XmlRich';
+import { Blocks, Credits, Inline } from '@/components/xml/XmlRich';
 import {
   PETITION_CLOSES_AT,
   PETITION_PATH,
@@ -13,7 +13,7 @@ import {
   isPetitionClosed,
   sectionById,
 } from '@/lib/petition';
-import { childElements, firstChild, textOf } from '@/lib/xmlContent';
+import { childElements, firstChild, textOf, type XmlElement } from '@/lib/xmlContent';
 
 // The TTC Finch West petition, from content/petitions/ttc-finch-west.xml.
 
@@ -38,6 +38,44 @@ export const metadata: Metadata = {
 
 // Sections that the page lays out itself rather than as plain text.
 const SPECIAL = ['supporterCounter', 'signatureForm'];
+
+/**
+ * The plain-words summary: question cards in the same style as the voting
+ * guide (/resources), then the closing ask as a gold callout.
+ */
+function PlainWords({ section }: { section: XmlElement }) {
+  const blocks = childElements(section).filter((c) => c.tag !== 'heading');
+  const firstCard = blocks.findIndex((c) => c.tag === 'card');
+  const intro = blocks.slice(0, firstCard).filter((c) => c.tag === 'paragraph');
+  const cards = blocks.filter((c) => c.tag === 'card');
+  const after = blocks.slice(firstCard).filter((c) => c.tag !== 'card');
+  const ask = after.find((c) => c.tag === 'emphasis');
+  const links = after.filter((c) => c.tag === 'paragraph');
+  return (
+    <div className="space-y-5">
+      {intro.map((p, i) => (
+        <p key={i} className="text-lg text-ink/80 leading-relaxed font-medium"><Inline nodes={p.children} /></p>
+      ))}
+      {cards.map((card) => (
+        <div key={textOf(firstChild(card, 'question'))} className="bg-surface rounded-2xl border border-ink/10 p-6">
+          <h3 className="font-fraunces font-bold text-xl md:text-2xl text-ink mb-2">{textOf(firstChild(card, 'question'))}</h3>
+          <p className="text-ink/80 leading-relaxed font-medium"><Inline nodes={firstChild(card, 'answer')?.children ?? []} /></p>
+          {firstChild(card, 'detail') && (
+            <p className="text-ink/70 text-sm leading-relaxed mt-3"><Inline nodes={firstChild(card, 'detail').children} /></p>
+          )}
+        </div>
+      ))}
+      {(ask || links.length > 0) && (
+        <div className="rounded-2xl border-2 border-brand-mustard bg-brand-mustard/10 p-6 space-y-3">
+          {ask && <p className="font-fraunces font-bold text-xl md:text-2xl text-ink leading-snug"><Inline nodes={ask.children} /></p>}
+          {links.map((p, i) => (
+            <p key={i} className="text-ink/80 leading-relaxed font-medium"><Inline nodes={p.children} /></p>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default async function TtcPetitionPage() {
   const petition = getPetition();
@@ -122,6 +160,8 @@ export default async function TtcPetitionPage() {
                     )}
                   </div>
                 </div>
+              ) : section.attrs.id === 'in-plain-words' ? (
+                <PlainWords section={section} />
               ) : (
                 <Blocks node={section} />
               )}

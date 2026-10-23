@@ -53,15 +53,36 @@
   </section>
   <section id="in-plain-words">
     <heading>What We Found, in Plain Words</heading>
-    <paragraph>We looked at the TTC's own reports, the City's guidelines and last winter's records. Here is what they show.</paragraph>
-    <list kind="bullets">
-      <item><strong>The bus near your home is gone.</strong> When Line 6 opened in December 2025, the TTC removed the 36 Finch West local bus. Train stops are farther apart than bus stops were, so many people now have a longer walk.</item>
-      <item><strong>The TTC was warned.</strong> In 2022, the TTC asked riders about these changes. Of the 100 people who answered, 81 said they would lose easy access to places they go.</item>
-      <item><strong>The walk takes longer than the TTC says.</strong> The TTC plans for a 400-metre walk to take 5 minutes. At a slower, careful pace, like a senior or someone with a cane, the same walk takes over 8 minutes.</item>
-      <item><strong>Nights feel less safe.</strong> On a TTC bus after 9 p.m., a rider travelling alone can ask to get off between stops, closer to home. The train can't do that.</item>
-      <item><strong>Winter makes it worse.</strong> Last winter was the snowiest on record at Pearson airport, and the City admitted it fell short on clearing sidewalks.</item>
-      <item><strong>Many neighbours are affected.</strong> More than half of Toronto Community Housing households have someone living with a disability.</item>
-    </list>
+    <paragraph>We read the TTC's own reports, the City's guidelines and last winter's records. Here's what they show.</paragraph>
+    <card>
+      <question>What changed?</question>
+      <answer>When Line 6 opened in December 2025, the TTC took away the 36 Finch West local bus.</answer>
+      <detail>Train stops are farther apart than the old bus stops, so many people now have a longer walk just to get on.</detail>
+    </card>
+    <card>
+      <question>Did the TTC know?</question>
+      <answer>Yes. In 2022 the TTC asked riders about these changes, and 81 of the 100 people who answered said they would lose easy access to places they go.</answer>
+    </card>
+    <card>
+      <question>How much longer is the walk?</question>
+      <answer>The TTC plans for a 400-metre walk to take 5 minutes. At a slower, careful pace, the same walk takes over 8 minutes.</answer>
+      <detail>That slower pace is what City guidelines plan for at some crossings, and it's before any snow or ice.</detail>
+    </card>
+    <card>
+      <question>What about at night?</question>
+      <answer>On a TTC bus after 9 p.m., a rider travelling alone can ask to get off between stops, closer to home. The train can't do that.</answer>
+      <detail>The 336 overnight bus still runs, but it doesn't replace the local bus during the day.</detail>
+    </card>
+    <card>
+      <question>Why before winter?</question>
+      <answer>Last winter was the snowiest on record at Pearson airport, and the City admitted it fell short on clearing sidewalks.</answer>
+      <detail>Snow and ice make a long walk harder, and less safe.</detail>
+    </card>
+    <card>
+      <question>Who does this affect?</question>
+      <answer>Everyone who relied on the local bus, and most of all seniors and people living with a disability, an injury or a chronic illness.</answer>
+      <detail>More than half of Toronto Community Housing households have someone living with a disability.</detail>
+    </card>
     <emphasis>Our ask is simple: bring back a local bus on Finch West, all day, alongside Line 6, before winter.</emphasis>
     <paragraph><link href="/platform/finch-west-transit">Read the full research, with every source</link>.</paragraph>
   </section>

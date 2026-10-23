@@ -29,7 +29,8 @@ export function Inline({ nodes }: { nodes: XmlNode[] }) {
         if (n.tag === 'strong') return <strong key={i} className="font-bold text-ink"><Inline nodes={n.children} /></strong>;
         if (n.tag === 'link') {
           return (
-            <a key={i} href={n.attrs.href} target="_blank" rel="noopener noreferrer" className={LINK_CLASS}>
+            // Links to other pages on this site open in the same tab.
+            <a key={i} href={n.attrs.href} {...(n.attrs.href?.startsWith('/') ? {} : { target: '_blank', rel: 'noopener noreferrer' })} className={LINK_CLASS}>
               <Inline nodes={n.children} />
             </a>
           );
