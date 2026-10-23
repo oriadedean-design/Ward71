@@ -7,6 +7,9 @@ export interface Endorsement {
   description: string;
   logoUrl?: string;
   logoAlt?: string;
+  /** A person's headshot, shown as a circle (organizations use a logo). */
+  photoUrl?: string;
+  photoAlt?: string;
   sourceUrl?: string;
 }
 
@@ -30,6 +33,9 @@ const BUILT_IN: Endorsement[] = [
     category: 'Elected official',
     description:
       'Andrea Hazell, Member of Provincial Parliament for Scarborough—Guildwood, endorses Lorna Antwi for Toronto City Council in Ward 7, Humber River-Black Creek.',
+    // Official portrait from the Legislative Assembly of Ontario (ola.org).
+    photoUrl: '/endorsements/andrea-hazell.jpg',
+    photoAlt: 'MPP Andrea Hazell',
   },
 ];
 

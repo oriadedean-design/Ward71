@@ -32,6 +32,15 @@ export function Endorsements({ endorsements }: { endorsements: Endorsement[] }) 
             <FadeIn className="h-full">
               <article className="h-full bg-surface rounded-2xl border border-ink/10 shadow-sm p-6 md:p-8 flex flex-col">
                 <div className="flex items-center gap-4 mb-4">
+                  {e.photoUrl && (
+                    <Image
+                      src={e.photoUrl}
+                      alt={e.photoAlt || e.name}
+                      width={56}
+                      height={56}
+                      className="h-14 w-14 rounded-full object-cover flex-shrink-0 ring-2 ring-brand-mustard"
+                    />
+                  )}
                   {e.logoUrl && (
                     <Image
                       src={e.logoUrl}

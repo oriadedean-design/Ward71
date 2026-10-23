@@ -4,7 +4,10 @@ import { useState, useEffect, useRef, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { CheckCircle } from 'lucide-react';
-import { loadStripe } from '@stripe/stripe-js';
+// The /pure entry doesn't add Stripe's script on import. The site prefetches
+// /donate from every page (the header's Donate links), so the plain import
+// was downloading Stripe (~270 KB plus its iframes) on every page.
+import { loadStripe } from '@stripe/stripe-js/pure';
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { usePrefersDark } from '@/hooks/use-prefers-dark';
 import {
@@ -16,7 +19,9 @@ import {
   isValidFullName,
 } from '@/lib/compliance';
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+// Stripe loads once, when the donate page is actually opened.
+let stripePromise: ReturnType<typeof loadStripe> | null = null;
+const getStripe = () => (stripePromise ??= loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!));
 
 const PRESET_AMOUNTS = [25, 50, 100, 250]
 
@@ -173,6 +178,8 @@ function PaymentForm({ amount, fullName }: { amount: number; fullName: string })
 // ── Main page ──────────────────────────────────────────────────────────────────
 export default function DonatePage() {
   const prefersDark = usePrefersDark()
+  // Start loading Stripe as soon as the page opens, so the card form is ready.
+  useEffect(() => { getStripe() }, [])
   // Compliance
   const [ontarioResident, setOntarioResident] = useState(false)
   const [isIndividual, setIsIndividual]       = useState(false)
@@ -594,7 +601,7 @@ export default function DonatePage() {
             {amountValid && donorInfoValid && clientSecret && !paymentLoading && !paymentError && (
               <div className="bg-surface rounded-2xl border border-ink/8 shadow-sm p-6">
                 <Elements
-                  stripe={stripePromise}
+                  stripe={getStripe()}
                   options={{
                     clientSecret,
                     // Matches the site's light/dark mode (see app/globals.css).
