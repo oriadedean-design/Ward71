@@ -9,9 +9,9 @@ import { childElements, firstChild, readXmlExport, textOf, type XmlElement } fro
 export const PETITION_FILE = 'ttc-finch-west';
 export const PETITION_PATH = '/TTCpetition';
 
-// Signing closes at the end of October 22, Toronto time (EDT, UTC-4); Lorna
-// hands the petition in on October 23.
-export const PETITION_CLOSES_AT = new Date('2026-10-22T23:59:59-04:00');
+// Signing closes at the end of Monday, October 26 (Election Day), Toronto time
+// (EDT, UTC-4); Lorna hands the petition in once signing closes.
+export const PETITION_CLOSES_AT = new Date('2026-10-26T23:59:59-04:00');
 export const isPetitionClosed = (now = new Date()) => now > PETITION_CLOSES_AT;
 
 export const SIGNATURE_TYPE = 'petitionSignature';

@@ -5,6 +5,8 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { DonationBanner } from '@/components/DonationBanner';
 import { VotingBanner } from '@/components/VotingBanner';
+import { PetitionBanner } from '@/components/PetitionBanner';
+import { PETITION_CLOSES_AT, PETITION_PATH, isPetitionClosed } from '@/lib/petition';
 import { Analytics } from '@vercel/analytics/next';
 import { SanityLive } from '@/sanity/live';
 import { getSiteSettings } from '@/lib/content';
@@ -113,7 +115,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             ])
           }}
         />
-        <VotingBanner {...settings.votingBanner} />
+        {/* While the petition is open, the top banner promotes it instead of the voting guide. */}
+        {isPetitionClosed() ? (
+          <VotingBanner {...settings.votingBanner} />
+        ) : (
+          <PetitionBanner closesAt={PETITION_CLOSES_AT.toISOString()} href={PETITION_PATH} />
+        )}
         <Header />
         <main className="flex-1">
           {children}

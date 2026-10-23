@@ -19,7 +19,7 @@ import { childElements, firstChild, textOf } from '@/lib/xmlContent';
 
 const PAGE_URL = `https://www.lornaantwi.com${PETITION_PATH}`;
 const DESCRIPTION =
-  'Sign the petition asking the TTC to restore safe, accessible local bus service along Finch West, alongside Line 6, before winter. Closes October 22.';
+  'Sign the petition asking the TTC to restore safe, accessible local bus service along Finch West, alongside Line 6, before winter. Closes Monday, October 26.';
 
 // The count is part of the page, so refresh it at least every 30 seconds.
 export const revalidate = 30;
@@ -111,7 +111,7 @@ export default async function TtcPetitionPage() {
                     <PetitionCounter initial={count} label={counterLabel} size="small" />
                     {closed || !spec ? (
                       <p className="font-semibold text-ink">
-                        This petition closed on October 22 and goes to the TTC on October 23. Thank you to everyone who signed.
+                        This petition closed on October 26, and Lorna is handing it to the TTC. Thank you to everyone who signed.
                       </p>
                     ) : (
                       <PetitionForm

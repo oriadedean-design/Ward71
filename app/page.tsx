@@ -102,7 +102,7 @@ export default async function Home() {
         </FadeIn>
       </section>
 
-      {/* ── Petition (closes Oct 22) ── */}
+      {/* ── Petition (closes Oct 26) ── */}
       <PetitionSection className="pb-10" />
 
       {/* ── How to vote callout ── */}

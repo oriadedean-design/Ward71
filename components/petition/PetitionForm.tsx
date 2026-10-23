@@ -140,7 +140,7 @@ function ThankYou({ already, shareUrl, shareText }: { already: boolean; shareUrl
     <div className="text-center space-y-5 py-4" role="status">
       <p className="text-3xl font-fraunces font-bold text-ink">{already ? 'You’ve already signed. Thank you!' : 'Thank you for signing!'}</p>
       <p className="text-ink/80">
-        The petition goes to the TTC on October 23. Every signature counts, so please ask friends, family and neighbours to sign too.
+        The petition goes to the TTC once signing closes on October 26. Every signature counts, so please ask friends, family and neighbours to sign too.
       </p>
       <SharePetition shareUrl={shareUrl} shareText={shareText} />
     </div>

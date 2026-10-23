@@ -25,6 +25,12 @@ const BUILT_IN: Endorsement[] = [
       "CUPE Local 79 represents 32,000 frontline public sector workers across Toronto. For the first time in the union's history, members voted directly on which city council candidates to endorse, measuring them against the vision from Local 79's Toronto Workers Summit: equity built into every community through strong public services. Local 79 members voted to endorse Lorna Antwi in Ward 7, Humber River-Black Creek.",
     sourceUrl: CUPE_LOCAL_79_SOURCE_URL || undefined,
   },
+  {
+    name: 'MPP Andrea Hazell',
+    category: 'Elected official',
+    description:
+      'Andrea Hazell, Member of Provincial Parliament for Scarborough—Guildwood, endorses Lorna Antwi for Toronto City Council in Ward 7, Humber River-Black Creek.',
+  },
 ];
 
 interface SanityEndorsement {
