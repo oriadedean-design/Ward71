@@ -75,7 +75,10 @@ function summarizeSingle(slug: string, area: PolicyElement): PolicyAreaSummary {
     heading,
     title,
     description,
-    searchDescription: shorten(`${title}: Lorna Antwi's plan for Ward 7 Humber River-Black Creek. ${description}`),
+    // An export can set its own <searchDescription>; otherwise one is built.
+    searchDescription:
+      textOf(firstChild(area, 'searchDescription')) ||
+      shorten(`${title}: Lorna Antwi's plan for Ward 7 Humber River-Black Creek. ${description}`),
     policies: [],
   };
 }

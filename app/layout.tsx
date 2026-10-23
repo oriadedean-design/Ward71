@@ -88,7 +88,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 "description": "Running for Toronto City Council in Humber River-Black Creek (Ward 7) in the 2026 municipal election.",
                 "url": "https://www.lornaantwi.com",
                 "image": OG_IMAGE,
-                "sameAs": [],
+                "sameAs": ["https://www.facebook.com/lornaantwi", "https://www.instagram.com/lornaantwi_/"],
                 "seeksOrOffer": {
                   "@type": "GovernmentService",
                   "name": "Toronto City Council — Ward 7 Humber River-Black Creek"

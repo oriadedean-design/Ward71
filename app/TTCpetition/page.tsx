@@ -19,13 +19,13 @@ import { childElements, firstChild, textOf, type XmlElement } from '@/lib/xmlCon
 
 const PAGE_URL = `https://www.lornaantwi.com${PETITION_PATH}`;
 const DESCRIPTION =
-  'Sign the petition asking the TTC to restore safe, accessible local bus service along Finch West, alongside Line 6, before winter. Closes Monday, October 26.';
+  'Bring back the 36 Finch West local bus. Sign the petition asking the TTC to restore local bus service alongside Line 6, before winter. Closes Oct 26.';
 
 // The count is part of the page, so refresh it at least every 30 seconds.
 export const revalidate = 30;
 
 export const metadata: Metadata = {
-  title: 'Sign: Restore Local Transit on Finch West',
+  title: 'Petition: Bring Back the 36 Finch West Bus',
   description: DESCRIPTION,
   alternates: { canonical: PAGE_URL },
   openGraph: {
